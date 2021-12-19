@@ -1,0 +1,66 @@
+<!-- <div class="container"> -->
+  <!-- <div class="row"> -->
+    <!-- <div class="col-sm-9 col-md-7 col-lg-5 mx-auto"> -->
+      <div class="card card-signin my-5" style="border: 0; margin: 0!important;">
+        <div class="card-body">
+          <h2 class="card-title text-center" >Add a new company</h2>
+          <form class="form-signin" (ngSubmit)="store()">
+            <div class="form-label-group m-4">
+              <input type="text" name="name" id="name" [(ngModel)]="company.name" class="form-control common-input px-3"
+                placeholder="Name" required autofocus />
+            </div>
+
+
+            <div class="form-label-group m-4">
+              <input type="number" name="balance" id="balance" [(ngModel)]="company.balance"
+                class="form-control common-input px-3" placeholder="Balance" required autofocus min="0" />
+            </div>
+
+
+            <div class="form-label-group m-4">
+              <input type="number" name="maxManagersNumber" id="maxManagersNumber"
+                [(ngModel)]="company.maxManagersNumber" class="form-control common-input px-3"
+                placeholder="Max Managers Number" required autofocus min="1" />
+            </div>
+
+            <div class="form-label-group m-4">
+              <input type="number" name="maxSupervisorsNumber" id="maxSupervisorsNumber"
+                [(ngModel)]="company.maxSupervisorsNumber" class="form-control common-input px-3"
+                placeholder="Max Supervisors Number" required autofocus min="1" />
+            </div>
+
+            <div class="form-label-group m-4">
+              <input type="number" name="maxCollectorsNumber" id="maxCollectorsNumber"
+                [(ngModel)]="company.maxCollectorsNumber" class="form-control common-input px-3"
+                placeholder="Max Collectors Number" required autofocus min="1" />
+            </div>
+
+            <div class="form-label-group m-4">
+              <input type="number" name="maxCustomersNumber" id="maxCustomersNumber"
+                [(ngModel)]="company.maxCustomersNumber" class="form-control common-input px-3"
+                placeholder="Max Customers Number" required autofocus min="1" />
+            </div>
+
+
+            <div class="form-label-group m-4">
+              <span style="margin-right: 100px">Max allowed location:</span>
+              <select class="form-control-sm" name='maxLocationToEnter' [(ngModel)]="company.maxLocationToEnter">
+                <option *ngFor="let address of addresses" [value]="address">
+                  {{ address }}
+                </option>
+              </select>
+            </div>
+
+
+            <div class="form-label-group m-4">
+              <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
+                <span *ngIf="!isStoreLoading">Add Company</span>
+                <img src="{{ loadingGif }}" *ngIf="isStoreLoading" width="20px" />
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    <!-- </div> -->
+  <!-- </div> -->
+<!-- </div> -->

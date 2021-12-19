@@ -1,0 +1,121 @@
+<section *ngIf="!isLoading" style="margin-bottom: 100px;">
+  <h1 style="margin: 20px;">Edit Customer</h1>
+  <details (click)='detailsClicked()' #detailsElement>
+    <summary>
+      <div>
+        <span style="background-color: #f2dcbb;">
+          <i class="fa fa-user" style="font-size: 25px" aria-hidden="true"></i>
+        </span>
+        <h3 style="font-size: 1rem;">
+          <strong>User Details</strong>
+          <!-- <small>Clothes & Fashion</small> -->
+        </h3>
+        <span class="px-5 text-danger" *ngIf="detailsIsOpen"><i class="fa fa-minus" aria-hidden="true"></i></span>
+        <span class="px-5 text-success" *ngIf="!detailsIsOpen"> <i class="fa fa-plus" aria-hidden="true"></i> </span>
+      </div>
+    </summary>
+    <div>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" name="name" id="name" aria-describedby="helpId" placeholder="Name"
+          [(ngModel)]="data.name">
+        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" name="email" id="email" aria-describedby="helpId"
+          placeholder="ex: user@gmail.com" [(ngModel)]="data.email">
+        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input type="text" class="form-control" name="phone" id="phone" aria-describedby="helpId"
+          placeholder="ex: +96103456789" [(ngModel)]="data.phoneNumber">
+        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+      </div>
+    </div>
+  </details>
+  <details (click)='addressClicked()' #addressElement>
+    <summary>
+      <div>
+        <span>
+          <i class="fa fa-home" style="font-size: 25px!important;" aria-hidden="true"></i>
+        </span>
+        <h3 style="font-size: 1rem;">
+          <strong>Address</strong>
+          <!-- <small>Gift</small> -->
+        </h3>
+        <span class="px-5 text-danger" *ngIf="addressIsOpen"><i class="fa fa-minus" aria-hidden="true"></i></span>
+        <span class="px-5 text-success" *ngIf="!addressIsOpen"> <i class="fa fa-plus" aria-hidden="true"></i> </span>
+      </div>
+    </summary>
+    <div>
+      <div class="form-group" *ngIf="isCountryAllowed">
+        <label for="country">Country:</label>
+        <input type="text" class="form-control" name="country" id="country" aria-describedby="helpId"
+          placeholder="ex: Lebanon" [(ngModel)]="data.address.country">
+        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+      </div>
+      <div class="form-group" *ngIf="isDistrictAllowed">
+        <label for="district">District:</label>
+        <input type="text" class="form-control" name="district" id="district" aria-describedby="helpId"
+          placeholder="ex: Baabda" [(ngModel)]="data.address.district">
+        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+      </div>
+      <div class="form-group" *ngIf="isCityAllowed">
+        <label for="district">City:</label>
+        <input type="text" class="form-control" name="city" id="city" aria-describedby="helpId" placeholder="ex: Beirut"
+          [(ngModel)]="data.address.city">
+        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+      </div>
+      <div class="form-group" *ngIf="isAreaAllowed">
+        <label for="area">Area:</label>
+        <input type="text" class="form-control" name="area" id="area" aria-describedby="helpId" placeholder="ex: Hamra"
+          [(ngModel)]="data.address.area">
+        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+      </div>
+      <div class="form-group" *ngIf="isStreetAllowed">
+        <label for="street">Street:</label>
+        <input type="text" class="form-control" name="street" id="street" aria-describedby="helpId"
+          placeholder="ex: Airport Street" [(ngModel)]="data.address.street">
+        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+      </div>
+      <div class="form-group" *ngIf="isBuildingAllowed">
+        <label for="building">Building:</label>
+        <input type="text" class="form-control" name="building" id="building" aria-describedby="helpId" placeholder=""
+          [(ngModel)]="data.address.building">
+        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+      </div>
+      <div class="form-group">
+        <label for="building">Notes:</label>
+        <input type="text" class="form-control" name="notes" id="notes" aria-describedby="helpId"
+          placeholder="Notes - optional" [(ngModel)]="data.address.notes">
+        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+      </div>
+    </div>
+  </details>
+  <details (click)='planClicked()' #planElement>
+    <summary>
+      <div>
+        <span style="background-color: #e0ece4;">
+          <i class="fas fa-network-wired" style="font-size: 25px!important;" aria-hidden="true"></i>
+        </span>
+        <h3 style="font-size: 1rem;">
+          <strong>Plans</strong>
+          <!-- <small>Food & Beverage</small> -->
+        </h3>
+        <span class="px-5 text-danger" *ngIf="plansIsOpen"><i class="fa fa-minus" aria-hidden="true"></i></span>
+        <span class="px-5 text-success" *ngIf="!plansIsOpen"> <i class="fa fa-plus" aria-hidden="true"></i> </span>
+      </div>
+    </summary>
+    <div class="m-5">
+      <ng-multiselect-dropdown [placeholder]="'Choose plan'" [settings]="dropdownSettings" [data]="dropdownList"
+        [(ngModel)]="selectedPlans" (onSelect)="onItemSelect($event)">
+      </ng-multiselect-dropdown>
+    </div>
+  </details>
+  <button class="btn btn-primary bg-linear-primary center-this mx-auto my-5" style="width: 70%;" (click)="update()" [disabled]="isStoreLoading">
+    <span *ngIf="!isStoreLoading" >Edit Customer</span>
+    <span *ngIf="isStoreLoading" ><img src="{{loadingGif}}" width="20px" ></span>
+  </button>
+</section>

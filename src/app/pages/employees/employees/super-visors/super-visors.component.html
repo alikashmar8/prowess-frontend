@@ -1,0 +1,25 @@
+<div *ngIf="!isLoading">
+  <div class="row p-3">
+    <div class="col-md-9">
+      <h3>All Supervisors:</h3>
+    </div>
+    <div class="col-md-3">
+    </div>
+  </div>
+
+  <div *ngIf="supervisors.length">
+    <div class="search-box ml-2">
+      <button class="btn-search"><i class="fas fa-search"></i></button>
+      <input type="text" class="input-search border" placeholder="Type to Search..." name="search" [(ngModel)]="search"
+        style="background: #6f86d6; border-radius: 25px;">
+    </div>
+    <div *ngFor="let supervisor of supervisors | filter: search; let i = index">
+      <hr>
+      <app-employee-list-item [employee]='supervisor'></app-employee-list-item>
+    </div>
+
+  </div>
+  <div class="row m-5 p-5 alert-danger" *ngIf="!supervisors.length">
+    <h3 class="col-md-12 px-5 center-this"> No supervisors available!</h3>
+  </div>
+</div>

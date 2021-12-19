@@ -1,0 +1,29 @@
+<div *ngIf="!isLoading">
+  <div class="row p-3">
+    <div class="col-md-9">
+      <h3>Companies:</h3>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-success" routerLink="/admin/companies/create">
+        <i class="fa fa-plus m-2"></i>
+        New Company
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="companies[0]">
+    <div class="search-box ml-2">
+      <button class="btn-search"><i class="fas fa-search"></i></button>
+      <input type="text" class="input-search border" placeholder="Type to Search..." name="search" [(ngModel)]="search"
+        style="background: #6f86d6; border-radius: 25px;">
+    </div>
+    <div *ngFor="let company of companies | filter: search; let i = index">
+      <hr>
+      <app-company-list-item [company]="company"></app-company-list-item>
+    </div>
+
+  </div>
+  <div class="row m-5 p-5 alert-danger" *ngIf="!companies[0]">
+    <h3 class="col-md-12 px-5 center-this"> No companies available!</h3>
+  </div>
+</div>

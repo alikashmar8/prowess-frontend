@@ -1,0 +1,39 @@
+<div *ngIf="!isLoading">
+  <div class="row p-3">
+    <div class="col-md-9">
+      <h3>All Plans:</h3>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-success" routerLink="/company/plans/create">Add New Plan</button>
+    </div>
+  </div>
+
+  <div *ngIf="plans.length">
+    <div class="search-box ml-2">
+      <button class="btn-search"><i class="fas fa-search"></i></button>
+      <input type="text" class="input-search border" placeholder="Type to Search..." name="search" [(ngModel)]="search"
+        style="background: #6f86d6; border-radius: 25px;">
+    </div>
+
+    <ul class="list-group m-5">
+      <div *ngFor="let plan of plans | filter: search; let i = index">
+        <li class="list-group-item d-flex justify-content-between align-items-center" [ngClass]="{
+          'bg-linear-primary': plan.isActive,
+          'bg-danger-light': !plan.isActive
+        }">
+          {{plan.name}}
+          <div class="badge ">
+            <i class="fa fa-pen bg-white p-1 rounded m-1" style="font-size: 22px!important;"></i>
+            <!-- <i class="fa fa-eye bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i>
+            <i class="fa fa-coins bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i> -->
+            <i *ngIf="!plan.isActive" class="fa fa-check-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i>
+            <i *ngIf="plan.isActive" class="fa fa-minus-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i>
+          </div>
+        </li>
+      </div>
+    </ul>
+  </div>
+  <div class="row m-5 p-5 alert-danger" *ngIf="!plans.length">
+    <h3 class="col-md-12 px-5 center-this"> No plans available!</h3>
+  </div>
+</div>

@@ -1,0 +1,152 @@
+<div *ngIf="!isLoading">
+  <div class="profile-head mb-5 row">
+    <div class="col-md-10">
+      <h5>
+        {{customer.name}}
+      </h5>
+      <div class="profile-rating">
+        <h6>Status: <span [ngClass]="{'text-success' : customer.isActive,'text-red': !customer.isActive}" >{{ customer.isActive ? 'active' : 'inactive'}}</span></h6>
+      </div>
+    </div>
+    <div class=""><button class="btn btn-warning px-3 text-white" routerLink="/admin/companies/{{customer.id}}/edit"><i
+          class="fas fa-pen"></i> Edit</button></div>
+  </div>
+  <my-tabs>
+    <my-tab [tabTitle]="'Details'">
+      <div class="container">
+        <div class="row m-2">
+          <strong class="col-md-6">Name:</strong> {{customer.name}}
+        </div>
+        <hr>
+        <div class="row m-2">
+          <strong class="col-md-6">Email:</strong> {{customer.email}}
+        </div>
+        <hr>
+        <div class="row m-2">
+          <strong class="col-md-6">Phone Number:</strong> {{customer.phoneNumber}}
+        </div>
+        <hr>
+        <div class="row m-2">
+          <strong class="col-md-6">Role:</strong> {{customer.role}}
+        </div>
+        <hr>
+        <div class="row m-2">
+          <strong class="col-md-6">Expiry Date:</strong> {{customer.expiryDate? customer.expiryDate: 'NULL'}}
+        </div>
+        <hr>
+        <div class="row m-2">
+          <strong class="col-md-6">Collector:</strong> {{customer.collector?.name}}
+        </div>
+      </div>
+    </my-tab>
+    <my-tab [tabTitle]="'Address'">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="">
+            <div class="row m-2" *ngIf="isCountryAllowed">
+              <span class="col-md-6"><strong>Country:</strong></span>
+              <span>
+                {{customer.address.country}}
+              </span>
+            </div>
+
+            <div class="row m-2" *ngIf="isDistrictAllowed">
+              <span class="col-md-6"><strong>District:</strong></span>
+              <span>{{customer.address.district}}</span>
+              <hr>
+            </div>
+
+            <div class="row m-2" *ngIf="isCityAllowed">
+              <span class="col-md-6"><strong>City:</strong></span>
+              <span> {{customer.address.city}}</span>
+              <hr>
+            </div>
+
+            <div class="row m-2" *ngIf="isAreaAllowed">
+              <span class="col-md-6"><strong>Area:</strong></span>
+              <span>{{customer.address.area}}</span>
+              <hr>
+            </div>
+
+            <div class="row m-2" *ngIf="isStreetAllowed">
+              <span class="col-md-6"><strong>Street:</strong></span>
+              <span>{{customer.address.street}}</span>
+              <hr>
+            </div>
+
+            <div class="row m-2" *ngIf="isBuildingAllowed">
+              <span class="col-md-6"><strong>Building:</strong></span>
+              <span>{{customer.address.building}}</span>
+              <hr>
+            </div>
+
+            <div class="row m-2">
+              <span class="col-md-6"><strong>Notes:</strong></span>
+              <span>{{customer.address.notes}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </my-tab>
+    <my-tab tabTitle="Invoices">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="main-box clearfix">
+              <div class="table-responsive">
+                <table class="table user-list">
+                  <thead>
+                    <tr>
+                      <th><span>Id</span></th>
+                      <th><span>Date</span></th>
+                      <th class="text-center"><span>Collector</span></th>
+                      <th class="text-center"><span>Amount</span></th>
+                      <th><span>Is paid</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let invoice of customer.invoices">
+                      <td>
+                        <a href="#" class="user-link">{{invoice.id}}</a>
+                      </td>
+                      <td class="text-center">
+                        <span class="label label-success">{{invoice.created_at}}</span>
+                      </td>
+                      <td>
+                        <a href="#">{{invoice.collector.name}}</a>
+                      </td>
+                      <td>
+                        <a href="#">{{invoice.total_amount}}</a>
+                      </td>
+                      <td class="text-center">
+                        <div>
+                          {{invoice.isPaid }}
+                        </div>
+                      </td>
+
+                      <td>
+                        <a href="#" class="table-link primary ">
+                          <span class="fa-stack">
+                            <!-- <i class="fa fa-square fa-stack-2x"></i> -->
+                            <i class="fa fa-search-plus p-1" style="border:2px solid; border-radius: 5px;"></i>
+                          </span>
+                        </a>
+                        <a href="#" class="table-link danger  ">
+                          <span class="fa-stack">
+                            <i class="fas fa-trash-alt p-1" style="border:2px solid; border-radius: 5px;"></i>
+                            <!-- <i class="fa fa-square fa-stack-2x"></i> -->
+                            <!-- <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i> -->
+                          </span>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </my-tab>
+  </my-tabs>
+</div>

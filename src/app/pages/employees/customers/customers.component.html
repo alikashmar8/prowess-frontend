@@ -1,0 +1,81 @@
+<div *ngIf="!isLoading">
+  <div class="row p-3">
+    <div class="col-md-9">
+      <h3>All Customers:</h3>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-success" routerLink="/company/customers/create">
+        <i class="fa fa-plus m-2"></i>
+        New Customer
+      </button>
+    </div>
+  </div>
+
+
+
+  <div *ngIf="customers.length">
+    <div class="search-box ml-2">
+      <button class="btn-search"><i class="fas fa-search"></i></button>
+      <input type="text" class="input-search border" placeholder="Type to Search..." name="search" [(ngModel)]="search"
+        style="background: #6f86d6; border-radius: 25px;">
+    </div>
+
+    <div>
+      <hr>
+
+      <table class="table table-hover">
+        <thead class="table-primary ">
+          <tr class="bg-info">
+            <!-- <th>#</th> -->
+            <th>Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of customers| filter: search; let i = index" [ngClass]="{
+            'bg-linear-primary': customer.isActive,
+            'bg-danger-light': !customer.isActive
+        }">
+            <td>{{customer.name}}</td>
+            <td>{{ getAddressString(customer.address) }}</td>
+            <td>{{customer.email}}</td>
+            <td>
+              <abbr data-title="Edit Customer"><i class="fa fa-pen bg-white p-1 rounded m-1"
+                  style="font-size: 22px!important;" routerLink="/company/customers/{{customer.id}}/edit"></i></abbr>
+              <abbr data-title="Show Customer"><i class="fa fa-eye bg-white p-1 rounded m-1"
+                  style="font-size: 21px!important;" routerLink="/company/customers/{{customer.id}}"></i></abbr>
+              <abbr data-title="Transactions"><i class="fa fa-coins bg-white p-1 rounded m-1"
+                  style="font-size: 21px!important;"></i></abbr>
+              <abbr *ngIf="!customer.isActive" data-title="Enable Customer"
+                (click)="openEnableDisableModal(customer.id, customer.name, customer.isActive)"><i
+                  class="fa fa-check-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i></abbr>
+              <abbr *ngIf="customer.isActive" data-title="Disable Customer"
+                (click)="openEnableDisableModal(customer.id, customer.name, customer.isActive)"><i
+                  class="fa fa-minus-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i></abbr>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div class="row">
+        <div class="col-md-10">
+          <ul class="pagination ">
+            <li class="page-item" [ngClass]="{'active': i+1 == currentPage }"
+              *ngFor='let in of counter(totalPages);let i = index' (click)="getPageRecords(i+1)">
+              <a href="javascript:void(0);" class="page-link">{{i+1}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+          Total: {{customers.length}}
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row m-5 p-5 alert-danger" *ngIf="!customers.length">
+    <h3 class="col-md-12 px-5 center-this"> No customers to show!</h3>
+  </div>
+</div>
