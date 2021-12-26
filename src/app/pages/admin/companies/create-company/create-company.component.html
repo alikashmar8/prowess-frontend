@@ -1,66 +1,108 @@
 <!-- <div class="container"> -->
-  <!-- <div class="row"> -->
-    <!-- <div class="col-sm-9 col-md-7 col-lg-5 mx-auto"> -->
-      <div class="card card-signin my-5" style="border: 0; margin: 0!important;">
-        <div class="card-body">
-          <h2 class="card-title text-center" >Add a new company</h2>
-          <form class="form-signin" (ngSubmit)="store()">
-            <div class="form-label-group m-4">
-              <input type="text" name="name" id="name" [(ngModel)]="company.name" class="form-control common-input px-3"
-                placeholder="Name" required autofocus />
-            </div>
+<!-- <div class="row"> -->
+<!-- <div class="col-sm-9 col-md-7 col-lg-5 mx-auto"> -->
+<div class="card card-signin my-5" style="border: 0; margin: 0!important;">
+  <div class="card-body">
+    <h2 class="card-title text-center">Add a new company</h2>
+    <form class="form-signin" (ngSubmit)="store()">
+      <div class="form-label-group m-4">
+        <input type="text" name="name" id="name" [(ngModel)]="company.name" class="form-control common-input px-3"
+          placeholder="Name" required autofocus />
+      </div>
 
 
-            <div class="form-label-group m-4">
-              <input type="number" name="balance" id="balance" [(ngModel)]="company.balance"
-                class="form-control common-input px-3" placeholder="Balance" required autofocus min="0" />
-            </div>
+      <div class="form-label-group m-4">
+        <input type="number" name="balance" id="balance" [(ngModel)]="company.balance"
+          class="form-control common-input px-3" placeholder="Balance" required autofocus min="0" />
+      </div>
 
 
-            <div class="form-label-group m-4">
-              <input type="number" name="maxManagersNumber" id="maxManagersNumber"
-                [(ngModel)]="company.maxManagersNumber" class="form-control common-input px-3"
-                placeholder="Max Managers Number" required autofocus min="1" />
-            </div>
+      <div class="form-label-group m-4">
+        <input type="number" name="maxManagersNumber" id="maxManagersNumber" [(ngModel)]="company.maxManagersNumber"
+          class="form-control common-input px-3" placeholder="Max Managers Number" required autofocus min="1" />
+      </div>
 
-            <div class="form-label-group m-4">
-              <input type="number" name="maxSupervisorsNumber" id="maxSupervisorsNumber"
-                [(ngModel)]="company.maxSupervisorsNumber" class="form-control common-input px-3"
-                placeholder="Max Supervisors Number" required autofocus min="1" />
-            </div>
+      <div class="form-label-group m-4">
+        <input type="number" name="maxSupervisorsNumber" id="maxSupervisorsNumber"
+          [(ngModel)]="company.maxSupervisorsNumber" class="form-control common-input px-3"
+          placeholder="Max Supervisors Number" required autofocus min="1" />
+      </div>
 
-            <div class="form-label-group m-4">
-              <input type="number" name="maxCollectorsNumber" id="maxCollectorsNumber"
-                [(ngModel)]="company.maxCollectorsNumber" class="form-control common-input px-3"
-                placeholder="Max Collectors Number" required autofocus min="1" />
-            </div>
+      <div class="form-label-group m-4">
+        <input type="number" name="maxCollectorsNumber" id="maxCollectorsNumber"
+          [(ngModel)]="company.maxCollectorsNumber" class="form-control common-input px-3"
+          placeholder="Max Collectors Number" required autofocus min="1" />
+      </div>
 
-            <div class="form-label-group m-4">
-              <input type="number" name="maxCustomersNumber" id="maxCustomersNumber"
-                [(ngModel)]="company.maxCustomersNumber" class="form-control common-input px-3"
-                placeholder="Max Customers Number" required autofocus min="1" />
-            </div>
+      <div class="form-label-group m-4">
+        <input type="number" name="maxCustomersNumber" id="maxCustomersNumber" [(ngModel)]="company.maxCustomersNumber"
+          class="form-control common-input px-3" placeholder="Max Customers Number" required autofocus min="1" />
+      </div>
 
+      <h5 class="mt-4 ml-4" >Addresses levels:</h5>
 
-            <div class="form-label-group m-4">
-              <span style="margin-right: 100px">Max allowed location:</span>
-              <select class="form-control-sm" name='maxLocationToEnter' [(ngModel)]="company.maxLocationToEnter">
-                <option *ngFor="let address of addresses" [value]="address">
-                  {{ address }}
-                </option>
-              </select>
-            </div>
-
-
-            <div class="form-label-group m-4">
-              <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
-                <span *ngIf="!isStoreLoading">Add Company</span>
-                <img src="{{ loadingGif }}" *ngIf="isStoreLoading" width="20px" />
-              </button>
-            </div>
-          </form>
+      <div class="row mx-3">
+        <div class='level-selector'>
+          <div class='level-item'>
+            <label (click)="level1Clicked()">
+              <input [checked]='isLevel1Checked' name='button-group' type='checkbox' value='level1' disabled>
+              <span class='btn first'><span *ngIf="isLevel1Checked">✔</span> level 1</span>
+            </label>
+            <label (click)="level2Clicked()">
+              <input [checked]='isLevel2Checked' name='button-group' type='checkbox' value='level2' disabled>
+              <span class='btn'><span *ngIf="isLevel2Checked">✔</span> Level 2</span>
+            </label>
+            <label (click)="level3Clicked()">
+              <input [checked]="isLevel3Checked" name='button-group' type='checkbox' value='level3' disabled>
+              <span class='btn'> <span *ngIf="isLevel3Checked">✔</span> level 3</span>
+            </label>
+            <label (click)="level4Clicked()">
+              <input [checked]="isLevel4Checked" name='button-group' type='checkbox' value='level4' disabled>
+              <span class='btn'> <span *ngIf="isLevel4Checked">✔</span> Level 4</span>
+            </label>
+            <label (click)="level5Clicked()">
+              <input [checked]="isLevel5Checked" name='button-group' type='checkbox' value='level5' disabled>
+              <span class='btn last'> <span *ngIf="isLevel5Checked">✔</span> Level 5</span>
+            </label>
+          </div>
         </div>
       </div>
-    <!-- </div> -->
-  <!-- </div> -->
+
+
+      <div class="form-label-group m-4" *ngIf="isLevel1Checked">
+        <input type="text" name="level1" id="level1" class="form-control common-input px-3" placeholder="Level 1 naming"
+         autofocus [(ngModel)]="company.addressLevel1Name" />
+      </div>
+
+      <div class="form-label-group m-4" *ngIf="isLevel2Checked">
+        <input type="text" name="level2" id="level2" class="form-control common-input px-3" placeholder="Level 2 naming"
+          autofocus [(ngModel)]="company.addressLevel2Name" />
+      </div>
+
+      <div class="form-label-group m-4" *ngIf="isLevel3Checked">
+        <input type="text" name="level3" id="level3" class="form-control common-input px-3" placeholder="Level 3 naming"
+          autofocus [(ngModel)]="company.addressLevel3Name" />
+      </div>
+
+      <div class="form-label-group m-4" *ngIf="isLevel4Checked">
+        <input type="text" name="level4" id="level4" class="form-control common-input px-3" placeholder="Level 4 naming"
+          autofocus [(ngModel)]="company.addressLevel4Name" />
+      </div>
+
+      <div class="form-label-group m-4" *ngIf="isLevel5Checked">
+        <input type="text" name="level5" id="level5" class="form-control common-input px-3" placeholder="Level 5 naming"
+          autofocus [(ngModel)]="company.addressLevel5Name" />
+      </div>
+
+      <div class="form-label-group m-4">
+        <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
+          <span *ngIf="!isStoreLoading">Add Company</span>
+          <img src="{{ loadingGif }}" *ngIf="isStoreLoading" width="20px" />
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- </div> -->
+<!-- </div> -->
 <!-- </div> -->

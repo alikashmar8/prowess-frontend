@@ -45,6 +45,12 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { EditCustomerComponent } from './pages/employees/customers/edit-customer/edit-customer.component';
 import { ShowCustomerComponent } from './pages/employees/customers/show-customer/show-customer.component';
 import { EnableDisableUserComponent } from './common/modals/enable-disable-user/enable-disable-user.component';
+import { Level1AddressesComponent } from './pages/employees/addresses/level1-addresses/level1-addresses.component';
+import { Level2AddressesComponent } from './pages/employees/addresses/level2-addresses/level2-addresses.component';
+import { Level3AddressesComponent } from './pages/employees/addresses/level3-addresses/level3-addresses.component';
+import { Level4AddressesComponent } from './pages/employees/addresses/level4-addresses/level4-addresses.component';
+import { Level5AddressesComponent } from './pages/employees/addresses/level5-addresses/level5-addresses.component';
+import { EditAddressModalComponent } from './common/modals/edit-address-modal/edit-address-modal.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +82,13 @@ import { EnableDisableUserComponent } from './common/modals/enable-disable-user/
     EditCustomerComponent,
     ShowCustomerComponent,
     EnableDisableUserComponent,
+
+    Level1AddressesComponent,
+    Level2AddressesComponent,
+    Level3AddressesComponent,
+    Level4AddressesComponent,
+    Level5AddressesComponent,
+    EditAddressModalComponent,
   ],
   imports: [
     BrowserModule,

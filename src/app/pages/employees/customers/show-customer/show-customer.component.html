@@ -5,7 +5,8 @@
         {{customer.name}}
       </h5>
       <div class="profile-rating">
-        <h6>Status: <span [ngClass]="{'text-success' : customer.isActive,'text-red': !customer.isActive}" >{{ customer.isActive ? 'active' : 'inactive'}}</span></h6>
+        <h6>Status: <span [ngClass]="{'text-success' : customer.isActive,'text-red': !customer.isActive}">{{
+            customer.isActive ? 'active' : 'inactive'}}</span></h6>
       </div>
     </div>
     <div class=""><button class="btn btn-warning px-3 text-white" routerLink="/admin/companies/{{customer.id}}/edit"><i
@@ -43,13 +44,38 @@
       <div class="row">
         <div class="col-md-6">
           <div class="">
-            <div class="row m-2" *ngIf="isCountryAllowed">
-              <span class="col-md-6"><strong>Country:</strong></span>
+            <div class="row m-2" *ngIf="isLevel5Allowed">
+              <span class="col-md-6"><strong>{{customer.company.addressLevel5Name}}:</strong></span>
               <span>
-                {{customer.address.country}}
+                {{customer.address.parent.parent.parent.parent.name}}
               </span>
             </div>
-
+            <div class="row m-2" *ngIf="isLevel4Allowed">
+              <span class="col-md-6"><strong>{{customer.company.addressLevel4Name}}:</strong></span>
+              <span>
+                {{customer.address.parent.parent.parent.name}}
+              </span>
+            </div>
+            <div class="row m-2" *ngIf="isLevel3Allowed">
+              <span class="col-md-6"><strong>{{customer.company.addressLevel3Name}}:</strong></span>
+              <span>
+                {{customer.address.parent.parent.name}}
+              </span>
+            </div>
+            <div class="row m-2" *ngIf="isLevel2Allowed">
+              <span class="col-md-6"><strong>{{customer.company.addressLevel2Name}}:</strong></span>
+              <span>
+                {{customer.address.parent.name}}
+              </span>
+            </div>
+            <div class="row m-2" >
+              <span class="col-md-6"><strong>{{customer.company.addressLevel1Name}}:</strong></span>
+              <span>
+                {{customer.address.name}}
+              </span>
+            </div>
+          </div>
+          <!--
             <div class="row m-2" *ngIf="isDistrictAllowed">
               <span class="col-md-6"><strong>District:</strong></span>
               <span>{{customer.address.district}}</span>
@@ -84,7 +110,7 @@
               <span class="col-md-6"><strong>Notes:</strong></span>
               <span>{{customer.address.notes}}</span>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </my-tab>

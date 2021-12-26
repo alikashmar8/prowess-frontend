@@ -9,5 +9,4 @@ export class Address {
   street?: string;
   building?: string;
   notes?: string;
-  user: User;
 }

@@ -1,4 +1,4 @@
-import { AddressesEnum } from 'src/enums/addresses.enum';
+import { AddressesLevel } from 'src/enums/addresses.enum';
 import { User } from './user.model';
 
 export class Company {
@@ -9,7 +9,12 @@ export class Company {
   maxSupervisorsNumber: number;
   maxCollectorsNumber: number;
   maxCustomersNumber: number;
-  maxLocationToEnter: AddressesEnum;
+  maxLocationLevel: AddressesLevel;
+  addressLevel1Name: string;
+  addressLevel2Name: string;
+  addressLevel3Name: string;
+  addressLevel4Name: string;
+  addressLevel5Name: string;
   createdBy_id?: string;
   parentCompany_id?: string;
   createdBy?: User;

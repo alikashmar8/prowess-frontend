@@ -11,12 +11,15 @@ import { User } from 'src/models/user.model';
 export class NavbarComponent implements OnInit {
   showUsers = false;
   showInvoices = false;
+  showAddresses = false;
   currentUser: User;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUser;
+    console.log(this.currentUser);
+
   }
 
   toggleUsers() {
@@ -25,6 +28,10 @@ export class NavbarComponent implements OnInit {
 
   toggleInvoices() {
     this.showInvoices = !this.showInvoices;
+  }
+
+  toggleAddresses() {
+    this.showAddresses = !this.showAddresses;
   }
 
   logout() {

@@ -1,0 +1,30 @@
+<div *ngIf="!isLoading">
+  <div class="modal-header">
+    <h4 class="modal-title">Update Address</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-signin">
+      <div class="form-label-group m-4">
+        <input type="text" name="name" id="name" [(ngModel)]="address.name" class="form-control common-input px-3"
+          placeholder="Name" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4" *ngIf="!isMaxLevel">
+        <select class="form-control" [(ngModel)]="address.parent_id" name="parentLevel">
+          <option class="form-control option" *ngFor="let level of parents" [value]="level.id">{{level.name}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary " [disabled]="isUpdateLoading"
+      (click)="update()">
+      <span *ngIf="!isUpdateLoading">Update</span>
+      <img src="{{ loadingGif }}" *ngIf="isUpdateLoading" width="20px" />
+    </button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button>
+  </div>
+</div>

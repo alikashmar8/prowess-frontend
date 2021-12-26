@@ -27,7 +27,7 @@ export class CompanyListItemComponent {
     modalRef.result.then(
       (result) => {
         if (result) {
-          this.companiesServices.adminDelete('this.company.id').subscribe(
+          this.companiesServices.adminDelete(this.company.id).subscribe(
             (result: any) => {
               if (result.affected > 0) {
                 this.alertService.toastSuccess('Company deleted successfully');

@@ -1,3 +1,4 @@
+import { Level1AddressesComponent } from './pages/employees/addresses/level1-addresses/level1-addresses.component';
 import { EmployeeGuard } from './guards/employee-guard.service';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -22,6 +23,10 @@ import { PlansComponent } from './pages/employees/plans/plans.component';
 import { CreatePlanComponent } from './pages/employees/plans/create-plan/create-plan.component';
 import { ShowCustomerComponent } from './pages/employees/customers/show-customer/show-customer.component';
 import { EditCustomerComponent } from './pages/employees/customers/edit-customer/edit-customer.component';
+import { Level2AddressesComponent } from './pages/employees/addresses/level2-addresses/level2-addresses.component';
+import { Level3AddressesComponent } from './pages/employees/addresses/level3-addresses/level3-addresses.component';
+import { Level4AddressesComponent } from './pages/employees/addresses/level4-addresses/level4-addresses.component';
+import { Level5AddressesComponent } from './pages/employees/addresses/level5-addresses/level5-addresses.component';
 
 const routes: Routes = [
   {
@@ -120,6 +125,32 @@ const routes: Routes = [
           {
             path: 'create',
             component: CreatePlanComponent,
+          },
+        ],
+        canActivate: [EmployeeGuard],
+      },
+      {
+        path: 'addresses',
+        children: [
+          {
+            path: 'level1',
+            component: Level1AddressesComponent,
+          },
+          {
+            path: 'level2',
+            component: Level2AddressesComponent,
+          },
+          {
+            path: 'level3',
+            component: Level3AddressesComponent,
+          },
+          {
+            path: 'level4',
+            component: Level4AddressesComponent,
+          },
+          {
+            path: 'level5',
+            component: Level5AddressesComponent,
           },
         ],
         canActivate: [EmployeeGuard],

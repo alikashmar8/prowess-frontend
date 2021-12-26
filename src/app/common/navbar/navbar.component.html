@@ -43,6 +43,23 @@
           <a routerLink='/company/employees/collectors' class="dashboard-nav-dropdown-item">Collectors</a>
         </div>
       </div>
+
+      <div class='dashboard-nav-dropdown' [ngClass]="{'show': showAddresses }">
+        <a (click)="toggleAddresses()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white">
+          <i class="fa fa-home" aria-hidden="true"></i>Addresses</a>
+        <div class='dashboard-nav-dropdown-menu'>
+          <a *ngIf="currentUser.company.addressLevel5Name" routerLink='/company/addresses/level5'
+            class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel5Name}}</a>
+          <a *ngIf="currentUser.company.addressLevel4Name" routerLink='/company/addresses/level4'
+            class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel4Name}}</a>
+          <a *ngIf="currentUser.company.addressLevel3Name" routerLink='/company/addresses/level3'
+            class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel3Name}}</a>
+          <a *ngIf="currentUser.company.addressLevel2Name" routerLink='/company/addresses/level2'
+            class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel2Name}}</a>
+          <a *ngIf="currentUser.company.addressLevel1Name" routerLink='/company/addresses/level1'
+            class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel1Name}}</a>
+          </div>
+      </div>
       <a routerLink="/company/sub-companies" class="dashboard-nav-item"
         [ngClass]="{'active': isCurrentRoute('/company/sub-companies') || isCurrentRoute('/company/sub-companies/create')}">
         <i class="fas fa-building"></i>

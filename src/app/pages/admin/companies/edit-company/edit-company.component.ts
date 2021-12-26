@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/services/auth-service.service';
 import { CompaniesService } from 'src/app/services/companies.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { loadingGifUrl } from 'src/constants/constants';
-import { AddressesEnum } from 'src/enums/addresses.enum';
+import { AddressesLevel } from 'src/enums/addresses.enum';
 import { Company } from './../../../../../models/company.model';
 
 @Component({
@@ -21,6 +21,12 @@ export class AdminEditCompanyComponent implements OnInit {
   isLoading: boolean = true;
   loadingGif = loadingGifUrl;
 
+  isLevel1Checked: boolean = true;
+  isLevel2Checked: boolean = false;
+  isLevel3Checked: boolean = false;
+  isLevel4Checked: boolean = false;
+  isLevel5Checked: boolean = false;
+
   constructor(
     private companiesService: CompaniesService,
     private router: Router,
@@ -33,13 +39,10 @@ export class AdminEditCompanyComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = this.loadingService.appLoading(true);
     this.company_id = this.route.snapshot.paramMap.get('id');
-    for (var enumMember in AddressesEnum) {
-      this.addresses.push(enumMember);
-    }
     this.companiesService.getById(this.company_id).subscribe(
       (data: Company) => {
-        console.log(data);
         this.company = data;
+        this.handleAddressLevels(data.maxLocationLevel);
         this.isLoading = this.loadingService.appLoading(false);
       },
       (err) => {
@@ -57,7 +60,7 @@ export class AdminEditCompanyComponent implements OnInit {
       !this.company.balance ||
       !this.company.maxCollectorsNumber ||
       !this.company.maxCustomersNumber ||
-      !this.company.maxLocationToEnter ||
+      !this.company.maxLocationLevel ||
       !this.company.maxManagersNumber ||
       !this.company.maxSupervisorsNumber
     ) {
@@ -76,9 +79,14 @@ export class AdminEditCompanyComponent implements OnInit {
         maxCollectorsNumber: this.company.maxCollectorsNumber,
         createdBy_id: this.company.createdBy_id,
         maxCustomersNumber: this.company.maxCustomersNumber,
-        maxLocationToEnter: this.company.maxLocationToEnter,
+        maxLocationLevel: this.company.maxLocationLevel,
         maxManagersNumber: this.company.maxManagersNumber,
         maxSupervisorsNumber: this.company.maxSupervisorsNumber,
+        addressLevel1Name: this.company.addressLevel1Name,
+        addressLevel2Name: this.company.addressLevel2Name,
+        addressLevel3Name: this.company.addressLevel3Name,
+        addressLevel4Name: this.company.addressLevel4Name,
+        addressLevel5Name: this.company.addressLevel5Name,
       })
       .subscribe(
         (result) => {
@@ -90,5 +98,105 @@ export class AdminEditCompanyComponent implements OnInit {
           this.isUpdateLoading = false;
         }
       );
+  }
+  handleAddressLevels(maxLocationLevel: AddressesLevel) {
+    switch (maxLocationLevel) {
+      case AddressesLevel.LEVEL1:
+        this.isLevel1Checked = true;
+        this.isLevel2Checked = false;
+        this.isLevel3Checked = false;
+        this.isLevel4Checked = false;
+        this.isLevel5Checked = false;
+        break;
+      case AddressesLevel.LEVEL2:
+        this.isLevel1Checked = true;
+        this.isLevel2Checked = true;
+        this.isLevel3Checked = false;
+        this.isLevel4Checked = false;
+        this.isLevel5Checked = false;
+        break;
+      case AddressesLevel.LEVEL3:
+        this.isLevel1Checked = true;
+        this.isLevel2Checked = true;
+        this.isLevel3Checked = true;
+        this.isLevel4Checked = false;
+        this.isLevel5Checked = false;
+        break;
+      case AddressesLevel.LEVEL4:
+        this.isLevel1Checked = true;
+        this.isLevel2Checked = true;
+        this.isLevel3Checked = true;
+        this.isLevel4Checked = true;
+        this.isLevel5Checked = false;
+        break;
+      case AddressesLevel.LEVEL5:
+        this.isLevel1Checked = true;
+        this.isLevel2Checked = true;
+        this.isLevel3Checked = true;
+        this.isLevel4Checked = true;
+        this.isLevel5Checked = true;
+        break;
+    }
+  }
+
+  level1Clicked() {
+    this.isLevel1Checked = true;
+    this.isLevel2Checked = false;
+    this.isLevel3Checked = false;
+    this.isLevel4Checked = false;
+    this.isLevel5Checked = false;
+    this.company.maxLocationLevel = AddressesLevel.LEVEL1;
+  }
+
+  level2Clicked() {
+    if (this.isLevel2Checked) {
+      this.isLevel2Checked = true;
+      this.isLevel3Checked = false;
+      this.isLevel4Checked = false;
+      this.isLevel5Checked = false;
+    } else {
+      this.isLevel1Checked = true;
+      this.isLevel2Checked = true;
+    }
+    this.company.maxLocationLevel = AddressesLevel.LEVEL2;
+  }
+
+  level3Clicked() {
+    if (this.isLevel3Checked) {
+      this.isLevel2Checked = true;
+      this.isLevel3Checked = true;
+      this.isLevel4Checked = false;
+      this.isLevel5Checked = false;
+    } else {
+      this.isLevel1Checked = true;
+      this.isLevel2Checked = true;
+      this.isLevel3Checked = true;
+    }
+    this.company.maxLocationLevel = AddressesLevel.LEVEL3;
+  }
+
+  level4Clicked() {
+    if (this.isLevel4Checked) {
+      this.isLevel2Checked = true;
+      this.isLevel3Checked = true;
+      this.isLevel4Checked = true;
+      this.isLevel5Checked = false;
+    } else {
+      this.isLevel1Checked = true;
+      this.isLevel2Checked = true;
+      this.isLevel3Checked = true;
+      this.isLevel4Checked = true;
+    }
+    this.company.maxLocationLevel = AddressesLevel.LEVEL4;
+  }
+
+  level5Clicked() {
+    this.isLevel1Checked = true;
+    this.isLevel2Checked = true;
+    this.isLevel3Checked = true;
+    this.isLevel4Checked = true;
+    this.isLevel5Checked = true;
+
+    this.company.maxLocationLevel = AddressesLevel.LEVEL5;
   }
 }

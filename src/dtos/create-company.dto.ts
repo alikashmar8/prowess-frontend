@@ -1,3 +1,5 @@
+import { AddressesLevel } from "src/enums/addresses.enum";
+
 export class AdminCreateCompanyDTO {
   name: string;
   balance: number;
@@ -5,6 +7,11 @@ export class AdminCreateCompanyDTO {
   maxSupervisorsNumber: number;
   maxCollectorsNumber: number;
   maxCustomersNumber: number;
-  maxLocationToEnter: string;
+  maxLocationLevel: AddressesLevel;
+  addressLevel1Name: string;
+  addressLevel2Name: string;
+  addressLevel3Name: string;
+  addressLevel4Name: string;
+  addressLevel5Name: string;
   createdBy_id: string;
 }
