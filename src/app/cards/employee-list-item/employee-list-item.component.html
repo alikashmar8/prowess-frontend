@@ -4,11 +4,12 @@
   <div class="job-left ml-2 my-4 d-md-flex align-items-center flex-wrap row">
     <div class="col-md-1" style="padding: 0;">
       <div class="img-holder d-lg-flex glow" [ngStyle]="{
-        'background-color': employee.isActive ? 'lime' : 'red'}">
+        'background-color': isActive || employee.role == 'ADMIN'  ? 'lime' : 'red'
+      }">
 
         <div class="shine"></div>
         <div class="light"></div>
-        <span class="font-weight-light" style="font-size: small">{{ employee.isActive? 'Active':
+        <span class="font-weight-light" style="font-size: small">{{ isActive || employee.role == 'ADMIN'? 'Active':
           'Inactive'}} </span>
       </div>
     </div>
@@ -40,8 +41,8 @@
 
   <div class="job-right my-4 flex-shrink-0 col-md-2">
 
-    <div class="row" *ngIf="employee.role != 'ADMIN'" >
-      <button class="btn d-block w-100 d-sm-inline-block btn-success m-1">
+    <div class="row" *ngIf="employee.role != 'ADMIN'">
+      <button class="btn d-block w-100 d-sm-inline-block btn-success m-1" (click)="openRenewModal()">
         <span>Renew</span>
       </button>
     </div>
@@ -50,7 +51,7 @@
       <a routerLink="/appointments/" class="btn d-block w-100 d-sm-inline-block btn-info m-1">Details</a>
     </div>
 
-    <div class="row" *ngIf="employee.role != 'ADMIN'" >
+    <div class="row" *ngIf="employee.role != 'ADMIN'">
       <button class="btn d-block w-100 d-sm-inline-block btn-danger m-1">
         Deny
       </button>

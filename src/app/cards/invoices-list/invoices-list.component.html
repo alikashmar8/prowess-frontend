@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-1 col-md-12">
+      <div class="panel">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col col-sm-4 col-xs-12">
+              <h4 class="title">{{ title }}</h4>
+            </div>
+            <div class="col-sm-8 col-xs-12 text-right">
+              <div class="btn_group">
+                <input type="text" class="form-control" placeholder="Search">
+                <button class="btn btn-default" title="Reload"><i class="fa fa-sync-alt"></i></button>
+                <button class="btn btn-default" title="Pdf"><i class="fa fa-file-pdf"></i></button>
+                <button class="btn btn-default" title="Excel"><i class="fas fa-file-excel"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Customer Name</th>
+                <th>Due Date</th>
+                <th>Total</th>
+                <th>Is Paid</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let invoice of invoices" [class.selectedRow]="rowIsSelected(invoice.id)"
+                (click)="onRowClick(invoice.id)" style="cursor: pointer;">
+                <td>{{invoice.id}}</td>
+                <td>{{ invoice.user.name }}</td>
+                <td>{{ invoice.dueDate | date:'yyyy-MM-dd' }}</td>
+                <td>{{invoice.total }}</td>
+                <td>{{invoice.isPaid }}</td>
+                <td>
+                  <ul class="action-list">
+                    <li><a routerLink="/company/invoices/{{invoice.id}}" data-tip="show">
+                        <i class="fa fa-eye" style="font-size: 21px!important;"></i></a>
+                    </li>
+                    <li><a (click)="openCollectModal(invoice.id, invoice.user.name)" data-tip="collect">
+                        <i class="fas fa-money-bill-alt" style="font-size: 21px!important;"></i></a>
+                    </li>
+                    <li><a (click)="openForgiveModal(invoice.id, invoice.user.name)" data-tip="forgive">
+                        <i class="fas fa-hand-holding-usd" style="font-size: 21px!important;"></i>
+                      </a></li>
+                  </ul>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <!-- <div class="panel-footer">
+          <div class="row">
+            <div class="col col-sm-6 col-xs-6">showing <b>5</b> out of <b>25</b> entries</div>
+            <div class="col-sm-6 col-xs-6">
+              <ul class="pagination hidden-xs pull-right">
+                <li><a href="#"></a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">></a></li>
+              </ul>
+              <ul class="pagination visible-xs pull-right">
+                <li><a href="#"></a></li>
+                <li><a href="#">></a></li>
+              </ul>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

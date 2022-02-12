@@ -1,10 +1,9 @@
-import { Level1AddressesComponent } from './pages/employees/addresses/level1-addresses/level1-addresses.component';
-import { EmployeeGuard } from './guards/employee-guard.service';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './guards/admin-guard.service';
 import { AnonymousGuard } from './guards/anonymous-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
+import { EmployeeGuard } from './guards/employee-guard.service';
 import { SuperAdminGuard } from './guards/super-admin-guard.service';
 import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.component';
 import { AdminCompaniesComponent } from './pages/admin/companies/companies.component';
@@ -12,28 +11,29 @@ import { AdminCreateCompanyComponent } from './pages/admin/companies/create-comp
 import { AdminEditCompanyComponent } from './pages/admin/companies/edit-company/edit-company.component';
 import { AdminShowCompanyComponent } from './pages/admin/companies/show-company/show-company.component';
 import { LoginComponent } from './pages/auth/login/login.component';
-import { AllEmployeesComponent } from './pages/employees/employees/all-employees/all-employees.component';
-import { CollectorsComponent } from './pages/employees/employees/collectors/collectors.component';
-import { ManagersComponent } from './pages/employees/employees/managers/managers.component';
-import { SuperVisorsComponent } from './pages/employees/employees/super-visors/super-visors.component';
-import { EmployeesHomeComponent } from './pages/employees/home/home.component';
-import { CustomersComponent } from './pages/employees/customers/customers.component';
-import { CreateCustomerComponent } from './pages/employees/customers/create-customer/create-customer.component';
-import { PlansComponent } from './pages/employees/plans/plans.component';
-import { CreatePlanComponent } from './pages/employees/plans/create-plan/create-plan.component';
-import { ShowCustomerComponent } from './pages/employees/customers/show-customer/show-customer.component';
-import { EditCustomerComponent } from './pages/employees/customers/edit-customer/edit-customer.component';
+import { Level1AddressesComponent } from './pages/employees/addresses/level1-addresses/level1-addresses.component';
 import { Level2AddressesComponent } from './pages/employees/addresses/level2-addresses/level2-addresses.component';
 import { Level3AddressesComponent } from './pages/employees/addresses/level3-addresses/level3-addresses.component';
 import { Level4AddressesComponent } from './pages/employees/addresses/level4-addresses/level4-addresses.component';
 import { Level5AddressesComponent } from './pages/employees/addresses/level5-addresses/level5-addresses.component';
+import { CreateCustomerComponent } from './pages/employees/customers/create-customer/create-customer.component';
+import { CustomersComponent } from './pages/employees/customers/customers.component';
+import { EditCustomerComponent } from './pages/employees/customers/edit-customer/edit-customer.component';
+import { ShowCustomerComponent } from './pages/employees/customers/show-customer/show-customer.component';
+import { AllEmployeesComponent } from './pages/employees/employees/all-employees/all-employees.component';
+import { CollectorsComponent } from './pages/employees/employees/collectors/collectors.component';
+import { CreateEmployeeComponent } from './pages/employees/employees/create-employee/create-employee.component';
+import { ManagersComponent } from './pages/employees/employees/managers/managers.component';
+import { SuperVisorsComponent } from './pages/employees/employees/super-visors/super-visors.component';
+import { EmployeesHomeComponent } from './pages/employees/home/home.component';
+import { CreateInvoiceComponent } from './pages/employees/invoices/create-invoice/create-invoice.component';
+import { ShowInvoiceComponent } from './pages/employees/invoices/show-invoice/show-invoice.component';
+import { ThisMonthInvoicesComponent } from './pages/employees/invoices/this-month-invoices/this-month-invoices.component';
+import { UnpaidInvoicesComponent } from './pages/employees/invoices/unpaid-invoices/unpaid-invoices.component';
+import { CreatePlanComponent } from './pages/employees/plans/create-plan/create-plan.component';
+import { PlansComponent } from './pages/employees/plans/plans.component';
 
-const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-    canActivate: [AnonymousGuard],
-  },
+const adminRoutes: Routes = [
   {
     // super admin routes
     path: 'admin',
@@ -67,6 +67,9 @@ const routes: Routes = [
     ],
     canActivate: [SuperAdminGuard],
   },
+];
+
+const employeesRoutes: Routes = [
   {
     // company employees routes
     path: 'company',
@@ -89,6 +92,10 @@ const routes: Routes = [
           {
             path: 'collectors',
             component: CollectorsComponent,
+          },
+          {
+            path: 'create',
+            component: CreateEmployeeComponent,
           },
         ],
         canActivate: [AdminGuard],
@@ -156,6 +163,28 @@ const routes: Routes = [
         canActivate: [EmployeeGuard],
       },
       {
+        path: 'invoices',
+        children: [
+          {
+            path: 'unpaid',
+            component: UnpaidInvoicesComponent,
+          },
+          {
+            path: 'this-month',
+            component: ThisMonthInvoicesComponent,
+          },
+          {
+            path: 'create',
+            component: CreateInvoiceComponent,
+          },
+          {
+            path: ':id',
+            component: ShowInvoiceComponent,
+          },
+        ],
+        canActivate: [EmployeeGuard],
+      },
+      {
         path: 'home',
         component: EmployeesHomeComponent,
         canActivate: [EmployeeGuard],
@@ -163,6 +192,16 @@ const routes: Routes = [
     ],
     canActivate: [AuthGuard],
   },
+];
+
+const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [AnonymousGuard],
+  },
+  ...adminRoutes,
+  ...employeesRoutes,
 ];
 
 @NgModule({

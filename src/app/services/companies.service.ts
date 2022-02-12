@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CreateCustomerDTO } from 'src/dtos/create-customer.dto';
+import { CreateEmployeeDTO } from 'src/dtos/create-employee.dto';
 import { UserRoles } from 'src/enums/user-roles.enum';
-import { User } from 'src/models/user.model';
 import { getHeaders } from 'src/utils/functions';
 import {
   adminCompaniesEndpoint,
@@ -109,6 +109,26 @@ export class CompaniesService {
       {
         headers: getHeaders(),
       }
+    );
+  }
+
+  storeEmployee(data: CreateEmployeeDTO) {
+    return this.http.post(
+      companiesEndpoint + data.company_id + '/employees/',
+      data,
+      { headers: getHeaders() }
+    );
+  }
+
+  renewEmployee(employee_id: string) {
+    return this.http.put(
+      companiesEndpoint +
+        this.authService.currentUser.company_id +
+        '/employees/' +
+        employee_id +
+        '/renew',
+      {},
+      { headers: getHeaders() }
     );
   }
 }

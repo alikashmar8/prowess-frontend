@@ -1,8 +1,10 @@
+import { Level1Address } from 'src/models/level1-address.model';
 import { HttpHeaders } from '@angular/common/http';
 import { AddressesLevel } from 'src/enums/addresses.enum';
 import { UserRoles } from 'src/enums/user-roles.enum';
 import { User } from 'src/models/user.model';
 import { Address } from '../models/address.model';
+
 export function getAccessToken() {
   return localStorage.getItem('access_token');
 }
@@ -15,21 +17,34 @@ export function getHeaders(): HttpHeaders {
   return headers;
 }
 
-export function getAddressString(address: Address): string {
+export function getAddressString(level1Address: Level1Address): string {
   let result: string = '';
-  if (address.country) result += address.country + ', ';
-
-  if (address.district) result += address.district + ', ';
-
-  if (address.city) result += address.city + ', ';
-
-  if (address.area) result += address.area + ', ';
-
-  if (address.street) result += address.street + ', ';
-
-  if (address.building) result += address.building;
-
-  return result;
+  result += level1Address.name;
+  if (level1Address.parent) {
+    const level2 = level1Address.parent;
+    result = level2.name + ', ' + result;
+    if (level2.parent) {
+      const level3 = level2.parent;
+      result = level3.name + ', ' + result;
+      if (level3.parent) {
+        const level4 = level3.parent;
+        result = level4.name + ', ' + result;
+        if (level4.parent) {
+          const level5 = level4.parent;
+          result = level5.name + ', ' + result;
+          return result;
+        } else {
+          return result;
+        }
+      } else {
+        return result;
+      }
+    } else {
+      return result;
+    }
+  } else {
+    return result;
+  }
 }
 
 export function isEmployee(user: User): boolean {

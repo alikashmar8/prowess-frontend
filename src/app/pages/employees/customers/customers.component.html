@@ -46,8 +46,6 @@
                   style="font-size: 22px!important;" routerLink="/company/customers/{{customer.id}}/edit"></i></abbr>
               <abbr data-title="Show Customer"><i class="fa fa-eye bg-white p-1 rounded m-1"
                   style="font-size: 21px!important;" routerLink="/company/customers/{{customer.id}}"></i></abbr>
-              <abbr data-title="Transactions"><i class="fa fa-coins bg-white p-1 rounded m-1"
-                  style="font-size: 21px!important;"></i></abbr>
               <abbr *ngIf="!customer.isActive" data-title="Enable Customer"
                 (click)="openEnableDisableModal(customer.id, customer.name, customer.isActive)"><i
                   class="fa fa-check-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i></abbr>

@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   isLoading: boolean = true;
   isAuthenticated = false;
   loadingSub: Subscription;
+  showMenu: boolean = true;
 
   constructor(
     private authService: AuthService,
@@ -43,5 +44,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     //unsub to avoid leaks
     this.loadingSub.unsubscribe();
+  }
+
+  toggleMenu(){
+    this.showMenu = !this.showMenu;
   }
 }

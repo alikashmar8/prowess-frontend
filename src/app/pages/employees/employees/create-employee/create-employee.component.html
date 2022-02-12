@@ -1,0 +1,46 @@
+<div class="card card-signin my-5" style="border: 0; margin: 0!important;">
+  <div class="card-body">
+    <h2 class="card-title text-center">Add a new Employee</h2>
+    <form class="form-signin" (ngSubmit)="store()">
+
+      <div class="form-label-group m-4">
+        <input type="text" name="name" id="name" [(ngModel)]="employee.name" class="form-control common-input px-3"
+          placeholder="Name" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <input type="text" name="username" id="username" [(ngModel)]="employee.username"
+          class="form-control common-input px-3" placeholder="Username" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <input type="email" name="email" id="email" [(ngModel)]="employee.email" class="form-control common-input px-3"
+          placeholder="Email" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <input type="text" name="mobile" id="mobile" [(ngModel)]="employee.phoneNumber"
+          class="form-control common-input px-3" placeholder="Phone Number" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <input type="text" name="password" id="password" [(ngModel)]="employee.password"
+          class="form-control common-input px-3" placeholder="Password" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <select [(ngModel)]="employee.role" class="form-control" name="role">
+          <option *ngFor="let role of userRoles" [value]="role">{{role}}</option>
+        </select>
+      </div>
+
+
+      <div class="form-label-group m-4">
+        <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
+          <span *ngIf="!isStoreLoading">Add Employee</span>
+          <img src="{{ loadingGif }}" *ngIf="isStoreLoading" width="20px" />
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

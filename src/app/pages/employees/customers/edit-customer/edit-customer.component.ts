@@ -1,3 +1,4 @@
+import { UserRoles } from './../../../../../enums/user-roles.enum';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -97,7 +98,9 @@ export class EditCustomerComponent implements OnInit {
           .getCompanyEmployees(this.currentCompany.id)
           .subscribe(
             (res: any) => {
-              this.collectors = res;
+              this.collectors = res.filter((collector) => {
+                if (collector.role != UserRoles.ADMIN) return collector;
+              });
               this.plansService.getActiveCompanyPlans().subscribe(
                 async (res: any) => {
                   this.plans = res;

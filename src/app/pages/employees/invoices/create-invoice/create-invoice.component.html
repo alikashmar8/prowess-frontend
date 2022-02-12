@@ -1,0 +1,70 @@
+<div class="card card-signin my-5" style="border: 0; margin: 0!important;">
+  <div class="card-body">
+    <h2 class="card-title text-center">Add a new plan</h2>
+    <form class="form-signin" (ngSubmit)="store()">
+      <hr>
+
+      <div class="form-label-group m-4 rounded" style="border: 1px solid;">
+        <label class="center-this h3">Invoice Type</label>
+        <my-tabs>
+          <my-tab [tabTitle]="'Plans'">
+
+            <div class="form-label-group m-4">
+              <ng-multiselect-dropdown [placeholder]="'Choose plan'" [settings]="planDropdownSettings"
+                [data]="plansDropdownList" [(ngModel)]="selectedPlans" name="plan" (onSelect)="onPlanSelect($event)"
+                (onDeSelect)="onPlanDeSelect($event)">
+              </ng-multiselect-dropdown>
+            </div>
+          </my-tab>
+          <my-tab [tabTitle]="'Item'">
+          </my-tab>
+        </my-tabs>
+      </div>
+      <div class="form-label-group m-4">
+        <label>Select Customer:</label>
+        <ng-multiselect-dropdown [placeholder]="'Choose plan'" [settings]="customerDropdownSettings"
+          [data]="customersDropdownList" [(ngModel)]="selectedCustomer" name="customer">
+        </ng-multiselect-dropdown>
+      </div>
+
+
+
+
+      <div class="form-label-group m-4">
+        <label>Due Date:</label>
+        <input type="date" class="form-control" name="dueDate" [(ngModel)]="data.dueDate">
+      </div>
+
+      <div class="form-label-group m-4 form-check">
+
+        <input type="checkbox" class="form-check-input" name="isFirstPayment" [(ngModel)]="data.isFirstPayment">
+        <label class='form-check-label' for='isFirstPayment'>First payment?</label>
+      </div>
+
+      <div class="form-label-group m-4">
+        <label>Extra amount:</label>
+        <input type="number" class="form-control" name="extraAmount" [(ngModel)]="data.extraAmount"
+          (ngModelChange)="extraAmountChanged()">
+      </div>
+
+      <div class="form-label-group m-4">
+        <label>Total amount:</label>
+        <input type="number" class="form-control" [disabled]="!data.isFirstPayment" name="totalAmount"
+          [(ngModel)]="data.total">
+      </div>
+
+      <div class="form-label-group m-4">
+        <label class="form-control">Additional Notes:</label>
+        <input type="text" class="form-control" name="notes" [(ngModel)]="data.notes">
+      </div>
+
+
+      <div class="form-label-group m-4">
+        <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
+          <span *ngIf="!isStoreLoading">Add Invoice</span>
+          <img src="{{ loadingGif }}" *ngIf="isStoreLoading" width="20px" />
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

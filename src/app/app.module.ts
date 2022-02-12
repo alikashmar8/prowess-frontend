@@ -51,6 +51,14 @@ import { Level3AddressesComponent } from './pages/employees/addresses/level3-add
 import { Level4AddressesComponent } from './pages/employees/addresses/level4-addresses/level4-addresses.component';
 import { Level5AddressesComponent } from './pages/employees/addresses/level5-addresses/level5-addresses.component';
 import { EditAddressModalComponent } from './common/modals/edit-address-modal/edit-address-modal.component';
+import { CreateEmployeeComponent } from './pages/employees/employees/create-employee/create-employee.component';
+import { RenewUserModalComponent } from './common/modals/renew-user-modal/renew-user-modal.component';
+import { UnpaidInvoicesComponent } from './pages/employees/invoices/unpaid-invoices/unpaid-invoices.component';
+import { InvoicesListComponent } from './cards/invoices-list/invoices-list.component';
+import { ShowInvoiceComponent } from './pages/employees/invoices/show-invoice/show-invoice.component';
+import { CreateInvoiceComponent } from './pages/employees/invoices/create-invoice/create-invoice.component';
+import { ThisMonthInvoicesComponent } from './pages/employees/invoices/this-month-invoices/this-month-invoices.component';
+import { ConfirmationModalComponent } from './common/modals/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +97,14 @@ import { EditAddressModalComponent } from './common/modals/edit-address-modal/ed
     Level4AddressesComponent,
     Level5AddressesComponent,
     EditAddressModalComponent,
+    CreateEmployeeComponent,
+    RenewUserModalComponent,
+    UnpaidInvoicesComponent,
+    InvoicesListComponent,
+    ShowInvoiceComponent,
+    CreateInvoiceComponent,
+    ThisMonthInvoicesComponent,
+    ConfirmationModalComponent,
   ],
   imports: [
     BrowserModule,

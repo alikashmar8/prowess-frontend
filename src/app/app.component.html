@@ -1,12 +1,13 @@
-<app-loading-screen [hidden]="!isLoading" ></app-loading-screen>
+<app-loading-screen [hidden]="!isLoading"></app-loading-screen>
 <div [hidden]="isLoading">
   <div *ngIf='!isAuthenticated'>
     <app-login></app-login>
   </div>
   <div class='dashboard' *ngIf="isAuthenticated">
-    <app-navbar></app-navbar>
-    <div class='dashboard-app'>
-      <!-- <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a></header> -->
+    <app-navbar [ngStyle]="{'display': !showMenu ? 'none': 'block' }"></app-navbar>
+    <div class='dashboard-app' [ngStyle]="{'margin-left': !showMenu ? '0': '240px' }">
+      <header class='dashboard-toolbar'><a (click)="toggleMenu()" class="menu-toggle"><i class="fas fa-bars"></i></a>
+      </header>
       <div class='dashboard-content'>
         <div class='container bg-white p-5 rounded'>
           <app-alert></app-alert>

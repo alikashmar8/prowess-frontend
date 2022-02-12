@@ -41,6 +41,7 @@
           <a routerLink='/company/employees/managers' class="dashboard-nav-dropdown-item">Managers</a>
           <a routerLink='/company/employees/super-visors' class="dashboard-nav-dropdown-item">Super Visors</a>
           <a routerLink='/company/employees/collectors' class="dashboard-nav-dropdown-item">Collectors</a>
+          <a routerLink='/company/employees/create' class="dashboard-nav-dropdown-item">Add New</a>
         </div>
       </div>
 
@@ -58,7 +59,7 @@
             class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel2Name}}</a>
           <a *ngIf="currentUser.company.addressLevel1Name" routerLink='/company/addresses/level1'
             class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel1Name}}</a>
-          </div>
+        </div>
       </div>
       <a routerLink="/company/sub-companies" class="dashboard-nav-item"
         [ngClass]="{'active': isCurrentRoute('/company/sub-companies') || isCurrentRoute('/company/sub-companies/create')}">
@@ -69,8 +70,12 @@
         <a (click)="toggleInvoices()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white">
           <i class="fas fa-money-check-alt"></i>Invoices</a>
         <div class='dashboard-nav-dropdown-menu'>
-          <a href="#" class="dashboard-nav-dropdown-item">This month</a>
-          <a href="#" class="dashboard-nav-dropdown-item">All Unpaid</a>
+          <a routerLink="/company/invoices/unpaid" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/unpaid')}">All Unpaid</a>
+          <a routerLink="/company/invoices/this-month" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/this-month')}">This Month</a>
+          <a routerLink="/company/invoices/create" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/create')}">Add New</a>
         </div>
       </div>
 

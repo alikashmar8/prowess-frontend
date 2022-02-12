@@ -108,7 +108,6 @@ export class AuthService {
   }
 
   handleHttpError(err: HttpErrorResponse) {
-    debugger
     switch (err.error.statusCode) {
       case 400:
         Array.isArray(err.error.message)

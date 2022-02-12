@@ -45,6 +45,8 @@ export class CustomersComponent implements OnInit {
       .subscribe(
         (result: any) => {
           this.customers = result.data;
+          console.log(this.customers);
+
           this.totalPages = result.total > 0 ? Math.ceil(result.total / 10) : 1;
           this.isLoading = this.loadingService.appLoading(false);
         },

@@ -89,12 +89,13 @@ export class CreateCustomerComponent implements OnInit {
           .getCompanyEmployees(this.currentCompany.id)
           .subscribe(
             (res: any) => {
-              this.collectors = res;
+              this.collectors = res.filter((collector) => {
+                if (collector.role != UserRoles.ADMIN) return collector;
+              });
               this.plansService.getActiveCompanyPlans().subscribe(
                 async (res: any) => {
                   this.plans = res;
                   this.dropdownList = this.plans;
-                  this.companiesService.getCompanyEmployees;
                   this.selectedPlans = [];
                   this.dropdownSettings = {
                     singleSelection: false,
@@ -128,7 +129,7 @@ export class CreateCustomerComponent implements OnInit {
                       this.isLevel4Allowed = false;
                       this.isLevel3Allowed = true;
                       this.isLevel2Allowed = true;
-                      this.level4Addresses =
+                      this.level3Addresses =
                         await this.addressesService.GetLevel3Addresses();
                       break;
                     case AddressesLevel.LEVEL2:
@@ -136,7 +137,7 @@ export class CreateCustomerComponent implements OnInit {
                       this.isLevel4Allowed = false;
                       this.isLevel3Allowed = false;
                       this.isLevel2Allowed = true;
-                      this.level4Addresses =
+                      this.level2Addresses =
                         await this.addressesService.GetLevel2Addresses();
                       break;
                     case AddressesLevel.LEVEL1:
@@ -252,6 +253,10 @@ export class CreateCustomerComponent implements OnInit {
     this.data.plans = this.selectedPlans.map((plan) => plan.id);
 
     this.data.company_id = this.authService.currentUser.company_id;
+
+    if (!this.data.collector_id) {
+      this.data.collector_id = this.authService.currentUser.id;
+    }
 
     this.companiesService.storeCustomer(this.data).subscribe(
       (res) => {
