@@ -46,6 +46,9 @@ export class EditCustomerComponent implements OnInit {
     plans: [],
     collector_id: null,
     company_id: null,
+    paymentDate: null,
+    invoice_total: null,
+    invoice_notes: null,
   };
 
   detailsIsOpen: boolean = false;
@@ -129,6 +132,13 @@ export class EditCustomerComponent implements OnInit {
                     collector_id: this.user.collector.id,
                     plans: this.user.plans.map((plan) => plan.id),
                     company_id: this.user.company_id,
+                    paymentDate: this.user.paymentDate
+                      ? new Date(this.user.paymentDate)
+                          .toISOString()
+                          .split('T')[0]
+                      : null,
+                    invoice_total: null,
+                    invoice_notes: null,
                   };
                   switch (this.currentCompany.maxLocationLevel) {
                     case AddressesLevel.LEVEL5:
@@ -189,7 +199,7 @@ export class EditCustomerComponent implements OnInit {
                       this.isLevel4Allowed = false;
                       this.isLevel3Allowed = false;
                       this.isLevel2Allowed = true;
-                      this.level4Addresses =
+                      this.level2Addresses =
                         await this.addressesService.GetLevel2Addresses();
 
                       this.selectedLevel2Id = this.user.address.parent.id;

@@ -15,6 +15,7 @@ export class User {
   role: UserRoles;
   isSuperAdmin: boolean;
   balance: number;
+  paymentDate?: Date;
   address_id?: string;
   company_id?: string;
   collector_id?: string;

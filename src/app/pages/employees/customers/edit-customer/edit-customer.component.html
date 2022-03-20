@@ -33,6 +33,11 @@
           placeholder="ex: +96103456789" [(ngModel)]="data.phoneNumber">
         <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
       </div>
+      <div class="form-group">
+        <label for="paymentDate">Payment Date:</label>
+        <input type="date" class="form-control" name="paymentDate" id="paymentDate" aria-describedby="helpId"
+          [(ngModel)]="data.paymentDate" required>
+      </div>
     </div>
   </details>
   <details (click)='addressClicked()' #addressElement>

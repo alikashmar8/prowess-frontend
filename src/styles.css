@@ -16,7 +16,7 @@ html {
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  overflow-x:hidden;
+  overflow-x: hidden;
 }
 
 nav {
@@ -34,7 +34,7 @@ body {
   color: #515151;
   text-align: left;
   background-color: #e9edf4;
-  overflow-x:hidden;
+  overflow-x: hidden;
 }
 
 h1,
@@ -476,11 +476,11 @@ body {
   position: absolute;
   z-index: 99;
   bottom: -3px;
-  -webkit-animation-name: spaceboots;
+  /* -webkit-animation-name: spaceboots;
   -webkit-animation-duration: 0.8s;
   -webkit-transform-origin: 50% 50%;
   -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
+  -webkit-animation-timing-function: linear; */
 }
 .loader .box {
   width: 100%;
@@ -736,3 +736,57 @@ abbr[data-title]:focus::after {
 }
 
 /* END Level selector css */
+
+
+/* START menu styles */
+.hide-menu {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.7s ease-in-out, opacity 0.7s ease-in-out;
+}
+
+.show-menu {
+  visibility: visible;
+  opacity: 1;
+}
+/* END menu styles */
+
+/* change input format */
+/* input[type="date"]::-webkit-datetime-edit, input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-clear-button {
+  color: #fff;
+  position: relative;
+}
+
+input[type="date"]::-webkit-datetime-edit-year-field{
+  position: absolute !important;
+  border-left:1px solid #8c8c8c;
+  padding: 2px;
+  color:#000;
+  left: 56px;
+}
+
+input[type="date"]::-webkit-datetime-edit-month-field{
+  position: absolute !important;
+  border-left:1px solid #8c8c8c;
+  padding: 2px;
+  color:#000;
+  left: 26px;
+}
+
+
+input[type="date"]::-webkit-datetime-edit-day-field{
+  position: absolute !important;
+  color:#000;
+  padding: 2px;
+  left: 4px;
+
+} */
+/* END input format */
+
+
+/* Base Input */
+.required:after {
+  content:" *";
+  color: red;
+}
+/* END Base Input */

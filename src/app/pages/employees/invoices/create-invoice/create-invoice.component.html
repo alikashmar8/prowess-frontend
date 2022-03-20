@@ -10,13 +10,19 @@
           <my-tab [tabTitle]="'Plans'">
 
             <div class="form-label-group m-4">
-              <ng-multiselect-dropdown [placeholder]="'Choose plan'" [settings]="planDropdownSettings"
+              <ng-multiselect-dropdown [placeholder]="'Choose plans'" [settings]="planDropdownSettings"
                 [data]="plansDropdownList" [(ngModel)]="selectedPlans" name="plan" (onSelect)="onPlanSelect($event)"
                 (onDeSelect)="onPlanDeSelect($event)">
               </ng-multiselect-dropdown>
             </div>
           </my-tab>
           <my-tab [tabTitle]="'Item'">
+            <div class="form-label-group m-4">
+              <ng-multiselect-dropdown [placeholder]="'Choose Items'" [settings]="itemDropdownSettings"
+                [data]="itemsDropdownList" [(ngModel)]="selectedItems" name="items" (onSelect)="onItemSelect($event)"
+                (onDeSelect)="onItemDeSelect($event)">
+              </ng-multiselect-dropdown>
+            </div>
           </my-tab>
         </my-tabs>
       </div>
@@ -28,15 +34,12 @@
       </div>
 
 
-
-
       <div class="form-label-group m-4">
         <label>Due Date:</label>
         <input type="date" class="form-control" name="dueDate" [(ngModel)]="data.dueDate">
       </div>
 
       <div class="form-label-group m-4 form-check">
-
         <input type="checkbox" class="form-check-input" name="isFirstPayment" [(ngModel)]="data.isFirstPayment">
         <label class='form-check-label' for='isFirstPayment'>First payment?</label>
       </div>

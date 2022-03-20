@@ -48,12 +48,14 @@
     </div>
 
     <div class="row">
-      <a routerLink="/appointments/" class="btn d-block w-100 d-sm-inline-block btn-info m-1">Details</a>
+      <button class="btn d-block w-100 d-sm-inline-block btn-info m-1"
+        (click)="openDetailModal(employee)">Details</button>
     </div>
 
     <div class="row" *ngIf="employee.role != 'ADMIN'">
-      <button class="btn d-block w-100 d-sm-inline-block btn-danger m-1">
-        Deny
+      <button class="btn d-block w-100 d-sm-inline-block btn-danger m-1"
+        (click)="openDeleteModal(employee.id, employee.name)">
+        Delete
       </button>
     </div>
 

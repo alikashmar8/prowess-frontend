@@ -1,4 +1,5 @@
 import { InvoiceTypes } from 'src/enums/invoices-type.enum';
+import { Item } from './item.model';
 import { Plan } from './plan.model';
 import { User } from './user.model';
 
@@ -12,11 +13,14 @@ export class Invoice {
   isFirstPayment: boolean;
   notes?: string;
   user_id: string;
+  collectedBy_id: string;
   item_id?: string;
   plan_id?: string;
   user: User;
-  // items?: Item;
+  collectedBy?: User;
+  items?: Item[];
   plans?: Plan[];
+  collected_at?: Date;
   created_at?: Date;
   updated_at?: Date;
 }

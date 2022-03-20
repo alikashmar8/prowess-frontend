@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/services/auth-service.service';
 import { CompaniesService } from 'src/app/services/companies.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { PlansService } from 'src/app/services/plans.service';
-import { UsersService } from 'src/app/services/users.service';
 import { loadingGifUrl } from 'src/constants/constants';
 import { CreateCustomerDTO } from 'src/dtos/create-customer.dto';
 import { AddressesLevel } from 'src/enums/addresses.enum';
@@ -44,6 +43,9 @@ export class CreateCustomerComponent implements OnInit {
     collector_id: null,
     plans: [],
     company_id: null,
+    paymentDate: new Date().toISOString().split('T')[0],
+    invoice_total: null,
+    invoice_notes: null,
   };
 
   detailsIsOpen: boolean = false;
@@ -215,6 +217,18 @@ export class CreateCustomerComponent implements OnInit {
       return;
     }
 
+    if (!this.data.phoneNumber) {
+      this.alertService.toastError('Customer phone number should be provided');
+      this.isStoreLoading = false;
+      return;
+    }
+
+    if (!this.data.paymentDate) {
+      this.alertService.toastError('Customer payment date should be provided');
+      this.isStoreLoading = false;
+      return;
+    }
+
     if (!this.data.address_id) {
       this.alertService.toastError('Address should be provided');
       this.isStoreLoading = false;
@@ -250,6 +264,12 @@ export class CreateCustomerComponent implements OnInit {
       return;
     }
 
+    if (!this.data.invoice_total) {
+      this.alertService.toastError('Invoice total should be specified!');
+      this.isStoreLoading = false;
+      return;
+    }
+
     this.data.plans = this.selectedPlans.map((plan) => plan.id);
 
     this.data.company_id = this.authService.currentUser.company_id;
@@ -268,6 +288,9 @@ export class CreateCustomerComponent implements OnInit {
           collector_id: null,
           plans: [],
           company_id: null,
+          paymentDate: new Date(),
+          invoice_total: null,
+          invoice_notes: null,
         };
         this.selectedPlans = [];
         this.alertService.toastSuccess('Customer created successfully');

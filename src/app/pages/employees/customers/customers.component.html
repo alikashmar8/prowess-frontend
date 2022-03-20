@@ -29,7 +29,7 @@
             <!-- <th>#</th> -->
             <th>Name</th>
             <th>Address</th>
-            <th>Email</th>
+            <th>Phone Number</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -40,7 +40,7 @@
         }">
             <td>{{customer.name}}</td>
             <td>{{ getAddressString(customer.address) }}</td>
-            <td>{{customer.email}}</td>
+            <td>{{customer.phoneNumber}}</td>
             <td>
               <abbr data-title="Edit Customer"><i class="fa fa-pen bg-white p-1 rounded m-1"
                   style="font-size: 22px!important;" routerLink="/company/customers/{{customer.id}}/edit"></i></abbr>
@@ -67,7 +67,7 @@
           </ul>
         </div>
         <div class="col-md-2">
-          Total: {{customers.length}}
+          Total: {{totalRecords}}
         </div>
       </div>
     </div>

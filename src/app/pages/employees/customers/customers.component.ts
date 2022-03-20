@@ -23,6 +23,7 @@ export class CustomersComponent implements OnInit {
   skip: number = 0;
 
   totalPages: number = 0;
+  totalRecords: number = 0;
   currentPage: number = 1;
 
   constructor(
@@ -46,8 +47,8 @@ export class CustomersComponent implements OnInit {
         (result: any) => {
           this.customers = result.data;
           console.log(this.customers);
-
-          this.totalPages = result.total > 0 ? Math.ceil(result.total / 10) : 1;
+          this.totalRecords = result.count;
+          this.totalPages = result.count > 0 ? Math.ceil(result.count / 10) : 1;
           this.isLoading = this.loadingService.appLoading(false);
         },
         (err) => {
@@ -79,7 +80,7 @@ export class CustomersComponent implements OnInit {
       .subscribe(
         (result: any) => {
           this.customers = result.data;
-          this.totalPages = result.total > 0 ? Math.ceil(result.total / 10) : 1;
+          this.totalPages = result.count > 0 ? Math.ceil(result.count / 10) : 1;
           this.currentPage = page;
           this.isLoading = this.loadingService.appLoading(false);
         },

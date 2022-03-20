@@ -41,7 +41,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let plan of invoice.plans" >
+                  <tr *ngFor="let plan of invoice.plans">
                     <td class="no">{{plan.id}}</td>
                     <td class="text-left">
                       <h3>
@@ -57,7 +57,20 @@
                     <td class="qty">1</td>
                     <td class="total">{{plan.price}}</td>
                   </tr>
-
+                <tbody>
+                  <tr *ngFor="let item of invoice.items">
+                    <td class="no">{{item.id}}</td>
+                    <td class="text-left">
+                      <h3>
+                        <a target="_blank" href="javascript:;">
+                          {{item.name}}
+                        </a>
+                      </h3>
+                    </td>
+                    <td class="unit">{{item.price}}</td>
+                    <td class="qty">1</td>
+                    <td class="total">{{item.price}}</td>
+                  </tr>
                 </tbody>
                 <tfoot>
                   <!-- <tr>
@@ -78,7 +91,7 @@
                 </tfoot>
               </table>
               <div class="thanks">Thank you!</div>
-              <div class="notices" *ngIf='invoice.notes' >
+              <div class="notices" *ngIf='invoice.notes'>
                 <div>Note:</div>
                 <div class="notice">{{invoice.notes}}</div>
               </div>

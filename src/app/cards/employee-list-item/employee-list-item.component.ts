@@ -5,6 +5,8 @@ import { RenewUserModalComponent } from 'src/app/common/modals/renew-user-modal/
 import { CompaniesService } from 'src/app/services/companies.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
+import { DeleteModalComponent } from 'src/app/common/modals/delete-modal/delete-modal.component';
+import { ShowEmployeeModal } from 'src/app/common/modals/show-employee-modal/show-employee-modal.component';
 
 @Component({
   selector: 'app-employee-list-item',
@@ -52,5 +54,37 @@ export class EmployeeListItemComponent implements OnInit {
       },
       (rejected) => {}
     );
+  }
+
+  openDeleteModal(employeeId: string, employeeName: string){
+    const modalRef = this.modalService.open(DeleteModalComponent);
+    modalRef.componentInstance.name = employeeName;
+    modalRef.result.then(
+      (result) => {
+        if (result) {
+          this.companiesService.deleteEmployee(employeeId).subscribe(
+            (result: any) => {
+              if (result.affected > 0) {
+                this.alertService.toastSuccess('Employee deleted successfully');
+                window.location.reload();
+              } else {
+                this.alertService.toastError('Error deleting company');
+              }
+            },
+            (error) => {
+              this.authService.handleHttpError(error);
+            }
+          );
+        }
+      },
+      (rejected) => {}
+    );
+  }
+
+  openDetailModal(employee){
+    const modalRef = this.modalService.open(ShowEmployeeModal, { size: 'lg' });
+    modalRef.componentInstance.employee = this.employee;
+
+
   }
 }

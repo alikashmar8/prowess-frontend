@@ -131,4 +131,15 @@ export class CompaniesService {
       { headers: getHeaders() }
     );
   }
+
+  deleteEmployee(employee_id: string) {
+    return this.http.delete(
+      companiesEndpoint +
+        this.authService.currentUser.company_id +
+        '/employees/' +
+        employee_id,
+      { headers: getHeaders() }
+    );
+  }
+
 }

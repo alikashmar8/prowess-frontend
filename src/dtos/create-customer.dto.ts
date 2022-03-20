@@ -6,4 +6,7 @@ export class CreateCustomerDTO {
   plans: string[];
   collector_id: string;
   company_id: string;
+  paymentDate?: any;
+  invoice_total: number;
+  invoice_notes?: string;
 }

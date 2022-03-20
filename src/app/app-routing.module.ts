@@ -30,6 +30,8 @@ import { CreateInvoiceComponent } from './pages/employees/invoices/create-invoic
 import { ShowInvoiceComponent } from './pages/employees/invoices/show-invoice/show-invoice.component';
 import { ThisMonthInvoicesComponent } from './pages/employees/invoices/this-month-invoices/this-month-invoices.component';
 import { UnpaidInvoicesComponent } from './pages/employees/invoices/unpaid-invoices/unpaid-invoices.component';
+import { CreateItemComponent } from './pages/employees/items/create-item/create-item.component';
+import { ItemsComponent } from './pages/employees/items/items.component';
 import { CreatePlanComponent } from './pages/employees/plans/create-plan/create-plan.component';
 import { PlansComponent } from './pages/employees/plans/plans.component';
 
@@ -132,6 +134,20 @@ const employeesRoutes: Routes = [
           {
             path: 'create',
             component: CreatePlanComponent,
+          },
+        ],
+        canActivate: [EmployeeGuard],
+      },
+      {
+        path: 'items',
+        children: [
+          {
+            path: '',
+            component: ItemsComponent,
+          },
+          {
+            path: 'create',
+            component: CreateItemComponent,
           },
         ],
         canActivate: [EmployeeGuard],

@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{employee.name}} Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-sm-6"><strong>Name:</strong> {{employee.name}}</div>
+    <div class="col-sm-6"><strong>Username:</strong>
+      {{employee.username}}</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6"><strong>Email:</strong> {{employee.email}}</div>
+    <div class="col-sm-6"><strong>Phone Number:</strong> {{employee.phoneNumber}}</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6"><strong>Is Active:</strong> {{employee.isActive}}</div>
+    <div class="col-sm-6"><strong>Expiry Date:</strong> {{employee.expiryDate | date: "dd/MM/yyyy"}}</div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button>
+</div>

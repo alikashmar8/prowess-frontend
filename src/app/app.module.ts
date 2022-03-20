@@ -59,6 +59,10 @@ import { ShowInvoiceComponent } from './pages/employees/invoices/show-invoice/sh
 import { CreateInvoiceComponent } from './pages/employees/invoices/create-invoice/create-invoice.component';
 import { ThisMonthInvoicesComponent } from './pages/employees/invoices/this-month-invoices/this-month-invoices.component';
 import { ConfirmationModalComponent } from './common/modals/confirmation-modal/confirmation-modal.component';
+import { ItemsComponent } from './pages/employees/items/items.component';
+import { CreateItemComponent } from './pages/employees/items/create-item/create-item.component';
+import { ShowEmployeeModal } from './common/modals/show-employee-modal/show-employee-modal.component';
+import { EditPlanModalComponent } from './common/modals/edit-plan-modal/edit-plan-modal.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +94,6 @@ import { ConfirmationModalComponent } from './common/modals/confirmation-modal/c
     EditCustomerComponent,
     ShowCustomerComponent,
     EnableDisableUserComponent,
-
     Level1AddressesComponent,
     Level2AddressesComponent,
     Level3AddressesComponent,
@@ -105,6 +108,10 @@ import { ConfirmationModalComponent } from './common/modals/confirmation-modal/c
     CreateInvoiceComponent,
     ThisMonthInvoicesComponent,
     ConfirmationModalComponent,
+    ItemsComponent,
+    CreateItemComponent,
+    ShowEmployeeModal,
+    EditPlanModalComponent,
   ],
   imports: [
     BrowserModule,

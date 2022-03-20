@@ -9,8 +9,8 @@
             customer.isActive ? 'active' : 'inactive'}}</span></h6>
       </div>
     </div>
-    <div class=""><button class="btn btn-warning px-3 text-white" routerLink="/admin/companies/{{customer.id}}/edit"><i
-          class="fas fa-pen"></i> Edit</button></div>
+    <div class=""><button class="btn btn-warning px-3 text-white"
+        routerLink="/company/customers/{{customer.id}}/edit"><i class="fas fa-pen"></i> Edit</button></div>
   </div>
   <my-tabs>
     <my-tab [tabTitle]="'Details'">
@@ -28,11 +28,7 @@
         </div>
         <hr>
         <div class="row m-2">
-          <strong class="col-md-6">Role:</strong> {{customer.role}}
-        </div>
-        <hr>
-        <div class="row m-2">
-          <strong class="col-md-6">Expiry Date:</strong> {{customer.expiryDate? customer.expiryDate: 'NULL'}}
+          <strong class="col-md-6">Payment Date:</strong> {{ customer.paymentDate | date: "dd/MM/yyyy" }}
         </div>
         <hr>
         <div class="row m-2">
@@ -84,7 +80,30 @@
           <div class="col-lg-12">
             <div class="main-box clearfix">
               <div class="table-responsive">
-                <table class="table user-list">
+                <span><strong> Last 12 months invoices:</strong></span>
+                <div class="container m-2">
+                  <div class="row">
+                    <div *ngFor="let invoice of customer.invoices" class="col-sm-1"><span>{{ invoice.dueDate | date:
+                        'MMM-yy' }}</span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div *ngFor="let invoice of customer.invoices" class="col-sm-1"
+                      [ngClass]="{'bg-success' : invoice.isPaid,'bg-danger': !invoice.isPaid}">
+                      <a routerLink="/company/invoices/{{invoice.id}}">
+                        <div *ngIf="invoice.isPaid">
+                          {{invoice.collectedBy?.name}} - {{invoice.collected_at | date:'dd/MM'}}
+                        </div>
+                        <div *ngIf="!invoice.isPaid">
+                          N/A
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <span><strong>Items Invoices:</strong></span>
+                <table class="table user-list m-2">
                   <thead>
                     <tr>
                       <th><span>Id</span></th>
@@ -100,13 +119,14 @@
                         <a href="#" class="user-link">{{invoice.id}}</a>
                       </td>
                       <td class="text-center">
-                        <span class="label label-success">{{invoice.created_at}}</span>
+                        <span class="label label-success">{{ invoice.dueDate }}</span>
+                        <span class="label label-success">{{ invoice.collectedBy }}</span>
                       </td>
                       <td>
-                        <a href="#">{{invoice.collector.name}}</a>
+                        <a href="#">{{customer.collector.name}}</a>
                       </td>
                       <td>
-                        <a href="#">{{invoice.total_amount}}</a>
+                        {{invoice.total}}
                       </td>
                       <td class="text-center">
                         <div>

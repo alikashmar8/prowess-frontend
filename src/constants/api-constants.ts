@@ -9,6 +9,7 @@ export const adminUsersEndpoint = apiUrl + 'admin/users/';
 export const companiesEndpoint = apiUrl + 'companies/';
 export const usersEndpoint = apiUrl + 'users/';
 export const plansEndpoint = apiUrl + 'plans/';
+export const itemsEndpoint = apiUrl + 'items/';
 export const addressesLevel1Endpoint = apiUrl + 'level1-addresses/';
 export const addressesLevel2Endpoint = apiUrl + 'level2-addresses/';
 export const addressesLevel3Endpoint = apiUrl + 'level3-addresses/';

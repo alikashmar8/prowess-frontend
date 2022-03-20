@@ -4,7 +4,7 @@
     <app-login></app-login>
   </div>
   <div class='dashboard' *ngIf="isAuthenticated">
-    <app-navbar [ngStyle]="{'display': !showMenu ? 'none': 'block' }"></app-navbar>
+    <app-navbar [ngClass]="{'hide-menu': !showMenu}"></app-navbar>
     <div class='dashboard-app' [ngStyle]="{'margin-left': !showMenu ? '0': '240px' }">
       <header class='dashboard-toolbar'><a (click)="toggleMenu()" class="menu-toggle"><i class="fas fa-bars"></i></a>
       </header>

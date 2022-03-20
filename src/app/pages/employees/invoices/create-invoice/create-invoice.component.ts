@@ -4,11 +4,13 @@ import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { CompaniesService } from 'src/app/services/companies.service';
 import { InvoicesService } from 'src/app/services/invoices.service';
+import { ItemsService } from 'src/app/services/items.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { PlansService } from 'src/app/services/plans.service';
 import { loadingGifUrl } from 'src/constants/constants';
 import { CreateInvoiceDTO } from 'src/dtos/create-invoice.dto';
 import { InvoiceTypes } from 'src/enums/invoices-type.enum';
+import { Item } from 'src/models/item.model';
 import { Plan } from 'src/models/plan.model';
 import { User } from 'src/models/user.model';
 
@@ -36,10 +38,15 @@ export class CreateInvoiceComponent implements OnInit {
   isLoading: boolean = true;
   customers: User[] = [];
   plans: Plan[] = [];
+  items: Item[] = [];
 
   plansDropdownList = [];
   selectedPlans: Plan[] = [];
   planDropdownSettings: IDropdownSettings = {};
+
+  itemsDropdownList = [];
+  selectedItems: Item[] = [];
+  itemDropdownSettings: IDropdownSettings = {};
 
   customersDropdownList = [];
   selectedCustomer: User[] = [];
@@ -51,7 +58,8 @@ export class CreateInvoiceComponent implements OnInit {
     private loadingService: LoadingService,
     private alertService: AlertService,
     private plansService: PlansService,
-    private companiesService: CompaniesService
+    private companiesService: CompaniesService,
+    private itemsService: ItemsService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -84,7 +92,21 @@ export class CreateInvoiceComponent implements OnInit {
                   limitSelection: 2,
                   allowSearchFilter: true,
                 };
-                this.isLoading = this.loadingService.appLoading(false);
+                this.itemsService
+                  .getCompanyItems(this.authService.currentUser.company_id)
+                  .subscribe((results: any) => {
+                    this.items = results;
+                    this.itemsDropdownList = results;
+                    this.itemDropdownSettings = {
+                      singleSelection: false,
+                      idField: 'id',
+                      textField: 'name',
+                      itemsShowLimit: 2,
+                      limitSelection: 2,
+                      allowSearchFilter: true,
+                    };
+                    this.isLoading = this.loadingService.appLoading(false);
+                  });
               },
               (err) => {
                 this.authService.handleHttpError(err);
@@ -111,6 +133,22 @@ export class CreateInvoiceComponent implements OnInit {
       this.data.total = Number(plansTotal);
     }
     // TODO: remove selected item
+    this.selectedItems = [];
+  }
+
+  onItemSelect(event) {
+    let itemsTotal = 0;
+    this.selectedItems.forEach((plan) => {
+      itemsTotal += Number(this.items.find((x) => x.id == plan.id).price);
+    });
+    if (this.data.extraAmount > 0) {
+      this.data.total = Number(this.data.extraAmount);
+      this.data.total += itemsTotal;
+    } else {
+      this.data.total = Number(itemsTotal);
+    }
+    // TODO: remove selected item
+    this.selectedPlans = [];
   }
 
   onPlanDeSelect(event) {
@@ -118,16 +156,26 @@ export class CreateInvoiceComponent implements OnInit {
     this.data.total -= price;
   }
 
+  onItemDeSelect(event) {
+    const price = Number(this.items.find((x) => x.id == event.id).price);
+    this.data.total -= price;
+  }
+
   extraAmountChanged() {
     const extraAmount: number = Number(this.data.extraAmount);
 
     let plansTotal = 0;
+    let itemsTotal = 0;
     this.selectedPlans.forEach((plan) => {
       plansTotal += Number(this.plans.find((x) => x.id == plan.id).price);
     });
 
+    this.selectedItems.forEach((item) => {
+      itemsTotal += Number(this.items.find((x) => x.id == item.id).price);
+    });
+
     // const itemPrice = Number(this.plans.find((x) => x.id == selectedItem.id).price);
-    this.data.total = extraAmount + plansTotal;
+    this.data.total = extraAmount + plansTotal + itemsTotal;
   }
   store() {
     this.isStoreLoading = true;
@@ -143,7 +191,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.data.user_id = this.selectedCustomer[0].id;
 
     // TODO: check selected item too
-    if (!this.selectedPlans) {
+    if (!this.selectedPlans && !this.selectedItems) {
       this.alertService.toastError(
         'You need to select a plan or item for the invoice.'
       );
@@ -152,6 +200,7 @@ export class CreateInvoiceComponent implements OnInit {
     }
 
     this.data.plans = this.selectedPlans.map((plan) => plan.id);
+    this.data.items = this.selectedItems.map((item) => item.id);
 
     this.data.company_id = this.authService.currentUser.company_id;
 
