@@ -1,0 +1,4 @@
+export enum ModalType{
+  DEFAULT = 'DEFAULT',
+  COLLECT_INVOICE = 'COLLECT_INVOICE',
+}

@@ -6,8 +6,19 @@
 </div>
 <div class="modal-body">
   <p>{{message}}</p>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-success" (click)="activeModal.close(true)">Confirm</button>
-  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button>
-</div>
+  <div *ngIf="type == ModalType.COLLECT_INVOICE">
+    <div
+      *ngIf="currentUser.role == UserRole.ADMIN ||currentUser.role == UserRole.MANAGER || currentUser.role == UserRole.SUPERVISOR">
+      <div class="form-group">
+        <label for="collector" class="required">Collector:</label>
+        <select class="form-control" [(ngModel)]="collector_id" name="collector">
+          <ng-container *ngFor="let employee of employees">
+            <option *ngIf="employee.role != UserRole.ADMIN" [value]="employee.id">{{employee.name}}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="submit()">Confirm</button>
+      <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button>
+    </div>

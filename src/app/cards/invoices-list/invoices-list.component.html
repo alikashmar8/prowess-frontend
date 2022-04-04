@@ -38,7 +38,7 @@
                 <td>{{invoice.total }}</td>
                 <td>{{invoice.isPaid }}</td>
                 <td>
-                  <ul class="action-list">
+                  <ul class="action-list" *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)" >
                     <li><a routerLink="/company/invoices/{{invoice.id}}" data-tip="show">
                         <i class="fa fa-eye" style="font-size: 21px!important;"></i></a>
                     </li>

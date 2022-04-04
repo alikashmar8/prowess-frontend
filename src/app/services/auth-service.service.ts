@@ -42,9 +42,6 @@ export class AuthService {
   loginByUsername(data: { username: string; password: string }) {
     return this.http.post<any>(`${apiUrl}auth/login`, data).pipe(
       map((user) => {
-        console.log(user);
-        console.log(user.user);
-        console.log(user.access_token);
 
         localStorage.setItem('currentUser', JSON.stringify(user.user));
         localStorage.setItem('access_token', user.access_token);

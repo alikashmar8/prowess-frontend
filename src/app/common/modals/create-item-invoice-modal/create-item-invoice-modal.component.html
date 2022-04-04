@@ -1,0 +1,34 @@
+<div *ngIf="!isLoading">
+  <div class="modal-header">
+    <h4 class="modal-title">Add Item Invoice</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-label-group m-4">
+      <label class="required">
+        Items:
+      </label>
+      <ng-multiselect-dropdown [placeholder]="'Choose Items'" [settings]="itemDropdownSettings"
+        [data]="itemsDropdownList" [(ngModel)]="selectedItems" name="items" (onSelect)="onItemSelect($event)"
+        (onDeSelect)="onItemDeSelect($event)">
+      </ng-multiselect-dropdown>
+    </div>
+    <div class="form-label-group m-4">
+      <label class="required">Total amount:</label>
+      <input type="number" class="form-control" name="totalAmount" [(ngModel)]="data.total">
+    </div>
+    <div class="form-label-group m-4">
+      <label>Additional Notes:</label>
+      <input type="text" class="form-control" name="notes" [(ngModel)]="data.notes">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Close click')">Close</button>
+    <button type="button" class="btn btn-success" [disabled]="isStoreLoading" (click)="store()">
+      <span *ngIf="!isStoreLoading">Save</span>
+      <span *ngIf="isStoreLoading"><img src="{{ loadingGif }}" width="20px" /></span>
+    </button>
+  </div>
+</div>

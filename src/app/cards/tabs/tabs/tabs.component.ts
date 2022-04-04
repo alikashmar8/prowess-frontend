@@ -34,7 +34,7 @@ import { TabComponent } from '../tab/tab.component';
         <span></span>
         <span></span>
         <span></span>
-        <div class="center-this">
+        <div class="center-elements">
           {{ tab.title }}
         </div>
       </div>

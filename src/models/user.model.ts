@@ -1,5 +1,6 @@
 import { UserRoles } from 'src/enums/user-roles.enum';
 import { Company } from './company.model';
+import { Invoice } from './invoice.model';
 import { Level1Address } from './level1-address.model';
 import { Plan } from './plan.model';
 
@@ -24,7 +25,8 @@ export class User {
   company: Company;
   collector?: User;
   plans: Plan[];
-  // invoices: Invoice[];
+  invoices: Invoice[];
   created_at: Date;
   updated_at: Date;
+  unpaidInvoices?: Invoice[];
 }

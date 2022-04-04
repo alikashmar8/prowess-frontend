@@ -428,10 +428,11 @@ h1,
   }
 }
 
-.center-this {
+.center-elements {
   display: grid;
   place-items: center;
   align-content: center;
+  justify-content: center;
 }
 
 html,

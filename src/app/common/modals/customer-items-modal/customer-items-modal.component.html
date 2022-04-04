@@ -1,0 +1,44 @@
+<div class="modal-header">
+  <h4 class="modal-title">Customer Items</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row m-3">
+    <div class="col-sm-10">
+      <h3>Items Purchases:</h3>
+    </div>
+    <div class="col-sm-2">
+      <button *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)"
+        type="button" class="btn btn-primary" (click)="openCreateItemInvoiceModal()">Add Item</button>
+    </div>
+  </div>
+  <div class="list-group">
+    <a *ngFor="let invoice of invoices"
+      class="list-group-item list-group-item-action flex-column align-items-start m-2">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{invoice.total}} $
+        </h5>
+        <small>{{invoice.created_at | date: 'yyyy-MM-dd HH:mm' }}
+          <br>
+          <span [ngStyle]="{
+          'color': invoice.isPaid ? 'lime' : 'red'}">
+            <div>{{invoice.isPaid? 'paid': 'not paid'}} </div>
+          </span>
+          <br>
+          <h6>Notes:</h6>
+          {{invoice.notes ? invoice.notes : 'N/A'}}
+        </small>
+      </div>
+      <p class="mb-1">Collected By:</p>
+      <small> {{invoice.collectedBy ? invoice.collectedBy.name : 'N/A'}} <br></small>
+      <hr>
+      <p class="mb-1">Items:</p>
+      <small *ngFor="let item of invoice.items">- {{item.name}} <br></small>
+    </a>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Done</button>
+</div>

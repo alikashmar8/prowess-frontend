@@ -12,4 +12,6 @@ export class CreateInvoiceDTO {
   isFirstPayment: boolean;
   notes?: string;
   company_id: string;
+  collectedBy_id?: string;
+  collected_at?: Date;
 }

@@ -1,6 +1,6 @@
 <div *ngIf="!isLoading">
   <div class="profile-head mb-5 row">
-    <div class="col-md-10">
+    <div class="col-sm-8">
       <h5>
         {{customer.name}}
       </h5>
@@ -9,8 +9,14 @@
             customer.isActive ? 'active' : 'inactive'}}</span></h6>
       </div>
     </div>
-    <div class=""><button class="btn btn-warning px-3 text-white"
-        routerLink="/company/customers/{{customer.id}}/edit"><i class="fas fa-pen"></i> Edit</button></div>
+    <div class="col-sm-4">
+      <button class="btn btn-info px-3 text-white" (click)="openCustomerItemsModal()">
+        <i class="fas fa-box mr-2"></i>Items
+      </button>
+
+      <button class="btn btn-warning px-3 text-white ml-2" routerLink="/company/customers/{{customer.id}}/edit"><i
+          class="fas fa-pen mr-2"></i>Edit</button>
+    </div>
   </div>
   <my-tabs>
     <my-tab [tabTitle]="'Details'">
@@ -77,81 +83,90 @@
     <my-tab tabTitle="Invoices">
       <div class="container">
         <div class="row">
-          <div class="col-lg-12">
+          <div class="col-sm-12">
             <div class="main-box clearfix">
               <div class="table-responsive">
                 <span><strong> Last 12 months invoices:</strong></span>
-                <div class="container m-2">
+                <div class="container">
                   <div class="row">
-                    <div *ngFor="let invoice of customer.invoices" class="col-sm-1"><span>{{ invoice.dueDate | date:
-                        'MMM-yy' }}</span>
+                    <div class="col-md-12">
+                      <table class="table table-striped table-bordered">
+                        <thead>
+                          <tr>
+                            <th *ngFor="let invoice of customer.invoices"><span>{{ invoice.dueDate | date: 'MMM-yy'
+                                }}</span></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td *ngFor="let invoice of customer.invoices"
+                              [ngClass]="{'bg-success' : invoice.isPaid,'bg-danger': !invoice.isPaid}">
+                              <a routerLink="/company/invoices/{{invoice.id}}" style="color: black">
+                                <div *ngIf="invoice.isPaid" class="center-elements">
+                                  {{invoice.collectedBy?.name}}
+                                  <hr class="m-1 w-100"> {{invoice.collected_at | date:'dd MMM'}}
+                                </div>
+                                <div *ngIf="!invoice.isPaid" class="center-elements">
+                                  N/A
+                                </div>
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
 
+                  <hr class="m-3 w-100">
                   <div class="row">
-                    <div *ngFor="let invoice of customer.invoices" class="col-sm-1"
-                      [ngClass]="{'bg-success' : invoice.isPaid,'bg-danger': !invoice.isPaid}">
-                      <a routerLink="/company/invoices/{{invoice.id}}">
-                        <div *ngIf="invoice.isPaid">
-                          {{invoice.collectedBy?.name}} - {{invoice.collected_at | date:'dd/MM'}}
-                        </div>
-                        <div *ngIf="!invoice.isPaid">
-                          N/A
-                        </div>
-                      </a>
+                    <span><strong> Unpaid Invoices:</strong></span>
+                    <div class="col-md-12">
+                      <table class="table table-striped table-bordered">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Collector</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let invoice of customer.unpaidInvoices">
+                            <td>
+                              <a routerLink="/company/invoices/{{invoice.id}}" style="color: black">
+                                {{invoice.id}}
+                              </a>
+                            </td>
+                            <td>
+                              {{invoice.dueDate | date:'dd-MM-yyyy'}}
+                            </td>
+                            <td>
+                              {{invoice.total | currency: 'USD':true}}
+                            </td>
+                            <td>
+                              {{customer.collector?.name}}
+                            </td>
+                            <td>
+                              <ul class="action-list"
+                                *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)">
+                                <li><a routerLink="/company/invoices/{{invoice.id}}" data-tip="show">
+                                    <i class="fa fa-eye" style="font-size: 21px!important;"></i></a>
+                                </li>
+                                <li><a (click)="openCollectModal(invoice.id, invoice.user.name)" data-tip="collect">
+                                    <i class="fas fa-money-bill-alt" style="font-size: 21px!important;"></i></a>
+                                </li>
+                                <li><a (click)="openForgiveModal(invoice.id, invoice.user.name)" data-tip="forgive">
+                                    <i class="fas fa-hand-holding-usd" style="font-size: 21px!important;"></i>
+                                  </a></li>
+                              </ul>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
-                <span><strong>Items Invoices:</strong></span>
-                <table class="table user-list m-2">
-                  <thead>
-                    <tr>
-                      <th><span>Id</span></th>
-                      <th><span>Date</span></th>
-                      <th class="text-center"><span>Collector</span></th>
-                      <th class="text-center"><span>Amount</span></th>
-                      <th><span>Is paid</span></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let invoice of customer.invoices">
-                      <td>
-                        <a href="#" class="user-link">{{invoice.id}}</a>
-                      </td>
-                      <td class="text-center">
-                        <span class="label label-success">{{ invoice.dueDate }}</span>
-                        <span class="label label-success">{{ invoice.collectedBy }}</span>
-                      </td>
-                      <td>
-                        <a href="#">{{customer.collector.name}}</a>
-                      </td>
-                      <td>
-                        {{invoice.total}}
-                      </td>
-                      <td class="text-center">
-                        <div>
-                          {{invoice.isPaid }}
-                        </div>
-                      </td>
-
-                      <td>
-                        <a href="#" class="table-link primary ">
-                          <span class="fa-stack">
-                            <!-- <i class="fa fa-square fa-stack-2x"></i> -->
-                            <i class="fa fa-search-plus p-1" style="border:2px solid; border-radius: 5px;"></i>
-                          </span>
-                        </a>
-                        <a href="#" class="table-link danger  ">
-                          <span class="fa-stack">
-                            <i class="fas fa-trash-alt p-1" style="border:2px solid; border-radius: 5px;"></i>
-                            <!-- <i class="fa fa-square fa-stack-2x"></i> -->
-                            <!-- <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i> -->
-                          </span>
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
             </div>
           </div>
