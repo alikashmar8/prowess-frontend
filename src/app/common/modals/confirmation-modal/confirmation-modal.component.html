@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body">
   <p>{{message}}</p>
-  <div *ngIf="type == ModalType.COLLECT_INVOICE">
+  <div *ngIf="type == ModalType.COLLECT_INVOICE || type == ModalType.FORGIVE_INVOICE" >
     <div
       *ngIf="currentUser.role == UserRole.ADMIN ||currentUser.role == UserRole.MANAGER || currentUser.role == UserRole.SUPERVISOR">
       <div class="form-group">

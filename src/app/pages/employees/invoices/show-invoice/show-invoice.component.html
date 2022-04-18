@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="!isLoading">
   <div class="card">
     <div class="card-body">
       <div id="invoice">
@@ -6,10 +6,10 @@
         <div class="invoice overflow-auto">
           <div style="min-width: 600px">
             <header>
-              <div class="row">
+              <div class="row center-elements">
                 <div class="col">
                   <a href="javascript:;">
-                    <img src="assets/images/logo-icon.png" width="80" alt="">
+                    <img src="assets/images/logoSmall.png" width="80" alt="">
                   </a>
                 </div>
 
@@ -45,7 +45,7 @@
                     <td class="no">{{plan.id}}</td>
                     <td class="text-left">
                       <h3>
-                        <a target="_blank" href="javascript:;">
+                        <a target="_blank" routerLink="/company/plans">
                           {{plan.name}}
                         </a>
                       </h3>
@@ -62,7 +62,7 @@
                     <td class="no">{{item.id}}</td>
                     <td class="text-left">
                       <h3>
-                        <a target="_blank" href="javascript:;">
+                        <a target="_blank" routerLink="/company/items">
                           {{item.name}}
                         </a>
                       </h3>
@@ -103,8 +103,8 @@
         </div>
         <div class="toolbar hidden-print">
           <div class="text-end">
-            <button type="button" class="btn btn-dark"><i class="fa fa-print"></i> Print</button>
-            <button type="button" class="btn btn-danger"><i class="fa fa-file-pdf-o"></i> Export as PDF</button>
+            <button type="button" class="btn btn-danger" (click)="downloadPDF()"><i class="fas fa-file-pdf"></i> Export
+              as PDF</button>
           </div>
           <hr>
         </div>

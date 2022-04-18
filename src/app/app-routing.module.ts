@@ -186,7 +186,7 @@ const employeesRoutes: Routes = [
             component: UnpaidInvoicesComponent,
           },
           {
-            path: 'this-month',
+            path: 'monthly',
             component: ThisMonthInvoicesComponent,
           },
           {

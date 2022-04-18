@@ -32,7 +32,7 @@
         </li>
         <li class="mr-md-4">
           <i class="fa fa-calendar-times"></i>
-          {{ employee.expiryDate? (employee.expiryDate | date: "medium"): 'No expiry date' }}
+          {{ employee.expiryDate? (employee.expiryDate | date: "shortDate"): 'No expiry date' }}
         </li>
       </ul>
     </div>

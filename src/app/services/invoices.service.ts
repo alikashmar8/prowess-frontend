@@ -10,12 +10,19 @@ import { AuthService } from './auth-service.service';
   providedIn: 'root',
 })
 export class InvoicesService {
+
   constructor(private authService: AuthService, private http: HttpClient) {}
 
-  async getUnpaidInvoices(): Promise<any> {
+  async getUnpaidInvoices(search?: string): Promise<any> {
+    if (!search) {
+      search = '';
+    }
     return await this.http
       .get(
-        invoicesEndpoint + this.authService.currentUser.company_id + '/unpaid',
+        invoicesEndpoint +
+          this.authService.currentUser.company_id +
+          '/unpaid?search=' +
+          search,
         { headers: getHeaders() }
       )
       .toPromise();
@@ -24,9 +31,33 @@ export class InvoicesService {
   async getThisMonthInvoices(): Promise<any> {
     return await this.http
       .get(
+        invoicesEndpoint + this.authService.currentUser.company_id + '/month',
+        { headers: getHeaders() }
+      )
+      .toPromise();
+  }
+
+  async getInvoicesByMonth(data: {
+    search?: string;
+    dateSearch?: string;
+  }): Promise<any> {
+    console.log(data);
+
+    if (!data.dateSearch) {
+      data.dateSearch = new Date().toISOString();
+    }
+    if (!data.search) {
+      data.search = '';
+    }
+
+    return await this.http
+      .get(
         invoicesEndpoint +
           this.authService.currentUser.company_id +
-          '/this-month',
+          '/month?search=' +
+          data.search +
+          '&searchMonth=' +
+          data.dateSearch,
         { headers: getHeaders() }
       )
       .toPromise();
@@ -52,10 +83,10 @@ export class InvoicesService {
     );
   }
 
-  forgive(ids: string[]) {
+  forgive(ids: string[], collector_id: string) {
     return this.http.put(
       invoicesEndpoint + this.authService.currentUser.company_id + '/forgive',
-      { ids },
+      { ids, collector_id },
       { headers: getHeaders() }
     );
   }
@@ -79,5 +110,27 @@ export class InvoicesService {
         { headers: getHeaders() }
       )
       .toPromise();
+  }
+
+  async downloadUnpaidInvoicesPdf() {
+    return await this.http
+      .get(invoicesEndpoint + 'reports/pdf/unpaid/', {
+        headers: getHeaders(),
+      })
+      .toPromise();
+  }
+
+  downloadUnpaidInvoicesExcel() {
+    return this.http.get(invoicesEndpoint + 'reports/excel/unpaid/', {
+      headers: getHeaders(),
+      responseType: 'blob',
+    });
+  }
+
+  async downloadInvoicePdf(id: string) {
+    return await this.http.get(invoicesEndpoint + id + '/report/pdf/', {
+      headers: getHeaders(),
+      responseType: 'blob',
+    }).toPromise();
   }
 }

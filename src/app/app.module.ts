@@ -27,9 +27,11 @@ import { UserListItemComponent } from './cards/user-list-item/user-list-item.com
 import { AlertComponent } from './common/alert/alert.component';
 import { LoadingScreenComponent } from './common/loading-screen/loading-screen.component';
 import { ConfirmationModalComponent } from './common/modals/confirmation-modal/confirmation-modal.component';
+import { CreateItemInvoiceModal } from './common/modals/create-item-invoice-modal/create-item-invoice-modal.component';
 import { CustomerItemsModal } from './common/modals/customer-items-modal/customer-items-modal.component';
 import { DeleteModalComponent } from './common/modals/delete-modal/delete-modal.component';
 import { EditAddressModalComponent } from './common/modals/edit-address-modal/edit-address-modal.component';
+import { EditItemModal } from './common/modals/edit-item-modal/edit-item-modal.component';
 import { EditPlanModalComponent } from './common/modals/edit-plan-modal/edit-plan-modal.component';
 import { EnableDisableUserComponent } from './common/modals/enable-disable-user/enable-disable-user.component';
 import { RenewUserModalComponent } from './common/modals/renew-user-modal/renew-user-modal.component';
@@ -64,7 +66,6 @@ import { CreateItemComponent } from './pages/employees/items/create-item/create-
 import { ItemsComponent } from './pages/employees/items/items.component';
 import { CreatePlanComponent } from './pages/employees/plans/create-plan/create-plan.component';
 import { PlansComponent } from './pages/employees/plans/plans.component';
-import { CreateItemInvoiceModal } from './common/modals/create-item-invoice-modal/create-item-invoice-modal.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import { CreateItemInvoiceModal } from './common/modals/create-item-invoice-moda
     EditPlanModalComponent,
     CustomerItemsModal,
     CreateItemInvoiceModal,
+    EditItemModal,
   ],
   imports: [
     BrowserModule,

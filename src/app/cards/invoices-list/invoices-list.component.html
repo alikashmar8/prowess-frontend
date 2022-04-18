@@ -9,16 +9,30 @@
             </div>
             <div class="col-sm-8 col-xs-12 text-right">
               <div class="btn_group">
-                <input type="text" class="form-control" placeholder="Search">
-                <button class="btn btn-default" title="Reload"><i class="fa fa-sync-alt"></i></button>
-                <button class="btn btn-default" title="Pdf"><i class="fa fa-file-pdf"></i></button>
-                <button class="btn btn-default" title="Excel"><i class="fas fa-file-excel"></i></button>
+                <div *ngIf="showSearchByDate">
+                  <div class="row m-1">
+                    <h6 class="title col">Choose month:</h6>
+                    <input type="date" class="form-control col" id="month" name="month" [(ngModel)]="monthSearch" />
+                    <button type="button" class="btn btn-default" title="Search" (click)="submitSearch()">
+                      <i class="fa fa-filter" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+                <input type="text" class="form-control" placeholder="Search" [(ngModel)]="search"
+                  (keyup.enter)="submitSearch()">
+                <button type="button" class="btn btn-default" title="Search" (click)="submitSearch()">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="btn btn-default" title="Export to Pdf" (click)="downloadAsPDF()"><i
+                    class="fa fa-file-pdf"></i></button>
+                <button type="button" class="btn btn-default" title="Export to Excel" (click)="downloadAsExcel()"><i
+                    class="fas fa-file-excel"></i></button>
               </div>
             </div>
           </div>
         </div>
         <div class="panel-body table-responsive">
-          <table class="table">
+          <table class="table" id="invoicesTable" #invoicesTable>
             <thead>
               <tr>
                 <th>Id</th>
@@ -36,18 +50,34 @@
                 <td>{{ invoice.user.name }}</td>
                 <td>{{ invoice.dueDate | date:'yyyy-MM-dd' }}</td>
                 <td>{{invoice.total }}</td>
-                <td>{{invoice.isPaid }}</td>
+                <td
+                  [ngClass]="{'text-success': invoice.isPaid, 'text-danger': !invoice.isPaid}"
+
+                  style="
+                  font-size: 1em;">
+
+                  <span *ngIf="invoice.isPaid">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                  </span>
+                  <span *ngIf="!invoice.isPaid">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </span>
+                  {{invoice.isPaid }}
+                </td>
                 <td>
-                  <ul class="action-list" *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)" >
+                  <ul class="action-list">
                     <li><a routerLink="/company/invoices/{{invoice.id}}" data-tip="show">
                         <i class="fa fa-eye" style="font-size: 21px!important;"></i></a>
                     </li>
-                    <li><a (click)="openCollectModal(invoice.id, invoice.user.name)" data-tip="collect">
+                    <li *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)">
+                      <a (click)="openCollectModal(invoice.id, invoice.user.name)" data-tip="collect">
                         <i class="fas fa-money-bill-alt" style="font-size: 21px!important;"></i></a>
                     </li>
-                    <li><a (click)="openForgiveModal(invoice.id, invoice.user.name)" data-tip="forgive">
+                    <li *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)">
+                      <a (click)="openForgiveModal(invoice.id, invoice.user.name)" data-tip="forgive">
                         <i class="fas fa-hand-holding-usd" style="font-size: 21px!important;"></i>
-                      </a></li>
+                      </a>
+                    </li>
                   </ul>
                 </td>
               </tr>

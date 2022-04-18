@@ -120,7 +120,6 @@ export class ShowCustomerComponent implements OnInit {
     modalRef.result.then(
       (result) => {
         if (result) {
-          debugger;
           if (result.collector_id) {
             this.invoicesService
               .collectInvoice([invoice_id], result.collector_id)
@@ -153,19 +152,25 @@ export class ShowCustomerComponent implements OnInit {
       ' for ' +
       customer_name +
       '?';
+    modalRef.componentInstance.type = ModalType.FORGIVE_INVOICE;
     modalRef.result.then(
       async (result) => {
         if (result) {
-          this.forgive(invoice_id);
+          if (result.collector_id) {
+          this.forgive(invoice_id, result.collector_id);
+          } else {
+            alert('Collector cannot be empty');
+            return;
+          }
         }
       },
       (rejected) => {}
     );
   }
 
-  forgive(id: string) {
+  forgive(id: string, collector_id: string) {
     this.loadingService.appLoading(true);
-    this.invoicesService.forgive([id]).subscribe(
+    this.invoicesService.forgive([id], collector_id).subscribe(
       (result) => {
         this.loadingService.appLoading(false);
         this.alertService.toastSuccess('Invoice forgive successful');

@@ -4,7 +4,7 @@
       <h3>All items:</h3>
     </div>
     <div class="col-md-3">
-      <button class="btn btn-success" routerLink="/company/items/create">Add New Plan</button>
+      <button class="btn btn-success" routerLink="/company/items/create">Add New item</button>
     </div>
   </div>
 
@@ -16,18 +16,19 @@
     </div>
 
     <ul class="list-group m-5">
-      <div *ngFor="let plan of items | filter: search; let i = index">
-        <li class="list-group-item d-flex justify-content-between align-items-center" [ngClass]="{
-          'bg-linear-primary': plan.isActive,
-          'bg-danger-light': !plan.isActive
+      <div *ngFor="let item of items | filter: search; let i = index">
+        <li class="list-group-item d-flex justify-content-between align-items-center m-1" [ngClass]="{
+          'bg-linear-primary': item.isActive,
+          'bg-danger-light': !item.isActive
         }">
-          {{plan.name}}
+          {{item.name}}
           <div class="badge ">
-            <i class="fa fa-pen bg-white p-1 rounded m-1" style="font-size: 22px!important;"></i>
-            <!-- <i class="fa fa-eye bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i>
-            <i class="fa fa-coins bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i> -->
-            <i *ngIf="!plan.isActive" class="fa fa-check-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i>
-            <i *ngIf="plan.isActive" class="fa fa-minus-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i>
+            <i class="fa fa-pen bg-white p-1 rounded m-1" style="font-size: 22px!important;"
+              (click)="openEditItemModal(item)"></i>
+            <i *ngIf="!item.isActive" class="fa fa-check-circle bg-white p-1 rounded m-1"
+              style="font-size: 21px!important;" (click)="updateStatus(item, true)"></i>
+            <i *ngIf="item.isActive" class="fa fa-minus-circle bg-white p-1 rounded m-1"
+              style="font-size: 21px!important;" (click)="updateStatus(item, false)"></i>
           </div>
         </li>
       </div>

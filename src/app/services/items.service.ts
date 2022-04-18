@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { itemsEndpoint } from 'src/constants/api-constants';
 import { CreateItemDTO } from 'src/dtos/create-item.dto';
+import { Item } from 'src/models/item.model';
 import { getHeaders } from 'src/utils/functions';
 import { AuthService } from './auth-service.service';
 
@@ -9,6 +10,7 @@ import { AuthService } from './auth-service.service';
   providedIn: 'root',
 })
 export class ItemsService {
+
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getCompanyItems(company_id: string) {
@@ -20,6 +22,20 @@ export class ItemsService {
     return this.http.post(
       itemsEndpoint + 'company/' + this.authService.currentUser.company_id,
       data,
+      { headers: getHeaders() }
+    );
+  }
+
+  async update(item: Item) {
+    return await this.http
+      .put(itemsEndpoint + item.id, item, { headers: getHeaders() })
+      .toPromise();
+  }
+
+  updateStatus(id: string, status: boolean) {
+    return this.http.put(
+      itemsEndpoint + id + '/status',
+      { isActive: status },
       { headers: getHeaders() }
     );
   }

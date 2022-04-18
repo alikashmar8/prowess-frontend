@@ -30,7 +30,7 @@ export class ConfirmationModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUser;
-    if(this.type == ModalType.COLLECT_INVOICE){
+    if(this.type == ModalType.COLLECT_INVOICE || this.type == ModalType.FORGIVE_INVOICE){
       this.companiesService.getCompanyEmployees(this.currentUser.company_id).subscribe(
         (result: any) => {
           this.employees = result;
@@ -43,13 +43,13 @@ export class ConfirmationModalComponent implements OnInit {
   }
 
   submit() {
-    if (this.type == ModalType.COLLECT_INVOICE) {
+    if (this.type == ModalType.COLLECT_INVOICE || this.type == ModalType.FORGIVE_INVOICE) {
       if (this.collector_id) {
         this.activeModal.close({
           collector_id: this.collector_id,
         });
       } else {
-        this.alertService.toastError('You should select a collector first');
+        this.alertService.toastError('A collector should be selected first');
         return;
       }
     } else {
