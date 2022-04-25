@@ -10,7 +10,6 @@ import { AuthService } from './auth-service.service';
   providedIn: 'root',
 })
 export class InvoicesService {
-
   constructor(private authService: AuthService, private http: HttpClient) {}
 
   async getUnpaidInvoices(search?: string): Promise<any> {
@@ -120,6 +119,14 @@ export class InvoicesService {
       .toPromise();
   }
 
+  async downloadInvoicesPdfByMonth(date) {
+    return await this.http
+      .get(invoicesEndpoint + 'reports/pdf/by-month/?date=' + date, {
+        headers: getHeaders(),
+      })
+      .toPromise();
+  }
+
   downloadUnpaidInvoicesExcel() {
     return this.http.get(invoicesEndpoint + 'reports/excel/unpaid/', {
       headers: getHeaders(),
@@ -127,10 +134,22 @@ export class InvoicesService {
     });
   }
 
+  downloadInvoicesExcelByMonth(date) {
+    return this.http.get(
+      invoicesEndpoint + 'reports/excel/by-month/?date=' + date,
+      {
+        headers: getHeaders(),
+        responseType: 'blob',
+      }
+    );
+  }
+
   async downloadInvoicePdf(id: string) {
-    return await this.http.get(invoicesEndpoint + id + '/report/pdf/', {
-      headers: getHeaders(),
-      responseType: 'blob',
-    }).toPromise();
+    return await this.http
+      .get(invoicesEndpoint + id + '/report/pdf/', {
+        headers: getHeaders(),
+        responseType: 'blob',
+      })
+      .toPromise();
   }
 }

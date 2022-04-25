@@ -23,11 +23,12 @@
         }">
           {{plan.name}}
           <div class="badge ">
-            <i class="fa fa-pen bg-white p-1 rounded m-1" style="font-size: 22px!important;"></i>
-            <!-- <i class="fa fa-eye bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i>
-            <i class="fa fa-coins bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i> -->
-            <i *ngIf="!plan.isActive" class="fa fa-check-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i>
-            <i *ngIf="plan.isActive" class="fa fa-minus-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i>
+            <i class="fa fa-pen bg-white p-1 rounded m-1" style="font-size: 22px!important;"
+              (click)="openEditPlanModal(plan)"></i>
+            <i *ngIf="!plan.isActive" class="fa fa-check-circle bg-white p-1 rounded m-1"
+              style="font-size: 21px!important;" (click)="updateStatus(plan, true)"></i>
+            <i *ngIf="plan.isActive" class="fa fa-minus-circle bg-white p-1 rounded m-1"
+              style="font-size: 21px!important;" (click)="updateStatus(plan, false)"></i>
           </div>
         </li>
       </div>

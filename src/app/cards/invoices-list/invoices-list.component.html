@@ -12,7 +12,7 @@
                 <div *ngIf="showSearchByDate">
                   <div class="row m-1">
                     <h6 class="title col">Choose month:</h6>
-                    <input type="date" class="form-control col" id="month" name="month" [(ngModel)]="monthSearch" />
+                    <input type="month" class="form-control col" id="month" name="month" [(ngModel)]="monthSearch" />
                     <button type="button" class="btn btn-default" title="Search" (click)="submitSearch()">
                       <i class="fa fa-filter" aria-hidden="true"></i>
                     </button>
@@ -50,10 +50,7 @@
                 <td>{{ invoice.user.name }}</td>
                 <td>{{ invoice.dueDate | date:'yyyy-MM-dd' }}</td>
                 <td>{{invoice.total }}</td>
-                <td
-                  [ngClass]="{'text-success': invoice.isPaid, 'text-danger': !invoice.isPaid}"
-
-                  style="
+                <td [ngClass]="{'text-success': invoice.isPaid, 'text-danger': !invoice.isPaid}" style="
                   font-size: 1em;">
 
                   <span *ngIf="invoice.isPaid">

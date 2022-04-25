@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EditPlanModalComponent } from 'src/app/common/modals/edit-plan-modal/edit-plan-modal.component';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { PlansService } from 'src/app/services/plans.service';
@@ -16,7 +18,8 @@ export class PlansComponent implements OnInit {
   constructor(
     private loadingService: LoadingService,
     private authService: AuthService,
-    private plansService: PlansService
+    private plansService: PlansService,
+    private ngbModal: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -25,5 +28,28 @@ export class PlansComponent implements OnInit {
       this.plans = result
       this.isLoading = this.loadingService.appLoading(false)
     })
+  }
+
+
+  openEditItemModal(plan: Plan) {
+    const modalRef = this.ngbModal.open(EditPlanModalComponent);
+    modalRef.componentInstance.plan = plan;
+    modalRef.result
+      .then(
+        (result) => {},
+        (rejected) => {}
+      )
+      .catch();
+  }
+
+  async updateStatus(plan: Plan, status: boolean) {
+    this.plansService.updateStatus(plan.id, status).subscribe(
+      (result: any) => {
+        plan.isActive = status;
+      },
+      (error) => {
+        this.authService.handleHttpError(error);
+      }
+    );
   }
 }

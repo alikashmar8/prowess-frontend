@@ -140,10 +140,10 @@ export class InvoicesListComponent implements OnInit {
   }
 
   public downloadAsPDF() {
-    this.exportPDF.emit(true);
+    this.exportPDF.emit(this.monthSearch);
   }
 
   public downloadAsExcel() {
-    this.exportExcel.emit(true);
+    this.exportExcel.emit(this.monthSearch);
   }
 }

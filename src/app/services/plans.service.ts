@@ -36,4 +36,12 @@ export class PlansService {
       { headers: getHeaders() }
     );
   }
+
+  updateStatus(id: string, status: boolean) {
+    return this.http.patch(
+      plansEndpoint + id + '/status',
+      { id, isActive: status },
+      { headers: getHeaders() }
+    );
+  }
 }

@@ -24,6 +24,7 @@ export class ThisMonthInvoicesComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.isLoading = this.loadingService.appLoading(true);
+      this.currentUser = this.authService.currentUser;
       this.invoices = await this.invoicesService.getInvoicesByMonth({
         dateSearch: this.today.toISOString(),
       });
@@ -33,7 +34,6 @@ export class ThisMonthInvoicesComponent implements OnInit {
       this.isLoading = this.loadingService.appLoading(false);
     }
   }
-
 
   async searchClicked(data: { search?: string; dateSearch?: string }) {
     try {
@@ -46,20 +46,25 @@ export class ThisMonthInvoicesComponent implements OnInit {
     }
   }
 
-  async exportPDF() {
+  async exportPDF(event) {
+    const date = new Date(event)
+    const dateString = date.toISOString()
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      const res = await this.invoicesService.downloadUnpaidInvoicesPdf();
+      const res = await this.invoicesService.downloadInvoicesPdfByMonth(dateString);
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
       this.isLoading = this.loadingService.appLoading(false);
     }
   }
 
-  async exportExcel() {
+  async exportExcel(event) {
+    console.log(event);
+    const date = new Date(event)
+    const dateString = date.toISOString()
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      const res = this.invoicesService.downloadUnpaidInvoicesExcel().subscribe(
+      const res = this.invoicesService.downloadInvoicesExcelByMonth(dateString).subscribe(
         (res) => {
           var newBlob = new Blob([res], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -71,11 +76,9 @@ export class ThisMonthInvoicesComponent implements OnInit {
           link.download =
             this.currentUser.company.name +
             '-invoices-' +
-            new Date().getDate() +
+            (date.getMonth() + 1) +
             '-' +
-            (new Date().getMonth() + 1) +
-            '-' +
-            new Date().getFullYear() +
+            date.getFullYear() +
             '.xlsx';
           link.dispatchEvent(
             new MouseEvent('click', {
