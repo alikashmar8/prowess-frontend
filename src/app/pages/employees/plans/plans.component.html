@@ -17,7 +17,7 @@
 
     <ul class="list-group m-5">
       <div *ngFor="let plan of plans | filter: search; let i = index">
-        <li class="list-group-item d-flex justify-content-between align-items-center" [ngClass]="{
+        <li class="list-group-item d-flex justify-content-between align-items-center m-1" [ngClass]="{
           'bg-linear-primary': plan.isActive,
           'bg-danger-light': !plan.isActive
         }">

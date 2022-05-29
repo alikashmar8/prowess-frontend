@@ -8,6 +8,21 @@ import { getHeaders } from 'src/utils/functions';
   providedIn: 'root',
 })
 export class UsersService {
+  async updateCustomerPlans(
+    customer_id: string,
+    data: { ids: string[]; invoice_total: number; invoice_note?: string }
+  ) {
+    console.log('in service before request');
+
+    return await this.http
+      .patch(
+        usersEndpoint + `${customer_id}/plans`,
+        { ...data },
+        { headers: getHeaders() }
+      )
+      .toPromise();
+  }
+
   constructor(private http: HttpClient) {}
 
   makeUserActive(id: string) {
@@ -27,6 +42,8 @@ export class UsersService {
   }
 
   getUserById(id: string): Promise<any> {
-    return this.http.get(usersEndpoint + `${id}`, { headers: getHeaders() }).toPromise();;
+    return this.http
+      .get(usersEndpoint + `${id}`, { headers: getHeaders() })
+      .toPromise();
   }
 }

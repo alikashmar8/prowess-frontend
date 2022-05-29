@@ -94,7 +94,7 @@ export class CreateCustomerComponent implements OnInit {
               this.collectors = res.filter((collector) => {
                 if (collector.role != UserRoles.ADMIN) return collector;
               });
-              this.plansService.getActiveCompanyPlans().subscribe(
+              this.plansService.getActivePlans().subscribe(
                 async (res: any) => {
                   this.plans = res;
                   this.dropdownList = this.plans;
@@ -248,20 +248,18 @@ export class CreateCustomerComponent implements OnInit {
       return;
     }
 
-    if (
-      !this.data.collector_id &&
-      this.authService.currentUser.role != UserRoles.ADMIN
-    ) {
-      this.data.collector_id = this.authService.currentUser.id;
-    }
-
-    if (
-      !this.data.collector_id &&
-      this.authService.currentUser.role == UserRoles.ADMIN
-    ) {
-      this.alertService.toastError('Collector should be specified!');
-      this.isStoreLoading = false;
-      return;
+    if (!this.data.collector_id) {
+      if (
+        [UserRoles.ADMIN, UserRoles.MANAGER].includes(
+          this.authService.currentUser.role
+        )
+      ) {
+        this.alertService.toastError('Collector should be specified!');
+        this.isStoreLoading = false;
+        return;
+      } else {
+        this.data.collector_id = this.authService.currentUser.id;
+      }
     }
 
     if (!this.data.invoice_total) {
@@ -273,10 +271,6 @@ export class CreateCustomerComponent implements OnInit {
     this.data.plans = this.selectedPlans.map((plan) => plan.id);
 
     this.data.company_id = this.authService.currentUser.company_id;
-
-    if (!this.data.collector_id) {
-      this.data.collector_id = this.authService.currentUser.id;
-    }
 
     this.companiesService.storeCustomer(this.data).subscribe(
       (res) => {

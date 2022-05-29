@@ -23,15 +23,16 @@ export class PlansComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isLoading = this.loadingService.appLoading(true)
-    this.plansService.getCompanyPlans(this.authService.currentUser.company_id).subscribe((result: Plan[]) => {
-      this.plans = result
-      this.isLoading = this.loadingService.appLoading(false)
-    })
+    this.isLoading = this.loadingService.appLoading(true);
+    this.plansService
+      .getCompanyPlans(this.authService.currentUser.company_id)
+      .subscribe((result: Plan[]) => {
+        this.plans = result;
+        this.isLoading = this.loadingService.appLoading(false);
+      });
   }
 
-
-  openEditItemModal(plan: Plan) {
+  openEditPlanModal(plan: Plan) {
     const modalRef = this.ngbModal.open(EditPlanModalComponent);
     modalRef.componentInstance.plan = plan;
     modalRef.result

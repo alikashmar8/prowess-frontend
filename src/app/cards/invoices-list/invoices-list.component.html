@@ -1,46 +1,46 @@
-<div class="container">
+<div class="container p-0">
   <div class="row">
-    <div class="col-md-offset-1 col-md-12">
+    <div class="col-md-offset-1 col-md-12 p-0">
       <div class="panel">
         <div class="panel-heading">
           <div class="row">
-            <div class="col col-sm-4 col-xs-12">
+            <div class="col col-sm-6 col-xs-6">
               <h4 class="title">{{ title }}</h4>
             </div>
-            <div class="col-sm-8 col-xs-12 text-right">
+            <div class="col-sm-6 col-xs-6 text-right">
               <div class="btn_group">
+
+                <button type="button" class="btn btn-default m-1" title="Search" (click)="openFilterModal()">
+                  <i class="fa fa-filter" aria-hidden="true"></i>
+                </button>
+                <!-- <button type="button" class="btn btn-default m-1" title="Export to Pdf" (click)="downloadAsPDF()"><i
+                    class="fa fa-file-pdf"></i></button> -->
+                <button type="button" class="btn btn-default m-1" title="Export to Excel" (click)="downloadAsExcel()"><i
+                    class="fas fa-file-excel"></i></button>
                 <div *ngIf="showSearchByDate">
                   <div class="row m-1">
                     <h6 class="title col">Choose month:</h6>
                     <input type="month" class="form-control col" id="month" name="month" [(ngModel)]="monthSearch" />
-                    <button type="button" class="btn btn-default" title="Search" (click)="submitSearch()">
-                      <i class="fa fa-filter" aria-hidden="true"></i>
-                    </button>
                   </div>
                 </div>
-                <input type="text" class="form-control" placeholder="Search" [(ngModel)]="search"
-                  (keyup.enter)="submitSearch()">
-                <button type="button" class="btn btn-default" title="Search" (click)="submitSearch()">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="btn btn-default" title="Export to Pdf" (click)="downloadAsPDF()"><i
-                    class="fa fa-file-pdf"></i></button>
-                <button type="button" class="btn btn-default" title="Export to Excel" (click)="downloadAsExcel()"><i
-                    class="fas fa-file-excel"></i></button>
               </div>
             </div>
           </div>
         </div>
-        <div class="panel-body table-responsive">
+        <div class="panel-body table-responsive" style="width: 82vw;" >
           <table class="table" id="invoicesTable" #invoicesTable>
             <thead>
               <tr>
                 <th>Id</th>
                 <th>Customer Name</th>
+                <th>Collector</th>
                 <th>Due Date</th>
+                <th *ngIf="showPlans">Plans</th>
+                <th *ngIf="showItems">Items</th>
+                <th *ngIf="showFirstPayment">First Payment?</th>
                 <th>Total</th>
                 <th>Is Paid</th>
-                <th>Action</th>
+                <th *ngIf="showActions" >Action</th>
               </tr>
             </thead>
             <tbody>
@@ -48,7 +48,22 @@
                 (click)="onRowClick(invoice.id)" style="cursor: pointer;">
                 <td>{{invoice.id}}</td>
                 <td>{{ invoice.user.name }}</td>
+                <td>{{ invoice.user.collector?.name }}</td>
                 <td>{{ invoice.dueDate | date:'yyyy-MM-dd' }}</td>
+                <td *ngIf="showPlans">
+                  <span *ngFor="let plan of invoice.plans">
+                    <span>{{plan.name}}, </span>
+                  </span>
+                </td>
+                <td *ngIf="showItems">
+                  <span *ngFor="let item of invoice.items">
+                    <span>{{item.name}}, </span>
+                  </span>
+                </td>
+                <td *ngIf="showFirstPayment">
+                  <span *ngIf="invoice.isFirstPayment">Yes</span>
+                  <span *ngIf="!invoice.isFirstPayment">No</span>
+                </td>
                 <td>{{invoice.total }}</td>
                 <td [ngClass]="{'text-success': invoice.isPaid, 'text-danger': !invoice.isPaid}" style="
                   font-size: 1em;">
@@ -61,7 +76,7 @@
                   </span>
                   {{invoice.isPaid }}
                 </td>
-                <td>
+                <td *ngIf="showActions" >
                   <ul class="action-list">
                     <li><a routerLink="/company/invoices/{{invoice.id}}" data-tip="show">
                         <i class="fa fa-eye" style="font-size: 21px!important;"></i></a>

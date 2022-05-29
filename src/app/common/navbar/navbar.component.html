@@ -3,26 +3,29 @@
     <img src="assets/images/logoSmall.png" style=" width: 50%; margin: auto; padding: 10px; ">
     <!-- super admin menu -->
     <div *ngIf="currentUser.isSuperAdmin == true">
-      <a routerLink="/admin/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/admin/home')}">
+      <a routerLink="/admin/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/admin/home')}"
+        translate>
         <i class="fas fa-home"></i>
-        Home
+        {{'Home' | translate}}
       </a>
       <a routerLink="admin/companies" class="dashboard-nav-item"
-        [ngClass]="{'active': isCurrentRoute('/admin/companies') || isCurrentRoute('/admin/companies/create')}">
-        <!-- <i class="fas fa-tachometer-alt"></i> -->
+        [ngClass]="{'active': isCurrentRoute('/admin/companies') || isCurrentRoute('/admin/companies/create')}"
+        translate>
         <i class="fas fa-building"></i>
         Companies
       </a>
     </div>
     <!-- company admin menu -->
     <div *ngIf="currentUser.role == 'ADMIN' && currentUser.isSuperAdmin != true">
-      <a routerLink="company/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/company/home')}">
+      <a routerLink="company/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/company/home')}"
+        translate>
         <i class="fas fa-home"></i>
         Home
       </a>
 
       <a routerLink='company/customers' class="dashboard-nav-item"
-        [ngClass]="{'active': isCurrentRoute('company/customers') || isCurrentRoute('/company/customers/create')}">
+        [ngClass]="{'active': isCurrentRoute('company/customers') || isCurrentRoute('/company/customers/create')}"
+        translate>
         <i class="fas fa-users"></i>
         Customers
       </a>
@@ -34,19 +37,16 @@
             href="#" class="dashboard-nav-dropdown-item">Video</a></div>
       </div> -->
       <div class='dashboard-nav-dropdown' [ngClass]="{'show': showUsers }">
-        <a (click)="toggleUsers()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white">
+        <a (click)="toggleUsers()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white" translate>
           <i class="fas fa-id-card"></i>Employees</a>
         <div class='dashboard-nav-dropdown-menu'>
-          <a routerLink='/company/employees/all' class="dashboard-nav-dropdown-item">All Employees</a>
-          <a routerLink='/company/employees/managers' class="dashboard-nav-dropdown-item">Managers</a>
-          <a routerLink='/company/employees/super-visors' class="dashboard-nav-dropdown-item">Super Visors</a>
-          <a routerLink='/company/employees/collectors' class="dashboard-nav-dropdown-item">Collectors</a>
-          <a routerLink='/company/employees/create' class="dashboard-nav-dropdown-item">Add New</a>
+          <a routerLink='/company/employees/all' class="dashboard-nav-dropdown-item" translate>All Employees</a>
+          <a routerLink='/company/employees/create' class="dashboard-nav-dropdown-item" translate>Add New</a>
         </div>
       </div>
 
       <div class='dashboard-nav-dropdown' [ngClass]="{'show': showAddresses }">
-        <a (click)="toggleAddresses()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white">
+        <a (click)="toggleAddresses()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white" translate>
           <i class="fa fa-home" aria-hidden="true"></i>Addresses</a>
         <div class='dashboard-nav-dropdown-menu'>
           <a *ngIf="currentUser.company.addressLevel5Name" routerLink='/company/addresses/level5'
@@ -62,44 +62,184 @@
         </div>
       </div>
       <a routerLink="/company/sub-companies" class="dashboard-nav-item"
-        [ngClass]="{'active': isCurrentRoute('/company/sub-companies') || isCurrentRoute('/company/sub-companies/create')}">
+        [ngClass]="{'active': isCurrentRoute('/company/sub-companies') || isCurrentRoute('/company/sub-companies/create')}"
+        translate>
         <i class="fas fa-building"></i>
         Sub Companies
       </a>
       <div class='dashboard-nav-dropdown' [ngClass]="{'show': showInvoices }">
-        <a (click)="toggleInvoices()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white">
+        <a (click)="toggleInvoices()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white" translate>
           <i class="fas fa-money-check-alt"></i>Invoices</a>
         <div class='dashboard-nav-dropdown-menu'>
           <a routerLink="/company/invoices/unpaid" class="dashboard-nav-dropdown-item"
-            [ngClass]="{'active': isCurrentRoute('/company/invoices/unpaid')}">All Unpaid</a>
-          <a routerLink="/company/invoices/monthly" class="dashboard-nav-dropdown-item"
-            [ngClass]="{'active': isCurrentRoute('/company/invoices/monthly')}">By Month</a>
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/unpaid')}" translate>Unpaid Invoices</a>
+          <a routerLink="/company/invoices/paid" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/paid')}" translate>Paid Invoices</a>
+          <a routerLink="/company/invoices/items" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/items')}" translate>Items Invoices</a>
           <!-- <a routerLink="/company/invoices/create" class="dashboard-nav-dropdown-item"
             [ngClass]="{'active': isCurrentRoute('/company/invoices/create')}">Add New</a> -->
         </div>
       </div>
 
       <a routerLink="/company/items" class="dashboard-nav-item"
-        [ngClass]="{'active': isCurrentRoute('/company/items') || isCurrentRoute('/company/items/create')}">
+        [ngClass]="{'active': isCurrentRoute('/company/items') || isCurrentRoute('/company/items/create')}" translate>
         <i class="fas fa-box"></i>
         Items
       </a>
 
       <a routerLink="/company/plans" class="dashboard-nav-item"
-        [ngClass]="{'active': isCurrentRoute('/company/plans') || isCurrentRoute('/company/plans/create')}">
+        [ngClass]="{'active': isCurrentRoute('/company/plans') || isCurrentRoute('/company/plans/create')}" translate>
         <i class="fas fa-network-wired"></i>
         Plans
       </a>
-      <!-- <a href="#" class="dashboard-nav-item">
-      <i class="fas fa-cogs"></i>
-      Settings
-    </a> -->
-      <a href="#" class="dashboard-nav-item">
+      <a routerLink="/company/profile" class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('/company/profile')}" translate>
         <i class="fas fa-user"></i>
         Profile
       </a>
     </div>
+
+    <!-- Managers Menu -->
+    <div *ngIf="currentUser.role == UserRole.MANAGER">
+      <a routerLink="company/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/company/home')}"
+        translate>
+        <i class="fas fa-home"></i>
+        Home
+      </a>
+
+      <a routerLink='company/customers' class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('company/customers') || isCurrentRoute('/company/customers/create')}"
+        translate>
+        <i class="fas fa-users"></i>
+        Customers
+      </a>
+
+      <div class='dashboard-nav-dropdown' [ngClass]="{'show': showAddresses }">
+        <a (click)="toggleAddresses()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white" translate>
+          <i class="fa fa-home" aria-hidden="true"></i>Addresses</a>
+        <div class='dashboard-nav-dropdown-menu'>
+          <a *ngIf="currentUser.company.addressLevel5Name" routerLink='/company/addresses/level5'
+            class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel5Name}}</a>
+          <a *ngIf="currentUser.company.addressLevel4Name" routerLink='/company/addresses/level4'
+            class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel4Name}}</a>
+          <a *ngIf="currentUser.company.addressLevel3Name" routerLink='/company/addresses/level3'
+            class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel3Name}}</a>
+          <a *ngIf="currentUser.company.addressLevel2Name" routerLink='/company/addresses/level2'
+            class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel2Name}}</a>
+          <a *ngIf="currentUser.company.addressLevel1Name" routerLink='/company/addresses/level1'
+            class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel1Name}}</a>
+        </div>
+      </div>
+      <!-- <a routerLink="/company/sub-companies" class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('/company/sub-companies') || isCurrentRoute('/company/sub-companies/create')}">
+        <i class="fas fa-building"></i>
+        Sub Companies
+      </a> -->
+      <div class='dashboard-nav-dropdown' [ngClass]="{'show': showInvoices }">
+        <a (click)="toggleInvoices()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white" translate>
+          <i class="fas fa-money-check-alt"></i>Invoices</a>
+        <div class='dashboard-nav-dropdown-menu'>
+          <a routerLink="/company/invoices/unpaid" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/unpaid')}" translate>Unpaid Invoices</a>
+          <a routerLink="/company/invoices/paid" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/paid')}" translate>Paid Invoices</a>
+          <a routerLink="/company/invoices/items" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/items')}" translate>Items Invoices</a>
+        </div>
+      </div>
+
+      <a routerLink="/company/items" class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('/company/items') || isCurrentRoute('/company/items/create')}" translate>
+        <i class="fas fa-box"></i>
+        Items
+      </a>
+
+      <a routerLink="/company/plans" class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('/company/plans') || isCurrentRoute('/company/plans/create')}" translate>
+        <i class="fas fa-network-wired"></i>
+        Plans
+      </a>
+
+      <a routerLink="/company/profile" class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('/company/profile')}" translate>
+        <i class="fas fa-user"></i>
+        Profile
+      </a>
+    </div>
+
+    <!-- Supervisors Menu -->
+    <div *ngIf="currentUser.role == UserRole.SUPERVISOR">
+      <a routerLink="company/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/company/home')}"
+        translate>
+        <i class="fas fa-home"></i>
+        Home
+      </a>
+
+      <a routerLink='company/customers' class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('company/customers') || isCurrentRoute('/company/customers/create')}"
+        translate>
+        <i class="fas fa-users"></i>
+        Customers
+      </a>
+
+      <div class='dashboard-nav-dropdown' [ngClass]="{'show': showInvoices }">
+        <a (click)="toggleInvoices()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white" translate>
+          <i class="fas fa-money-check-alt"></i>Invoices</a>
+        <div class='dashboard-nav-dropdown-menu'>
+          <a routerLink="/company/invoices/unpaid" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/unpaid')}" translate>Unpaid Invoices</a>
+          <a routerLink="/company/invoices/paid" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/paid')}" translate>Paid Invoices</a>
+          <a routerLink="/company/invoices/items" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/items')}" translate>Items Invoices</a>
+        </div>
+      </div>
+
+      <a routerLink="/company/profile" class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('/company/profile')}" translate>
+        <i class="fas fa-user"></i>
+        Profile
+      </a>
+    </div>
+
+    <!-- Collector Menu -->
+    <div *ngIf="currentUser.role == UserRole.COLLECTOR">
+      <a routerLink="company/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/company/home')}"
+        translate>
+        <i class="fas fa-home"></i>
+        Home
+      </a>
+
+      <a routerLink='company/customers' class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('company/customers') || isCurrentRoute('/company/customers/create')}"
+        translate>
+        <i class="fas fa-users"></i>
+        Customers
+      </a>
+
+      <div class='dashboard-nav-dropdown' [ngClass]="{'show': showInvoices }">
+        <a (click)="toggleInvoices()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white" translate>
+          <i class="fas fa-money-check-alt"></i>Invoices</a>
+        <div class='dashboard-nav-dropdown-menu'>
+          <a routerLink="/company/invoices/unpaid" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/unpaid')}" translate>Unpaid Invoices</a>
+          <a routerLink="/company/invoices/paid" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/paid')}" translate>Paid Invoices</a>
+          <a routerLink="/company/invoices/items" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/items')}" translate>Items Invoices</a>
+        </div>
+      </div>
+
+      <a routerLink="/company/profile" class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('/company/profile')}" translate>
+        <i class="fas fa-user"></i>
+        Profile
+      </a>
+    </div>
+
+
     <div class="nav-item-divider"></div>
-    <a href="#" (click)="logout()" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
+    <a href="#" (click)="logout()" class="dashboard-nav-item" translate><i class="fas fa-sign-out-alt"></i> Logout </a>
   </nav>
 </div>

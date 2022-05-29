@@ -34,6 +34,9 @@ import { CreateItemComponent } from './pages/employees/items/create-item/create-
 import { ItemsComponent } from './pages/employees/items/items.component';
 import { CreatePlanComponent } from './pages/employees/plans/create-plan/create-plan.component';
 import { PlansComponent } from './pages/employees/plans/plans.component';
+import { PaidInvoicesComponent } from './pages/employees/invoices/paid-invoices/paid-invoices.component';
+import { ItemsInvoicesComponent } from './pages/employees/invoices/items-invoices/items-invoices.component';
+import { ProfileComponent } from './pages/employees/profile/profile.component';
 
 const adminRoutes: Routes = [
   {
@@ -186,8 +189,12 @@ const employeesRoutes: Routes = [
             component: UnpaidInvoicesComponent,
           },
           {
-            path: 'monthly',
-            component: ThisMonthInvoicesComponent,
+            path: 'paid',
+            component: PaidInvoicesComponent,
+          },
+          {
+            path: 'items',
+            component: ItemsInvoicesComponent,
           },
           {
             path: 'create',
@@ -203,6 +210,11 @@ const employeesRoutes: Routes = [
       {
         path: 'home',
         component: EmployeesHomeComponent,
+        canActivate: [EmployeeGuard],
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
         canActivate: [EmployeeGuard],
       },
     ],

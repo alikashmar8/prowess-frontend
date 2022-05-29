@@ -1,10 +1,10 @@
 <div *ngIf="!isLoading">
   <div class="row p-3">
     <div class="col-md-9">
-      <h3>All Customers:</h3>
+      <h3 translate>All Customers:</h3>
     </div>
     <div class="col-md-3">
-      <button class="btn btn-success" routerLink="/company/customers/create">
+      <button class="btn btn-success" routerLink="/company/customers/create" translate>
         <i class="fa fa-plus m-2"></i>
         New Customer
       </button>
@@ -12,33 +12,49 @@
   </div>
 
 
-
+  <div class="row">
+    <div class="col-sm-6">
+      <input type="text" class="form-control m-2" placeholder="{{'Search' | translate}}" [(ngModel)]="search">
+    </div>
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-primary m-2" (click)="searchCustomers()" translate>
+        <i class="fa fa-search"></i>
+        Search
+      </button>
+    </div>
+  </div>
   <div *ngIf="customers.length">
-    <div class="search-box ml-2">
+    <!-- <div class="search-box ml-2">
       <button class="btn-search"><i class="fas fa-search"></i></button>
       <input type="text" class="input-search border" placeholder="Type to Search..." name="search" [(ngModel)]="search"
         style="background: #6f86d6; border-radius: 25px;">
-    </div>
+    </div> -->
 
-    <div>
+    <div class="table-container">
       <hr>
-
-      <table class="table table-hover">
+      <table class="table table-hover" style="display: block; overflow-x: auto;">
         <thead class="table-primary ">
           <tr class="bg-info">
-            <!-- <th>#</th> -->
-            <th>Name</th>
-            <th>Address</th>
-            <th>Phone Number</th>
-            <th>Actions</th>
+            <th translate>Name</th>
+            <th translate>Plans</th>
+            <th translate>Payment Day</th>
+            <th translate>Address</th>
+            <th translate>Phone Number</th>
+            <th translate>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let customer of customers| filter: search; let i = index" [ngClass]="{
+          <tr *ngFor="let customer of customers; let i = index" [ngClass]="{
             'bg-linear-primary': customer.isActive,
             'bg-danger-light': !customer.isActive
         }">
             <td>{{customer.name}}</td>
+            <td>
+              <span *ngFor="let plan of customer.plans">
+                {{plan.name}},
+              </span>
+            </td>
+            <td>{{customer.paymentDate | date: 'dd'}}</td>
             <td>{{ getAddressString(customer.address) }}</td>
             <td>{{customer.phoneNumber}}</td>
             <td>

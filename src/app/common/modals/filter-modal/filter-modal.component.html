@@ -1,0 +1,73 @@
+<!-- <div class="modal-header">
+  <h4 class="modal-title">Filter</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div> -->
+<div class="modal-body">
+  <div class="search-form-container">
+    <div class="search-bar-section center-elements">
+      <label for="search">Search:</label>
+      <input class="form-control" type="search" placeholder="Search" style="border: 1px solid grey!important;"
+        [(ngModel)]="search" name="search" id="locality">
+    </div>
+    <div class="row">
+      <div class="col-sm-6 p-3" *ngIf="[UserRole.ADMIN, UserRole.MANAGER].hasOwnProperty(currentUser.role)">
+        <label for="employee">Filter by employee:</label>
+        <select name="employee" class="form-control w-100" placeholder="Select Employee" [(ngModel)]="selectedEmployee">
+          <option value disabled hidden>Select Employee</option>
+          <ng-container *ngFor="let employee of employees">
+            <option *ngIf="employee.role != UserRole.ADMIN" [value]="employee.id">{{employee.name}}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="col-sm-6 p-3" *ngIf="showPlansFilter" >
+        <label for="plan">Filter by plan:</label>
+        <select name="plan" [(ngModel)]="selectedPlan" class=" form-control w-100">
+          <option value disabled hidden>Select Plan</option>
+          <ng-container *ngFor="let plan of plans">
+            <option *ngIf="plan.isActive" [value]="plan.id">{{plan.name}}</option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="col-sm-6 p-3">
+        <label for="startDate">Start Date:</label>
+        <input type="date" name="startDate" [(ngModel)]="startDateFilter"
+          class="bg-linear-primary p-2 select rounded w-100 form-control" style="background-image: linear-gradient(
+            to right,
+            rgb(72, 197, 239, 50%) 0%,
+            rgb(111, 134, 214, 50%) 100%
+          )!important;
+          ;
+          padding: 12px!important;
+          " placeholder="Starting Date">
+      </div>
+      <div class="col-sm-6 p-3">
+        <label for="endDate">End Date:</label>
+        <input type="date" name="endDate" [(ngModel)]="endDateFilter"
+          class="bg-linear-primary p-2 select rounded w-100 form-control" style="background-image: linear-gradient(
+            to right,
+            rgb(72, 197, 239, 50%) 0%,
+            rgb(111, 134, 214, 50%) 100%
+          )!important;
+          ;
+          padding: 12px!important;
+          " placeholder="Starting Date">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6"></div>
+    <div class="col-sm-6">
+      <button class="btn btn-info m-2" (click)="clearFilters()">
+        Clear Filters
+      </button>
+      <button type="button" class="btn btn-outline-dark m-2" (click)="activeModal.dismiss(false)">Close</button>
+      <button type="button" class="btn btn-primary m-2" (click)="onSearch()">Search</button>
+
+    </div>
+  </div>
+</div>
+<!-- <div class="modal-footer">
+</div> -->

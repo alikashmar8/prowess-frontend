@@ -32,10 +32,22 @@ export class UnpaidInvoicesComponent implements OnInit {
     }
   }
 
-  async searchClicked(data: { search?: string; dateSearch?: Date }) {
+  async searchClicked(data: {
+    search?: string;
+    selectedEmployee?: string;
+    selectedPlan?: string;
+    startDateFilter?: Date;
+    endDateFilter?: Date;
+  }) {
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      this.invoices = await this.invoicesService.getUnpaidInvoices(data.search);
+      this.invoices = await this.invoicesService.getUnpaidInvoices({
+        search: data.search,
+        employee_id: data.selectedEmployee,
+        plan_id: data.selectedPlan,
+        startDate: data.startDateFilter,
+        endDate: data.endDateFilter,
+      });
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
       this.authService.handleHttpError(err);
@@ -45,8 +57,11 @@ export class UnpaidInvoicesComponent implements OnInit {
 
   async exportPDF() {
     try {
+      console.log('export pdf');
+
       this.isLoading = this.loadingService.appLoading(true);
-      const res = await this.invoicesService.downloadUnpaidInvoicesPdf();
+      const ids = this.invoices.map((invoice) => invoice.id);
+      const res = await this.invoicesService.downloadInvoicesPdf(ids);
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
       this.isLoading = this.loadingService.appLoading(false);
@@ -56,7 +71,8 @@ export class UnpaidInvoicesComponent implements OnInit {
   async exportExcel() {
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      const res = this.invoicesService.downloadUnpaidInvoicesExcel().subscribe(
+      const ids = this.invoices.map((invoice) => invoice.id);
+      const res = this.invoicesService.downloadInvoicesExcel(ids).subscribe(
         (res) => {
           var newBlob = new Blob([res], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',

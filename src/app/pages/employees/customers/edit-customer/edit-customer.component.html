@@ -1,5 +1,11 @@
 <section *ngIf="!isLoading" style="margin-bottom: 100px;">
-  <h1 style="margin: 20px;">Edit Customer</h1>
+  <div class="row">
+    <div class="col-sm-8">  <h1 style="margin: 20px;">Edit Customer</h1>
+</div>
+    <div class="col-sm-4">
+      <button class="btn btn-primary" style="float: right; margin-top: 20px;" (click)="openUpdateCustomerPlansModal()">Update Plans</button>
+    </div>
+  </div>
   <details (click)='detailsClicked()' #detailsElement>
     <summary>
       <div>
@@ -99,12 +105,6 @@
         <span class="px-5 text-success" *ngIf="!plansIsOpen"> <i class="fa fa-plus" aria-hidden="true"></i> </span>
       </div>
     </summary>
-    <div class="m-5" >
-      Plan:
-      <ng-multiselect-dropdown [placeholder]="'Choose plan'" [settings]="dropdownSettings" [data]="dropdownList"
-        [(ngModel)]="selectedPlans">
-      </ng-multiselect-dropdown>
-    </div>
     <div class="m-5" *ngIf="authService.currentUser.role == 'ADMIN' || authService.currentUser.role == 'MANAGER' ">
       Collector:
       <select [(ngModel)]="data.collector_id" class="form-control">

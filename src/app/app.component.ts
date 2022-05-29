@@ -3,11 +3,14 @@ import {
   ChangeDetectorRef,
   Component,
   OnDestroy,
-  OnInit
+  OnInit,
 } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { isMobile } from 'src/utils/functions';
 import { AuthService } from './services/auth-service.service';
 import { LoadingService } from './services/loading.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -23,12 +26,27 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private authService: AuthService,
     private loadingService: LoadingService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private router: Router,
+    public translate: TranslateService
   ) {
     this.isAuthenticated = this.authService.isAuthenticated();
+    router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd && isMobile()) {
+        this.showMenu = false;
+      }
+    });
+
+
+    translate.addLangs(['en', 'ar']);
+    translate.setDefaultLang('en');
   }
 
   ngOnInit(): void {
+    if (isMobile()) {
+      this.showMenu = false;
+    }
+
     this.loadingSub = this.loadingService.loading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
@@ -46,7 +64,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadingSub.unsubscribe();
   }
 
-  toggleMenu(){
+  toggleMenu() {
     this.showMenu = !this.showMenu;
   }
 }

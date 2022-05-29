@@ -1,10 +1,11 @@
-import { UserRoles } from './../../../../../../prowess-backend/src/users/enums/user-roles.enum';
 import { loadingGifUrl } from './../../../../constants/constants';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
+import { UserRoles } from 'src/enums/user-roles.enum';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
+    public translate: TranslateService
   ) {
     if (this.authService.isAuthenticated()) {
       this.router.navigate(['/']);
@@ -79,5 +81,9 @@ export class LoginComponent implements OnInit {
           this.isLoginLoading = false;
         }
       );
+  }
+
+  switchLang(lang: string) {
+    this.translate.use(lang);
   }
 }

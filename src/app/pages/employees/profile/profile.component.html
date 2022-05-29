@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 pull-right">
+      <span class="form-inline">
+        <select class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
+          <option *ngFor="let language of translate.getLangs()" [value]="language"
+            [selected]="language === translate.currentLang">
+            {{ language }}
+          </option>
+        </select>
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <h4 class="card-title">
+                <span class="text-muted">
+                  <i class="fa fa-user"></i>
+                </span>
+                <span>
+                  {{ user.name }}
+                </span>
+              </h4>
+            </div>
+            <div class="col-sm-12">
+              <h4 class="card-title">
+                <span class="text-muted">
+                  <i class="fa fa-lock" aria-hidden="true"></i>
+                </span>
+                <span>
+                  {{ user.username }}
+                </span>
+              </h4>
+            </div>
+
+            <div class="col-sm-12">
+              <h4 class="card-title">
+                <span class="text-muted">
+                  <i class="fa fa-phone"></i>
+                </span>
+                <span>
+                  {{ user.phoneNumber? user.phoneNumber : 'No phone number'| translate}}
+                </span>
+              </h4>
+
+            </div>
+
+            <div class="col-sm-12">
+              <h4 class="card-title">
+                <span class="text-muted">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                </span>
+                <span>
+                  {{ user.email? user.email : 'No email'| translate}}
+                </span>
+              </h4>
+            </div>
+
+            <div class="col-sm-12">
+              <h4 class="card-title">
+                <span class="text-muted">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                </span>
+                <span *ngIf="user.expiryDate">
+                  {{ user.expiryDate | date: 'dd/MM/yyyy' }}
+                  <small>{{'expiry' | translate}}</small>
+                </span>
+                <span *ngIf="!user.expiryDate">
+                  {{'No expiry date' | translate}}
+                </span>
+              </h4>
+            </div>
+
+            <div class="col-sm-12">
+              <h4 class="card-title">
+                <span class="text-muted">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                </span>
+                <span>
+                  {{ user.created_at | date: 'dd/MM/yyyy' }}
+                </span> <small>{{'created' | translate }}</small>
+
+              </h4>
+            </div>
+            <div class="col-sm-12 center-elements">
+              <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                (click)="openChangePasswordModal()">
+                Change Password
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

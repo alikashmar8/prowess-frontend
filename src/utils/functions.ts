@@ -177,3 +177,23 @@ export function isAddressMaxLevel(
       else return false;
   }
 }
+
+export function isMobile() {
+  return window.innerWidth <= 900;
+}
+
+
+export function getLang():string{
+  if (localStorage){
+      return localStorage['lang'] || "";
+  }
+  else{
+      return "";
+  }
+}
+
+export function setLang(language: string){
+  if (localStorage){
+      localStorage['lang'] = language;
+  }
+}

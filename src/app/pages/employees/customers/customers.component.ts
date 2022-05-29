@@ -129,4 +129,27 @@ export class CustomersComponent implements OnInit {
       (rejected) => {}
     );
   }
+
+  searchCustomers() {
+    this.isLoading = this.loadingService.appLoading(true);
+    this.customers = [];
+    this.companiesService
+      .getCompanyCustomers(
+        this.authService.currentUser.company_id,
+        this.take,
+        this.skip,
+        this.search,
+      )
+      .subscribe(
+        (result: any) => {
+          this.customers = result.data;
+          this.totalRecords = result.count;
+          this.totalPages = result.count > 0 ? Math.ceil(result.count / 10) : 1;
+          this.isLoading = this.loadingService.appLoading(false);
+        },
+        (err) => {
+          this.alertService.toastError('Error fetching results');
+        }
+      );
+  }
 }

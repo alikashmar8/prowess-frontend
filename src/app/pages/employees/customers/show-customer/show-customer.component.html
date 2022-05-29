@@ -1,177 +1,196 @@
 <div *ngIf="!isLoading">
-  <div class="profile-head mb-5 row">
-    <div class="col-sm-8">
-      <h5>
-        {{customer.name}}
-      </h5>
-      <div class="profile-rating">
-        <h6>Status: <span [ngClass]="{'text-success' : customer.isActive,'text-red': !customer.isActive}">{{
-            customer.isActive ? 'active' : 'inactive'}}</span></h6>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <button class="btn btn-info px-3 text-white" (click)="openCustomerItemsModal()">
-        <i class="fas fa-box mr-2"></i>Items
-      </button>
-
-      <button class="btn btn-warning px-3 text-white ml-2" routerLink="/company/customers/{{customer.id}}/edit"><i
-          class="fas fa-pen mr-2"></i>Edit</button>
-    </div>
-  </div>
-  <my-tabs>
-    <my-tab [tabTitle]="'Details'">
-      <div class="container">
-        <div class="row m-2">
-          <strong class="col-md-6">Name:</strong> {{customer.name}}
-        </div>
-        <hr>
-        <div class="row m-2">
-          <strong class="col-md-6">Email:</strong> {{customer.email}}
-        </div>
-        <hr>
-        <div class="row m-2">
-          <strong class="col-md-6">Phone Number:</strong> {{customer.phoneNumber}}
-        </div>
-        <hr>
-        <div class="row m-2">
-          <strong class="col-md-6">Payment Date:</strong> {{ customer.paymentDate | date: "dd/MM/yyyy" }}
-        </div>
-        <hr>
-        <div class="row m-2">
-          <strong class="col-md-6">Collector:</strong> {{customer.collector?.name}}
-        </div>
-      </div>
-    </my-tab>
-    <my-tab [tabTitle]="'Address'">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="">
-            <div class="row m-2" *ngIf="isLevel5Allowed">
-              <span class="col-md-6"><strong>{{customer.company.addressLevel5Name}}:</strong></span>
-              <span>
-                {{customer.address.parent.parent.parent.parent.name}}
-              </span>
-            </div>
-            <div class="row m-2" *ngIf="isLevel4Allowed">
-              <span class="col-md-6"><strong>{{customer.company.addressLevel4Name}}:</strong></span>
-              <span>
-                {{customer.address.parent.parent.parent.name}}
-              </span>
-            </div>
-            <div class="row m-2" *ngIf="isLevel3Allowed">
-              <span class="col-md-6"><strong>{{customer.company.addressLevel3Name}}:</strong></span>
-              <span>
-                {{customer.address.parent.parent.name}}
-              </span>
-            </div>
-            <div class="row m-2" *ngIf="isLevel2Allowed">
-              <span class="col-md-6"><strong>{{customer.company.addressLevel2Name}}:</strong></span>
-              <span>
-                {{customer.address.parent.name}}
-              </span>
-            </div>
-            <div class="row m-2">
-              <span class="col-md-6"><strong>{{customer.company.addressLevel1Name}}:</strong></span>
-              <span>
-                {{customer.address.name}}
-              </span>
+  <div class="container">
+    <div class="main-body">
+      <div class="row gutters-sm">
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
+                <img src="assets/images/user-image.jpg" alt="Admin" class="rounded-circle" width="150">
+                <div class="mt-3">
+                  <h4>{{customer.name}}</h4>
+                  <p class=" mb-1">Status: <span
+                      [ngClass]="{'text-success' : customer.isActive,'text-red': !customer.isActive}">{{
+                      customer.isActive ? 'active' : 'inactive'}}</span></p>
+                  <p class="text-muted font-size-sm">
+                    <span *ngIf="isLevel5Allowed">
+                      {{customer.address.parent.parent.parent.parent.name}}
+                    </span>
+                    <span *ngIf="isLevel4Allowed">
+                      {{customer.address.parent.parent.parent.name}}
+                    </span>
+                    <span *ngIf="isLevel3Allowed">
+                      {{customer.address.parent.parent.name}}
+                    </span>
+                    <span *ngIf="isLevel2Allowed">
+                      {{customer.address.parent.name}}
+                    </span>
+                    <span>
+                      {{customer.address.name}}
+                    </span>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
+          <div class="card mt-3">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <button class="btn btn-info w-100 " (click)="openCustomerItemsModal()">Items</button>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <a class="btn btn-warning text-white w-100" target="__blank"
+                  routerLink="/company/customers/{{customer.id}}/edit">
+                  <i class="fas fa-pen mr-2"></i>Edit
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="card mt-3 ">
+            <h5 class="center-elements m-1">
+              Subscribed Plans:
+            </h5>
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let plan of customer.plans"
+                class="list-group-item d-flex justify-content-between align-items-center flex-wrap ">
+                <button class="btn btn-primary w-100 ">{{plan.name}}</button>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </my-tab>
-    <my-tab tabTitle="Invoices">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="main-box clearfix">
-              <div class="table-responsive">
-                <span><strong> Last 12 months invoices:</strong></span>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <table class="table table-striped table-bordered">
-                        <thead>
-                          <tr>
-                            <th *ngFor="let invoice of customer.invoices"><span>{{ invoice.dueDate | date: 'MMM-yy'
-                                }}</span></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td *ngFor="let invoice of customer.invoices"
-                              [ngClass]="{'bg-success' : invoice.isPaid,'bg-danger': !invoice.isPaid}">
-                              <a routerLink="/company/invoices/{{invoice.id}}" style="color: black">
-                                <div *ngIf="invoice.isPaid" class="center-elements">
-                                  {{invoice.collectedBy?.name}}
-                                  <hr class="m-1 w-100"> {{invoice.collected_at | date:'dd MMM'}}
-                                </div>
-                                <div *ngIf="!invoice.isPaid" class="center-elements">
-                                  N/A
-                                </div>
-                              </a>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+        <div class="col-md-8">
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Full Name</h6>
+                </div>
+                <div class="col-sm-9 text-primary">
+                  {{customer.name}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Email</h6>
+                </div>
+                <div class="col-sm-9 text-primary">
+                  {{customer.email}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Phone Number:</h6>
+                </div>
+                <div class="col-sm-9 text-primary">
+                  {{customer.phoneNumber}}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Payment Date:</h6>
+                </div>
+                <div class="col-sm-9 text-primary">
+                  {{ customer.paymentDate | date: "dd/MM/yyyy" }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Collector</h6>
+                </div>
+                <div class="col-sm-9 text-primary">
+                  {{customer.collector?.name}}
+                </div>
+              </div>
+              <hr>
+            </div>
+          </div>
 
-                  <hr class="m-3 w-100">
-                  <div class="row">
-                    <span><strong> Unpaid Invoices:</strong></span>
-                    <div class="col-md-12">
-                      <table class="table table-striped table-bordered">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Collector</th>
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let invoice of customer.unpaidInvoices">
-                            <td>
-                              <a routerLink="/company/invoices/{{invoice.id}}" style="color: black">
-                                {{invoice.id}}
-                              </a>
-                            </td>
-                            <td>
-                              {{invoice.dueDate | date:'dd-MM-yyyy'}}
-                            </td>
-                            <td>
-                              {{invoice.total | currency: 'USD':true}}
-                            </td>
-                            <td>
-                              {{customer.collector?.name}}
-                            </td>
-                            <td>
-                              <ul class="action-list"
-                                *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)">
-                                <li><a routerLink="/company/invoices/{{invoice.id}}" data-tip="show">
-                                    <i class="fa fa-eye" style="font-size: 21px!important;"></i></a>
-                                </li>
-                                <li><a (click)="openCollectModal(invoice.id, invoice.user.name)" data-tip="collect">
-                                    <i class="fas fa-money-bill-alt" style="font-size: 21px!important;"></i></a>
-                                </li>
-                                <li><a (click)="openForgiveModal(invoice.id, invoice.user.name)" data-tip="forgive">
-                                    <i class="fas fa-hand-holding-usd" style="font-size: 21px!important;"></i>
-                                  </a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+          <div class="row gutters-sm">
+            <div class="col-sm-12 mb-3">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h6 class="d-flex align-items-center mb-3"><i class="text-info mr-2">Last 12
+                      months</i>Invoices</h6>
+                  <ul class="list-group m-5">
+                    <div *ngFor="let invoice of customer.invoices; let i = index">
+                      <li class="list-group-item d-flex justify-content-between align-items-center m-1"
+                        [ngClass]="{'bg-success' : invoice.isPaid,'bg-danger': !invoice.isPaid}">
+                        {{ invoice.dueDate | date: 'MMM-yy'}}:
+                        <div class="badge ">
+                          <a routerLink="/company/invoices/{{invoice.id}}" style="color: black">
+                            <div *ngIf="invoice.isPaid" class="center-elements">
+                              {{invoice.collectedBy?.name}}
+                              <hr class="m-1 w-100"> {{invoice.collected_at | date:'dd MMM'}}
+                            </div>
+                            <div *ngIf="!invoice.isPaid" class="center-elements">
+                              N/A
+                            </div>
+                          </a>
+                        </div>
+                      </li>
                     </div>
-                  </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 mb-3">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h6 class="d-flex align-items-center mb-3"><i class="text-info mr-2">Unpaid</i>Invoices
+                  </h6>
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Collector</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let invoice of customer.unpaidInvoices">
+                        <td>
+                          <a routerLink="/company/invoices/{{invoice.id}}" style="color: black">
+                            {{invoice.id}}
+                          </a>
+                        </td>
+                        <td>
+                          {{invoice.dueDate | date:'dd-MM-yyyy'}}
+                        </td>
+                        <td>
+                          {{invoice.total | currency: 'USD':true}}
+                        </td>
+                        <td>
+                          {{customer.collector?.name}}
+                        </td>
+                        <td>
+                          <ul class="action-list"
+                            *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)">
+                            <li><a routerLink="/company/invoices/{{invoice.id}}" data-tip="show">
+                                <i class="fa fa-eye" style="font-size: 21px!important;"></i></a>
+                            </li>
+                            <li><a (click)="openCollectModal(invoice.id, invoice.user.name)" data-tip="collect">
+                                <i class="fas fa-money-bill-alt" style="font-size: 21px!important;"></i></a>
+                            </li>
+                            <li><a (click)="openForgiveModal(invoice.id, invoice.user.name)" data-tip="forgive">
+                                <i class="fas fa-hand-holding-usd" style="font-size: 21px!important;"></i>
+                              </a></li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </my-tab>
-  </my-tabs>
+    </div>
+  </div>
 </div>

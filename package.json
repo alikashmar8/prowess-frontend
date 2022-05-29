@@ -25,6 +25,8 @@
     "@costlydeveloper/ngx-awesome-popup": "^2.2.0",
     "@fortawesome/fontawesome-free": "~5.6.3",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
     "@types/chart.js": "^2.9.34",
     "angular-bootstrap-md": "^10.1.1",
     "angular-sidebar-menu": "^1.5.0",

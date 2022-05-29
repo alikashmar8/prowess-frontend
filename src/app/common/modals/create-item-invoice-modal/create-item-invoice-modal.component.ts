@@ -59,8 +59,13 @@ export class CreateItemInvoiceModal implements OnInit {
     this.itemsService
       .getCompanyItems(this.authService.currentUser.company_id)
       .subscribe((results: any) => {
-        this.items = results;
-        this.itemsDropdownList = results;
+        results.forEach((item: Item) => {
+          if (item.isActive) {
+            this.items.push(item);
+          }
+        });
+        // this.items = results;
+        this.itemsDropdownList = this.items;
         this.itemDropdownSettings = {
           singleSelection: false,
           idField: 'id',

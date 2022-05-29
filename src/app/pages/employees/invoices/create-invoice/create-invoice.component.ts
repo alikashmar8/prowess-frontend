@@ -82,8 +82,13 @@ export class CreateInvoiceComponent implements OnInit {
             .getCompanyPlans(this.authService.currentUser.company_id)
             .subscribe(
               (res: any) => {
-                this.plans = res;
-                this.plansDropdownList = res;
+                res.forEach((plan: Plan) => {
+                  if (plan.isActive) {
+                    this.plans.push(plan);
+                  }
+                });
+                // this.plans = res;
+                this.plansDropdownList = this.plans;
                 this.planDropdownSettings = {
                   singleSelection: false,
                   idField: 'id',
@@ -95,8 +100,13 @@ export class CreateInvoiceComponent implements OnInit {
                 this.itemsService
                   .getCompanyItems(this.authService.currentUser.company_id)
                   .subscribe((results: any) => {
-                    this.items = results;
-                    this.itemsDropdownList = results;
+                    results.forEach(item => {
+                      if (item.isActive) {
+                        this.items.push(item);
+                      }
+                    });
+                    // this.items = results;
+                    this.itemsDropdownList = this.items;
                     this.itemDropdownSettings = {
                       singleSelection: false,
                       idField: 'id',

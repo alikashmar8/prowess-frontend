@@ -1,1 +1,28 @@
-<p>home works!</p>
+<div class="row">
+  <div class="col-sm-12 center-elements">
+    <h1><span translate>Welcome</span> {{currentUser.name}}</h1>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div *ngIf="currentUser.role == 'ADMIN'" class="col-sm-2 box-card m-3 center-elements" translate>
+    Balance:
+    <br>
+    {{currentUser.company.balance}}
+  </div>
+  <div class="col-sm-2 box-card m-3 center-elements" translate>
+    Customers:
+    <br>
+    {{stats.customers_count}}
+  </div>
+  <div class="col-sm-2 box-card m-3 center-elements" translate>
+    Unpaid Invoice:
+    <br>
+    {{stats.unpaid_invoices_count}}
+  </div>
+  <div class="col-sm-2 box-card m-3 center-elements" translate>
+    Collected Today:
+    <br>
+    {{stats.amount_collected_today}}
+  </div>
+</div>

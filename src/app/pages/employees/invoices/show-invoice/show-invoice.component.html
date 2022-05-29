@@ -28,6 +28,17 @@
                   <h1 class="invoice-id">INVOICE: {{invoice.id}}</h1>
                   <div class="date">Date of Invoice: {{ invoice.created_at | date: 'yyyy-MM-dd' }}</div>
                   <div class="date">Due Date: {{ invoice.dueDate | date: 'yyyy-MM-dd' }}</div>
+                  <div class="box-card m-2">
+                    <div class="date text-danger" *ngIf="!invoice.isPaid">Not Paid </div>
+                    <div *ngIf="invoice.isPaid">
+                      <div class="date" class="text-success" *ngIf="invoice.isPaid">Paid </div>
+                      <div class="vr"></div>
+                      <hr>
+                      <div class="date" *ngIf="invoice.isPaid">Collected By: {{invoice.collectedBy?.name}} </div>
+                      <hr>
+                      <div class="date" *ngIf="invoice.isPaid">Collected At: {{invoice.collected_at | date: 'yyyy-MM-dd HH:mm' }} </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <table>
@@ -103,7 +114,18 @@
         </div>
         <div class="toolbar hidden-print">
           <div class="text-end">
-            <button type="button" class="btn btn-danger" (click)="downloadPDF()"><i class="fas fa-file-pdf"></i> Export
+            <button
+              *ngIf="!invoice.isPaid && [UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)"
+              class="btn btn-success m-2" (click)="openCollectModal(invoice.id, invoice.user.name)" data-tip="collect">
+              <i class="fas fa-money-bill-alt m-1" style="font-size: 21px!important;"></i>Collect</button>
+            <button
+              *ngIf="!invoice.isPaid && [UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)"
+              class="btn btn-info m-2" (click)="openForgiveModal(invoice.id, invoice.user.name)" data-tip="forgive">
+              <i class="fas fa-hand-holding-usd m-1" style="font-size: 21px!important;"></i>
+              Forgive
+            </button>
+            <button type="button" class="btn btn-danger m-2" (click)="downloadPDF()"><i class="fas fa-file-pdf"></i>
+              Export
               as PDF</button>
           </div>
           <hr>

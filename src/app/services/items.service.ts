@@ -10,7 +10,6 @@ import { AuthService } from './auth-service.service';
   providedIn: 'root',
 })
 export class ItemsService {
-
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getCompanyItems(company_id: string) {
@@ -19,11 +18,7 @@ export class ItemsService {
     });
   }
   store(data: CreateItemDTO) {
-    return this.http.post(
-      itemsEndpoint + 'company/' + this.authService.currentUser.company_id,
-      data,
-      { headers: getHeaders() }
-    );
+    return this.http.post(itemsEndpoint, data, { headers: getHeaders() });
   }
 
   async update(item: Item) {

@@ -61,9 +61,18 @@ export class CompaniesService {
     }
   }
 
-  getCompanyCustomers(company_id: string, take: number, skip: number) {
+  getCompanyCustomers(
+    company_id: string,
+    take: number,
+    skip: number,
+    search?: string
+  ) {
+    if (!search) search = '';
+
     return this.http.get(
-      companiesEndpoint + company_id + `/customers?take=${take}&skip=${skip}`,
+      companiesEndpoint +
+        company_id +
+        `/customers?take=${take}&skip=${skip}&search=${search}`,
       {
         headers: getHeaders(),
       }
@@ -141,5 +150,4 @@ export class CompaniesService {
       { headers: getHeaders() }
     );
   }
-
 }

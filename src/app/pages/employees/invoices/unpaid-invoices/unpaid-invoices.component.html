@@ -1,5 +1,2 @@
-<app-invoices-list [invoices]="invoices" [title]="'Unpaid Invoices'" (searchAction)="searchClicked($event)"
- (exportPDF)="exportPDF()"
-  (exportExcel)="exportExcel()"
- ></app-invoices-list>
-
+<app-invoices-list [invoices]="invoices" [title]="'Unpaid Invoices'" [showPlans]="true"
+  (searchAction)="searchClicked($event)" (exportPDF)="exportPDF()" (exportExcel)="exportExcel()"></app-invoices-list>

@@ -12,16 +12,14 @@ export class PlansService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getCompanyPlans(company_id: string) {
-    return this.http.get(plansEndpoint + 'company/' + company_id, {
+    return this.http.get(plansEndpoint, {
       headers: getHeaders(),
     });
   }
 
-  getActiveCompanyPlans() {
+  getActivePlans() {
     return this.http.get(
       plansEndpoint +
-        'company/' +
-        this.authService.currentUser.company_id +
         '?isActive=true',
       {
         headers: getHeaders(),
@@ -31,7 +29,7 @@ export class PlansService {
 
   store(data: CreatePlanDTO) {
     return this.http.post(
-      plansEndpoint + 'company/' + this.authService.currentUser.company_id,
+      plansEndpoint,
       data,
       { headers: getHeaders() }
     );
@@ -42,6 +40,16 @@ export class PlansService {
       plansEndpoint + id + '/status',
       { id, isActive: status },
       { headers: getHeaders() }
+    );
+  }
+
+  update(id: string, data: { name: string; price: number; isActive: boolean }) {
+    return this.http.put(
+      plansEndpoint + id,
+      { ...data, company_id: this.authService.currentUser.company_id },
+      {
+        headers: getHeaders(),
+      }
     );
   }
 }

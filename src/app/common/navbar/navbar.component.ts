@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth-service.service';
+import { UserRoles } from 'src/enums/user-roles.enum';
 import { User } from 'src/models/user.model';
+import { getLang, setLang } from 'src/utils/functions';
 
 @Component({
   selector: 'app-navbar',
@@ -13,13 +16,25 @@ export class NavbarComponent implements OnInit {
   showInvoices = false;
   showAddresses = false;
   currentUser: User;
+  UserRole = UserRoles;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    public translate: TranslateService
+  ) {
+    var storedLang: string = getLang();
+    if (storedLang !== '') {
+      translate.use(storedLang);
+    } else {
+      translate.use('en');
+      setLang('en');
+    }
+  }
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUser;
     console.log(this.currentUser);
-
   }
 
   toggleUsers() {

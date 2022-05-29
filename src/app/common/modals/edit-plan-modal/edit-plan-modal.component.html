@@ -6,11 +6,17 @@
 </div>
 <div class="modal-body">
   <div class="row">
-    <div class="col-sm-12"><strong>Name:</strong> {{plan.name}}</div>
-    <div class="col-sm-12"><strong>Price:</strong>
-      {{plan.price}}</div>
+    <div class="col-sm-12 m-2"><strong>Name:</strong>
+      <input type="text" id="name" name="name" class="form-control" [(ngModel)]="plan.name" />
+    </div>
+    <div class="col-sm-12 m-2"><strong>Price:</strong>
+      <input type="text" id="price" name="price" class="form-control" [(ngModel)]="plan.price" />
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button>
-    <button type="button" class="btn btn-success" (click)="activeModal.close(true)">Confirm</button>
+    <button type="button" class="btn btn-success" (click)="update()" [disabled]="isUpdateLoading" >
+      <span *ngIf="!isUpdateLoading">Update</span>
+      <span *ngIf="isUpdateLoading"><i class="fa fa-spinner fa-spin"></i> Updating...</span>
+      </button>
   </div>
