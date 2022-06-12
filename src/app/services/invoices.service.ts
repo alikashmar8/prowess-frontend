@@ -139,27 +139,17 @@ export class InvoicesService {
 
   async getById(id: string): Promise<any> {
     return await this.http
-      .get(
-        invoicesEndpoint +
-          this.authService.currentUser.company_id +
-          '/invoice/' +
-          id,
-        { headers: getHeaders() }
-      )
+      .get(invoicesEndpoint + id, { headers: getHeaders() })
       .toPromise();
   }
 
   store(data: CreateInvoiceDTO) {
-    return this.http.post(
-      invoicesEndpoint,
-      data,
-      { headers: getHeaders() }
-    );
+    return this.http.post(invoicesEndpoint, data, { headers: getHeaders() });
   }
 
   forgive(ids: string[], collector_id: string) {
     return this.http.put(
-      invoicesEndpoint + this.authService.currentUser.company_id + '/forgive',
+      invoicesEndpoint + 'forgive',
       { ids, collector_id },
       { headers: getHeaders() }
     );
@@ -167,7 +157,7 @@ export class InvoicesService {
 
   collectInvoice(ids: string[], collector_id: string) {
     return this.http.put(
-      invoicesEndpoint + this.authService.currentUser.company_id + '/collect',
+      invoicesEndpoint + 'collect',
       { ids, collector_id },
       { headers: getHeaders() }
     );
@@ -252,9 +242,9 @@ export class InvoicesService {
   }
 
   async downloadInvoicesPdf(ids: string[]) {
-    let params = '?'
-    ids.forEach(id => {
-      params += '&ids=' + id
+    let params = '?';
+    ids.forEach((id) => {
+      params += '&ids=' + id;
     });
     return await this.http
       .get(invoicesEndpoint + 'reports/pdf/' + params, {
