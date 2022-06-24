@@ -81,7 +81,7 @@ export class InvoicesService {
   }): Promise<any> {
     let searchString = '';
     if (data?.search) {
-      searchString = `search=${data.search}`;
+      searchString = `&search=${data.search}`;
     }
     if (data?.employee_id) {
       searchString = `${searchString}&employee_id=${data.employee_id}`;
@@ -96,7 +96,7 @@ export class InvoicesService {
       searchString = `${searchString}&end_date=${data.endDate}`;
     }
     return await this.http
-      .get(invoicesEndpoint + 'paid?' + searchString, {
+      .get(invoicesEndpoint + '?isPaid=true' + searchString, {
         headers: getHeaders(),
       })
       .toPromise();

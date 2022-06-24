@@ -83,12 +83,12 @@ export class CreateItemInvoiceModal implements OnInit {
     this.selectedItems.forEach((plan) => {
       itemsTotal += Number(this.items.find((x) => x.id == plan.id).price);
     });
-    if (this.data.extraAmount > 0) {
-      this.data.total = Number(this.data.extraAmount);
-      this.data.total += itemsTotal;
-    } else {
+    // if (this.data.extraAmount > 0) {
+    //   this.data.total = Number(this.data.extraAmount);
+    //   this.data.total += itemsTotal;
+    // } else {
       this.data.total = Number(itemsTotal);
-    }
+    // }
   }
 
   onItemDeSelect(event) {

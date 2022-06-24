@@ -81,11 +81,11 @@
                     <li><a routerLink="/company/invoices/{{invoice.id}}" data-tip="show">
                         <i class="fa fa-eye" style="font-size: 21px!important;"></i></a>
                     </li>
-                    <li *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)">
+                    <li *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role) && showCollectAction">
                       <a (click)="openCollectModal(invoice.id, invoice.user.name)" data-tip="collect">
                         <i class="fas fa-money-bill-alt" style="font-size: 21px!important;"></i></a>
                     </li>
-                    <li *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)">
+                    <li *ngIf="[UserRole.ADMIN].includes(currentUser.role) && showForgiveAction">
                       <a (click)="openForgiveModal(invoice.id, invoice.user.name)" data-tip="forgive">
                         <i class="fas fa-hand-holding-usd" style="font-size: 21px!important;"></i>
                       </a>

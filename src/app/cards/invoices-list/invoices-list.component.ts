@@ -31,6 +31,8 @@ export class InvoicesListComponent implements OnInit {
   @Input('invoices') invoices: Invoice[] = [];
   @Input('title') title: string = 'Invoices';
   @Input('showSearchByDate') showSearchByDate: boolean = false;
+  @Input() showCollectAction: boolean = true;
+  @Input() showForgiveAction: boolean = true;
   @Input() showPlans: boolean = false;
   @Input() showItems: boolean = false;
   @Input() showFirstPayment: boolean = false;
