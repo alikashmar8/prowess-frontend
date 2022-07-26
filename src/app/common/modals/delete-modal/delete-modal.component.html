@@ -1,13 +1,13 @@
 <div class="modal-header">
-  <h4 class="modal-title">Confirmation</h4>
+  <h4 class="modal-title" translate>Confirmation</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-  <p>Are you sure you want to delete {{name}}?</p>
+  <p><span translate>Are you sure you want to delete</span> {{name}}?</p>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-danger" (click)="activeModal.close(true)">Delete</button>
-  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button>
+  <button type="button" class="btn btn-danger" (click)="activeModal.close(true)" translate>Delete</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)" translate>Close</button>
 </div>

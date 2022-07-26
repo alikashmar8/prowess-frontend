@@ -1,9 +1,9 @@
 <section *ngIf="!isLoading" style="margin-bottom: 100px;">
   <div class="row">
-    <div class="col-sm-8">  <h1 style="margin: 20px;">Edit Customer</h1>
+    <div class="col-sm-8">  <h1 style="margin: 20px;" translate>Edit Customer</h1>
 </div>
     <div class="col-sm-4">
-      <button class="btn btn-primary" style="float: right; margin-top: 20px;" (click)="openUpdateCustomerPlansModal()">Update Plans</button>
+      <button class="btn btn-primary" style="float: right; margin-top: 20px;" (click)="openUpdateCustomerPlansModal()" translate>Update Plans</button>
     </div>
   </div>
   <details (click)='detailsClicked()' #detailsElement>
@@ -13,7 +13,7 @@
           <i class="fa fa-user" style="font-size: 25px" aria-hidden="true"></i>
         </span>
         <h3 style="font-size: 1rem;">
-          <strong>User Details</strong>
+          <strong translate>User Details</strong>
           <!-- <small>Clothes & Fashion</small> -->
         </h3>
         <span class="px-5 text-danger" *ngIf="detailsIsOpen"><i class="fa fa-minus" aria-hidden="true"></i></span>
@@ -22,25 +22,25 @@
     </summary>
     <div>
       <div class="form-group">
-        <label for="name">Name:</label>
+        <label for="name" translate>Name:</label>
         <input type="text" class="form-control" name="name" id="name" aria-describedby="helpId" placeholder="Name"
           [(ngModel)]="data.name">
         <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
       </div>
       <div class="form-group">
-        <label for="email">Email:</label>
+        <label for="email" translate>Email:</label>
         <input type="email" class="form-control" name="email" id="email" aria-describedby="helpId"
           placeholder="ex: user@gmail.com" [(ngModel)]="data.email">
         <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
       </div>
       <div class="form-group">
-        <label for="phone">Phone Number:</label>
+        <label for="phone" translate>Phone Number:</label>
         <input type="text" class="form-control" name="phone" id="phone" aria-describedby="helpId"
           placeholder="ex: +96103456789" [(ngModel)]="data.phoneNumber">
         <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
       </div>
       <div class="form-group">
-        <label for="paymentDate">Payment Date:</label>
+        <label for="paymentDate" translate>Payment Date:</label>
         <input type="date" class="form-control" name="paymentDate" id="paymentDate" aria-describedby="helpId"
           [(ngModel)]="data.paymentDate" required>
       </div>
@@ -53,7 +53,7 @@
           <i class="fa fa-home" style="font-size: 25px!important;" aria-hidden="true"></i>
         </span>
         <h3 style="font-size: 1rem;">
-          <strong>Address</strong>
+          <strong translate>Address</strong>
           <!-- <small>Gift</small> -->
         </h3>
         <span class="px-5 text-danger" *ngIf="addressIsOpen"><i class="fa fa-minus" aria-hidden="true"></i></span>
@@ -98,14 +98,14 @@
           <i class="fas fa-network-wired" style="font-size: 25px!important;" aria-hidden="true"></i>
         </span>
         <h3 style="font-size: 1rem;">
-          <strong>Plans</strong>
+          <strong translate>Plans</strong>
           <!-- <small>Food & Beverage</small> -->
         </h3>
         <span class="px-5 text-danger" *ngIf="plansIsOpen"><i class="fa fa-minus" aria-hidden="true"></i></span>
         <span class="px-5 text-success" *ngIf="!plansIsOpen"> <i class="fa fa-plus" aria-hidden="true"></i> </span>
       </div>
     </summary>
-    <div class="m-5" *ngIf="authService.currentUser.role == 'ADMIN' || authService.currentUser.role == 'MANAGER' ">
+    <div class="m-5" *ngIf="authService.currentUser.role == 'ADMIN' || authService.currentUser.role == 'MANAGER' " translate>
       Collector:
       <select [(ngModel)]="data.collector_id" class="form-control">
         <option *ngFor="let collector of collectors" [value]="collector.id">{{collector.name}}</option>
@@ -113,7 +113,7 @@
     </div>
   </details>
   <button class="btn btn-primary bg-linear-primary center-elements mx-auto my-5" style="width: 70%;" (click)="update()" [disabled]="isStoreLoading">
-    <span *ngIf="!isStoreLoading" >Edit Customer</span>
+    <span *ngIf="!isStoreLoading" translate>Edit Customer</span>
     <span *ngIf="isStoreLoading" ><img src="{{loadingGif}}" width="20px" ></span>
   </button>
 </section>

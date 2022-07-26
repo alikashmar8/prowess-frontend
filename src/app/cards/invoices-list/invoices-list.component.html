@@ -31,16 +31,16 @@
           <table class="table" id="invoicesTable" #invoicesTable>
             <thead>
               <tr>
-                <th>Id</th>
-                <th>Customer Name</th>
-                <th>Collector</th>
-                <th>Due Date</th>
-                <th *ngIf="showPlans">Plans</th>
-                <th *ngIf="showItems">Items</th>
-                <th *ngIf="showFirstPayment">First Payment?</th>
-                <th>Total</th>
-                <th>Is Paid</th>
-                <th *ngIf="showActions" >Action</th>
+                <th translate>Id</th>
+                <th translate>Customer Name</th>
+                <th translate>Collector</th>
+                <th translate>Due Date</th>
+                <th *ngIf="showPlans" translate>Plans</th>
+                <th *ngIf="showItems" translate>Items</th>
+                <th *ngIf="showFirstPayment" translate>First Payment?</th>
+                <th translate>Total</th>
+                <th translate>Is Paid</th>
+                <th *ngIf="showActions" translate>Action</th>
               </tr>
             </thead>
             <tbody>

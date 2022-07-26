@@ -30,7 +30,7 @@
           <i class="fa fa-user mr-2"></i>
           <span>{{employee.role}}</span>
         </li>
-        <li class="mr-md-4">
+        <li class="mr-md-4" translate>
           <i class="fa fa-calendar-times"></i>
           {{ employee.expiryDate? (employee.expiryDate | date: "shortDate"): 'No expiry date' }}
         </li>
@@ -43,22 +43,20 @@
 
     <div class="row" *ngIf="employee.role != 'ADMIN'">
       <button class="btn d-block w-100 d-sm-inline-block btn-success m-1" (click)="openRenewModal()">
-        <span>Renew</span>
+        <span translate>Renew</span>
       </button>
     </div>
 
     <div class="row">
       <button class="btn d-block w-100 d-sm-inline-block btn-info m-1"
-        (click)="openDetailModal(employee)">Details</button>
+        (click)="openDetailModal(employee)" translate>Details</button>
     </div>
 
     <div class="row" *ngIf="employee.role != 'ADMIN'">
       <button class="btn d-block w-100 d-sm-inline-block btn-danger m-1"
-        (click)="openDeleteModal(employee.id, employee.name)">
+        (click)="openDeleteModal(employee.id, employee.name)" translate>
         Delete
       </button>
     </div>
-
-
   </div>
 </div>

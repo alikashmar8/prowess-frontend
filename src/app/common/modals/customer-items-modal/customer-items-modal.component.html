@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Customer Items</h4>
+  <h4 class="modal-title" translate>Customer Items</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -7,7 +7,7 @@
 <div class="modal-body">
   <div class="row m-3">
     <div class="col-sm-10">
-      <h3>Items Purchases:</h3>
+      <h3 translate>Items Purchases:</h3>
     </div>
     <div class="col-sm-2">
       <button *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)"
@@ -27,18 +27,18 @@
             <div>{{invoice.isPaid? 'paid': 'not paid'}} </div>
           </span>
           <br>
-          <h6>Notes:</h6>
+          <h6 translate>Notes:</h6>
           {{invoice.notes ? invoice.notes : 'N/A'}}
         </small>
       </div>
-      <p class="mb-1">Collected By:</p>
+      <p class="mb-1" translate>Collected By:</p>
       <small> {{invoice.collectedBy ? invoice.collectedBy.name : 'N/A'}} <br></small>
       <hr>
-      <p class="mb-1">Items:</p>
+      <p class="mb-1" translate>Items:</p>
       <small *ngFor="let item of invoice.items">- {{item.name}} <br></small>
     </a>
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Done</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)" translate>Done</button>
 </div>

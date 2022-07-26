@@ -1,6 +1,6 @@
 <div class="card card-signin my-5" style="border: 0; margin: 0!important;" *ngIf="!isLoading">
   <div class="card-body">
-    <h2 class="card-title text-center">Add {{currentCompany.addressLevel4Name}} </h2>
+    <h2 class="card-title text-center"><span translate>Add</span> {{currentCompany.addressLevel4Name}} </h2>
     <form class="form-signin" (ngSubmit)="store()">
       <div class="form-label-group m-4">
         <input type="text" name="name" id="name" [(ngModel)]="name" class="form-control common-input px-3"
@@ -15,7 +15,7 @@
       </div>
       <div class="form-label-group m-4">
         <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
-          <span *ngIf="!isStoreLoading">Save</span>
+          <span *ngIf="!isStoreLoading" translate>Save</span>
           <img src="{{ loadingGif }}" *ngIf="isStoreLoading" width="20px" />
         </button>
       </div>
@@ -45,6 +45,6 @@
     </ul>
   </div>
   <div class="row m-5 p-5 alert-danger" *ngIf="!addresses.length">
-    <h3 class="col-md-12 px-5 center-elements"> No addresses available!</h3>
+    <h3 class="col-md-12 px-5 center-elements" translate> No addresses available!</h3>
   </div>
 </div>

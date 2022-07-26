@@ -1,24 +1,24 @@
 <div class="modal-header">
-  <h4 class="modal-title">{{employee.name}} Details</h4>
+  <h4 class="modal-title">{{employee.name}} <span translate>Details</span></h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
   <div class="row">
-    <div class="col-sm-6"><strong>Name:</strong> {{employee.name}}</div>
-    <div class="col-sm-6"><strong>Username:</strong>
+    <div class="col-sm-6"><strong translate>Name:</strong> {{employee.name}}</div>
+    <div class="col-sm-6"><strong translate>Username:</strong>
       {{employee.username}}</div>
   </div>
   <div class="row">
-    <div class="col-sm-6"><strong>Email:</strong> {{employee.email}}</div>
-    <div class="col-sm-6"><strong>Phone Number:</strong> {{employee.phoneNumber}}</div>
+    <div class="col-sm-6"><strong translate>Email:</strong> {{employee.email}}</div>
+    <div class="col-sm-6"><strong translate>Phone Number:</strong> {{employee.phoneNumber}}</div>
   </div>
   <div class="row">
-    <div class="col-sm-6"><strong>Is Active:</strong> {{employee.isActive}}</div>
-    <div class="col-sm-6"><strong>Expiry Date:</strong> {{employee.expiryDate | date: "dd/MM/yyyy"}}</div>
+    <div class="col-sm-6"><strong translate>Is Active:</strong> {{employee.isActive}}</div>
+    <div class="col-sm-6"><strong translate>Expiry Date:</strong> {{employee.expiryDate | date: "dd/MM/yyyy"}}</div>
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)" translate>Close</button>
 </div>

@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Confirmation</h4>
+  <h4 class="modal-title" translate>Confirmation</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -19,6 +19,6 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="submit()">Confirm</button>
-      <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button>
+      <button type="button" class="btn btn-success" (click)="submit()" translate>Confirm</button>
+      <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)" translate>Close</button>
     </div>

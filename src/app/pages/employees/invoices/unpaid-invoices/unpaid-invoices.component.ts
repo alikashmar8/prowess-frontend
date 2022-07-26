@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth-service.service';
 import { InvoicesService } from 'src/app/services/invoices.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { Invoice } from 'src/models/invoice.model';
+import { getLang } from 'src/utils/functions';
 
 @Component({
   selector: 'app-unpaid-invoices',
@@ -14,6 +15,7 @@ export class UnpaidInvoicesComponent implements OnInit {
   invoices: Invoice[] = [];
   today = new Date();
   currentUser;
+  title = '';
   constructor(
     private invoicesService: InvoicesService,
     private loadingService: LoadingService,
@@ -25,6 +27,15 @@ export class UnpaidInvoicesComponent implements OnInit {
       this.isLoading = this.loadingService.appLoading(true);
       this.invoices = await this.invoicesService.getUnpaidInvoices();
       this.currentUser = this.authService.currentUser;
+      // get language
+      var storedLang: string = getLang();
+      if (storedLang) {
+        if (storedLang == 'en') {
+          this.title = 'Unpaid Invoices';
+        } else if (storedLang == 'ar') {
+          this.title = 'الفواتير الغير مدفوعة';
+        }
+      }
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
       this.authService.handleHttpError(err);
