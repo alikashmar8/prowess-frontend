@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { User } from 'src/models/user.model';
-import { getLang, setLang } from 'src/utils/functions';
 
 @Component({
   selector: 'app-change-password-modal',
@@ -21,17 +19,8 @@ export class ChangePasswordModal implements OnInit {
   constructor(
     private authService: AuthService,
     private alertService: AlertService,
-    public activeModal: NgbActiveModal,
-    public translate: TranslateService
-  ) {
-    var storedLang: string = getLang();
-    if (storedLang !== '') {
-      translate.use(storedLang);
-    } else {
-      translate.use('en');
-      setLang('en');
-    }
-  }
+    public activeModal: NgbActiveModal
+  ) {}
 
   ngOnInit(): void {
     if (this.authService.currentUser.id != this.user.id) {

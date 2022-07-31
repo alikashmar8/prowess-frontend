@@ -18,25 +18,25 @@
             <main>
               <div class="row contacts">
                 <div class="col invoice-to">
-                  <div class="text-gray-light">INVOICE TO:</div>
+                  <div class="text-gray-light" translate>INVOICE TO:</div>
                   <h2 class="to">{{invoice.user.name}}</h2>
                   <div class="address">{{ getAddressString(invoice.user.address) }}</div>
                   <div class="email"><a href="mailto:{{invoice.user.email}}">{{invoice.user.email}}</a></div>
                   <div class="email">{{invoice.user.phoneNumber}}</div>
                 </div>
                 <div class="col invoice-details">
-                  <h1 class="invoice-id">INVOICE: {{invoice.id}}</h1>
-                  <div class="date">Date of Invoice: {{ invoice.created_at | date: 'yyyy-MM-dd' }}</div>
-                  <div class="date">Due Date: {{ invoice.dueDate | date: 'yyyy-MM-dd' }}</div>
+                  <h1 class="invoice-id"><span translate>INVOICE:</span> {{invoice.id}}</h1>
+                  <div class="date"><span translate>Date of Invoice:</span> {{ invoice.created_at | date: 'yyyy-MM-dd' }}</div>
+                  <div class="date"><span translate>Due Date:</span> {{ invoice.dueDate | date: 'yyyy-MM-dd' }}</div>
                   <div class="box-card m-2">
-                    <div class="date text-danger" *ngIf="!invoice.isPaid">Not Paid </div>
+                    <div class="date text-danger" *ngIf="!invoice.isPaid" translate>Not Paid</div>
                     <div *ngIf="invoice.isPaid">
                       <div class="date" class="text-success" *ngIf="invoice.isPaid">Paid </div>
                       <div class="vr"></div>
                       <hr>
-                      <div class="date" *ngIf="invoice.isPaid">Collected By: {{invoice.collectedBy?.name}} </div>
+                      <div class="date" *ngIf="invoice.isPaid"><span translate>Collected By:</span> {{invoice.collectedBy?.name}} </div>
                       <hr>
-                      <div class="date" *ngIf="invoice.isPaid">Collected At: {{invoice.collected_at | date: 'yyyy-MM-dd HH:mm' }} </div>
+                      <div class="date" *ngIf="invoice.isPaid"><span translate>Collected At:</span> {{invoice.collected_at | date: 'yyyy-MM-dd HH:mm' }} </div>
                     </div>
                   </div>
                 </div>
@@ -45,10 +45,10 @@
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th class="text-left">DESCRIPTION</th>
-                    <th class="text-right">PRICE</th>
-                    <th class="text-right">QTY</th>
-                    <th class="text-right">TOTAL</th>
+                    <th class="text-left" translate>DESCRIPTION</th>
+                    <th class="text-right" translate>PRICE</th>
+                    <th class="text-right" translate>QTY</th>
+                    <th class="text-right" translate>TOTAL</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -91,23 +91,23 @@
                   </tr> -->
                   <tr>
                     <td colspan="2"></td>
-                    <td colspan="2">Extra Amount:</td>
+                    <td colspan="2" translate>Extra Amount:</td>
                     <td>{{ invoice.extraAmount }}</td>
                   </tr>
                   <tr>
                     <td colspan="2"></td>
-                    <td colspan="2">GRAND TOTAL</td>
+                    <td colspan="2" translate>GRAND TOTAL</td>
                     <td>{{invoice.total}}</td>
                   </tr>
                 </tfoot>
               </table>
-              <div class="thanks">Thank you!</div>
+              <div class="thanks" translate>Thank you!</div>
               <div class="notices" *ngIf='invoice.notes'>
-                <div>Note:</div>
+                <div translate>Note:</div>
                 <div class="notice">{{invoice.notes}}</div>
               </div>
             </main>
-            <footer>Invoice was created on a computer and is valid without the signature and seal.</footer>
+            <footer translate>Invoice was created on a computer and is valid without the signature and seal.</footer>
           </div>
           <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
           <div></div>
@@ -116,17 +116,16 @@
           <div class="text-end">
             <button
               *ngIf="!invoice.isPaid && [UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)"
-              class="btn btn-success m-2" (click)="openCollectModal(invoice.id, invoice.user.name)" data-tip="collect">
+              class="btn btn-success m-2" (click)="openCollectModal(invoice.id, invoice.user.name)" data-tip="collect" translate>
               <i class="fas fa-money-bill-alt m-1" style="font-size: 21px!important;"></i>Collect</button>
             <button
-              *ngIf="!invoice.isPaid && [UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role)"
-              class="btn btn-info m-2" (click)="openForgiveModal(invoice.id, invoice.user.name)" data-tip="forgive">
+              *ngIf="!invoice.isPaid && [UserRole.MANAGER, UserRole.ADMIN].includes(currentUser.role)"
+              class="btn btn-info m-2" (click)="openForgiveModal(invoice.id, invoice.user.name)" data-tip="forgive" translate>
               <i class="fas fa-hand-holding-usd m-1" style="font-size: 21px!important;"></i>
               Forgive
             </button>
-            <button type="button" class="btn btn-danger m-2" (click)="downloadPDF()"><i class="fas fa-file-pdf"></i>
-              Export
-              as PDF</button>
+            <button type="button" class="btn btn-danger m-2" (click)="downloadPDF()" translate><i class="fas fa-file-pdf"></i>
+              Export as PDF</button>
           </div>
           <hr>
         </div>

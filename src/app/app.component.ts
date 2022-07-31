@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { isMobile } from 'src/utils/functions';
+import { getLang, isMobile } from 'src/utils/functions';
 import { AuthService } from './services/auth-service.service';
 import { LoadingService } from './services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -36,10 +36,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         this.showMenu = false;
       }
     });
-
-
     translate.addLangs(['en', 'ar']);
     translate.setDefaultLang('en');
+    let storedLanguage = getLang();
+    if (storedLanguage) {
+      translate.use(storedLanguage);
+    }
   }
 
   ngOnInit(): void {

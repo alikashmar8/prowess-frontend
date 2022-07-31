@@ -1,6 +1,6 @@
 <div class="card card-signin my-5" style="border: 0; margin: 0!important;" *ngIf="!isLoading">
   <div class="card-body">
-    <h2 class="card-title text-center">Edit Company</h2>
+    <h2 class="card-title text-center" translate>Edit Company</h2>
     <form class="form-signin" (ngSubmit)="update()">
       <div class="form-label-group m-4">
         <input type="text" name="name" id="name" [(ngModel)]="company.name" class="form-control common-input px-3"
@@ -34,7 +34,7 @@
           class="form-control common-input px-3" placeholder="Max Customers Number" required autofocus min="1" />
       </div>
 
-      <h5 class="mt-4 ml-4" >Addresses levels:</h5>
+      <h5 class="mt-4 ml-4" translate>Addresses levels:</h5>
 
       <div class="row mx-3">
         <div class='level-selector'>
@@ -92,7 +92,7 @@
 
       <div class="form-label-group m-4">
         <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isUpdateLoading">
-          <span *ngIf="!isUpdateLoading">Edit Company</span>
+          <span *ngIf="!isUpdateLoading" translate>Edit Company</span>
           <img src="{{ loadingGif }}" *ngIf="isUpdateLoading" width="20px" />
         </button>
       </div>

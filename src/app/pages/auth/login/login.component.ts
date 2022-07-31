@@ -1,11 +1,12 @@
-import { loadingGifUrl } from './../../../../constants/constants';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
+import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { UserRoles } from 'src/enums/user-roles.enum';
-import { TranslateService } from '@ngx-translate/core';
+import { setLang } from 'src/utils/functions';
+import { loadingGifUrl } from './../../../../constants/constants';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -85,5 +86,6 @@ export class LoginComponent implements OnInit {
 
   switchLang(lang: string) {
     this.translate.use(lang);
+    setLang(lang);
   }
 }

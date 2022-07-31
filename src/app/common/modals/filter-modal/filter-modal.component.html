@@ -7,15 +7,15 @@
 <div class="modal-body">
   <div class="search-form-container">
     <div class="search-bar-section center-elements">
-      <label for="search">Search:</label>
+      <label for="search" translate>Search:</label>
       <input class="form-control" type="search" placeholder="Search" style="border: 1px solid grey!important;"
         [(ngModel)]="search" name="search" id="locality">
     </div>
     <div class="row">
-      <div class="col-sm-6 p-3" *ngIf="[UserRole.ADMIN, UserRole.MANAGER].hasOwnProperty(currentUser.role)">
-        <label for="employee">Filter by employee:</label>
+      <div class="col-sm-6 p-3" *ngIf="[UserRole.ADMIN, UserRole.MANAGER].includes(currentUser.role)">
+        <label for="employee" translate>Filter by employee:</label>
         <select name="employee" class="form-control w-100" placeholder="Select Employee" [(ngModel)]="selectedEmployee">
-          <option value disabled hidden>Select Employee</option>
+          <option value disabled hidden translate>Select Employee</option>
           <ng-container *ngFor="let employee of employees">
             <option *ngIf="employee.role != UserRole.ADMIN" [value]="employee.id">{{employee.name}}
             </option>
@@ -23,16 +23,16 @@
         </select>
       </div>
       <div class="col-sm-6 p-3" *ngIf="showPlansFilter" >
-        <label for="plan">Filter by plan:</label>
+        <label for="plan" translate>Filter by plan:</label>
         <select name="plan" [(ngModel)]="selectedPlan" class=" form-control w-100">
-          <option value disabled hidden>Select Plan</option>
+          <option value disabled hidden translate>Select Plan</option>
           <ng-container *ngFor="let plan of plans">
             <option *ngIf="plan.isActive" [value]="plan.id">{{plan.name}}</option>
           </ng-container>
         </select>
       </div>
       <div class="col-sm-6 p-3">
-        <label for="startDate">Start Date:</label>
+        <label for="startDate" translate>Start Date:</label>
         <input type="date" name="startDate" [(ngModel)]="startDateFilter"
           class="bg-linear-primary p-2 select rounded w-100 form-control" style="background-image: linear-gradient(
             to right,
@@ -44,7 +44,7 @@
           " placeholder="Starting Date">
       </div>
       <div class="col-sm-6 p-3">
-        <label for="endDate">End Date:</label>
+        <label for="endDate" translate>End Date:</label>
         <input type="date" name="endDate" [(ngModel)]="endDateFilter"
           class="bg-linear-primary p-2 select rounded w-100 form-control" style="background-image: linear-gradient(
             to right,
@@ -60,12 +60,11 @@
   <div class="row">
     <div class="col-sm-6"></div>
     <div class="col-sm-6">
-      <button class="btn btn-info m-2" (click)="clearFilters()">
+      <button class="btn btn-info m-2" (click)="clearFilters()" translate>
         Clear Filters
       </button>
-      <button type="button" class="btn btn-outline-dark m-2" (click)="activeModal.dismiss(false)">Close</button>
-      <button type="button" class="btn btn-primary m-2" (click)="onSearch()">Search</button>
-
+      <button type="button" class="btn btn-outline-dark m-2" (click)="activeModal.dismiss(false)" translate>Close</button>
+      <button type="button" class="btn btn-primary m-2" (click)="onSearch()" translate>Search</button>
     </div>
   </div>
 </div>

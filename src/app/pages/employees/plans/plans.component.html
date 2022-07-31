@@ -1,10 +1,10 @@
 <div *ngIf="!isLoading">
   <div class="row p-3">
     <div class="col-md-9">
-      <h3>All Plans:</h3>
+      <h3 translate>All Plans:</h3>
     </div>
     <div class="col-md-3">
-      <button class="btn btn-success" routerLink="/company/plans/create">Add New Plan</button>
+      <button class="btn btn-success" routerLink="/company/plans/create" translate>Add New Plan</button>
     </div>
   </div>
 
@@ -35,6 +35,6 @@
     </ul>
   </div>
   <div class="row m-5 p-5 alert-danger" *ngIf="!plans.length">
-    <h3 class="col-md-12 px-5 center-elements"> No plans available!</h3>
+    <h3 class="col-md-12 px-5 center-elements" translate>No plans available!</h3>
   </div>
 </div>

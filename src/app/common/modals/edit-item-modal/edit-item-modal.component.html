@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Update Item</h4>
+  <h4 class="modal-title" translate>Update Item</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -29,8 +29,8 @@
   <div class="form-label-group m-4">
     <button class="btn btn-primary form-control" (click)="update()"
       [disabled]="isUpdateLoading">
-      <span *ngIf="!isUpdateLoading">Update</span>
+      <span *ngIf="!isUpdateLoading" translate>Update</span>
       <img src="{{ loadingGif }}" *ngIf="isUpdateLoading" width="20px" />
     </button>
-  </div><button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button>
+  </div><button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)" translate>Close</button>
 </div>

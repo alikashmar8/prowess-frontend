@@ -10,7 +10,7 @@
     <div
       *ngIf="currentUser.role == UserRole.ADMIN ||currentUser.role == UserRole.MANAGER || currentUser.role == UserRole.SUPERVISOR">
       <div class="form-group">
-        <label for="collector" class="required">Collector:</label>
+        <label for="collector" class="required" translate>Collector:</label>
         <select class="form-control" [(ngModel)]="collector_id" name="collector">
           <ng-container *ngFor="let employee of employees">
             <option *ngIf="employee.role != UserRole.ADMIN" [value]="employee.id">{{employee.name}}</option>

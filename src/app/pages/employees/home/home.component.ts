@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { async } from 'rxjs';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { CommonService } from 'src/app/services/common.service';
 import { User } from 'src/models/user.model';
-import { getLang, setLang } from 'src/utils/functions';
 
 @Component({
   selector: 'app-home',
@@ -27,18 +24,8 @@ export class EmployeesHomeComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private alertService: AlertService,
-    private authService: AuthService,
-    public translate: TranslateService
-  ) {
-    var storedLang: string = getLang();
-    if (storedLang !== '') {
-      translate.use(storedLang);
-    }
-    else {
-      translate.use('en');
-      setLang('en');
-    }
-  }
+    private authService: AuthService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     try {

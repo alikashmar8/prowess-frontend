@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ChangePasswordModal } from 'src/app/common/modals/change-password-modal/change-password-modal.component';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { User } from 'src/models/user.model';
-import { getLang, setLang } from 'src/utils/functions';
+import { setLang } from 'src/utils/functions';
 
 @Component({
   selector: 'app-profile',
@@ -16,15 +16,7 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService,
     private ngbModal: NgbModal,
     public translate: TranslateService
-  ) {
-    var storedLang: string = getLang();
-    if (storedLang !== '') {
-      translate.use(storedLang);
-    } else {
-      translate.use('en');
-      setLang('en');
-    }
-  }
+  ) {}
 
   user: User;
 
