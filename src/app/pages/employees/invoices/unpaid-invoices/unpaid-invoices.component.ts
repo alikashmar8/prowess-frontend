@@ -68,7 +68,6 @@ export class UnpaidInvoicesComponent implements OnInit {
 
   async exportPDF() {
     try {
-      console.log('export pdf');
 
       this.isLoading = this.loadingService.appLoading(true);
       const ids = this.invoices.map((invoice) => invoice.id);

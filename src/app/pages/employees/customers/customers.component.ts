@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivateCustomerModal } from 'src/app/common/modals/activate-customer-modal/activate-customer-modal.component';
 import { EnableDisableUserComponent } from 'src/app/common/modals/enable-disable-user/enable-disable-user.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
@@ -46,7 +47,6 @@ export class CustomersComponent implements OnInit {
       .subscribe(
         (result: any) => {
           this.customers = result.data;
-          console.log(this.customers);
           this.totalRecords = result.count;
           this.totalPages = result.count > 0 ? Math.ceil(result.count / 10) : 1;
           this.isLoading = this.loadingService.appLoading(false);
@@ -91,43 +91,54 @@ export class CustomersComponent implements OnInit {
   }
 
   openEnableDisableModal(id: string, userName: string, isActive: boolean) {
-    const modalRef = this.modalService.open(EnableDisableUserComponent);
-    modalRef.componentInstance.userName = userName;
-    modalRef.componentInstance.isActive = isActive;
-    modalRef.result.then(
-      (result) => {
+    if (isActive) {
+      const modalRef = this.modalService.open(EnableDisableUserComponent);
+      modalRef.componentInstance.userName = userName;
+      modalRef.componentInstance.isActive = isActive;
+      modalRef.result.then(
+        (result) => {
+          if (result) {
+            isActive
+              ? this.usersService.makeUserInactive(id).subscribe(
+                  (result: any) => {
+                    if (result.affected > 0) {
+                      this.alertService.toastSuccess('Operation successful');
+                      window.location.reload();
+                    } else {
+                      this.alertService.toastError('Error');
+                    }
+                  },
+                  (error) => {
+                    this.authService.handleHttpError(error);
+                  }
+                )
+              : this.usersService.makeUserActive(id).subscribe(
+                  (result: any) => {
+                    if (result.affected > 0) {
+                      this.alertService.toastSuccess('Operation successful');
+                      window.location.reload();
+                    } else {
+                      this.alertService.toastError('Error');
+                    }
+                  },
+                  (error) => {
+                    this.authService.handleHttpError(error);
+                  }
+                );
+          }
+        },
+        (rejected) => {}
+      );
+    } else {
+      const modalRef = this.modalService.open(ActivateCustomerModal);
+      modalRef.componentInstance.customer_id = id;
+      modalRef.componentInstance.userName = userName;
+      modalRef.result.then((result) => {
         if (result) {
-          isActive
-            ? this.usersService.makeUserInactive(id).subscribe(
-                (result: any) => {
-                  if (result.affected > 0) {
-                    this.alertService.toastSuccess('Operation successful');
-                    window.location.reload();
-                  } else {
-                    this.alertService.toastError('Error');
-                  }
-                },
-                (error) => {
-                  this.authService.handleHttpError(error);
-                }
-              )
-            : this.usersService.makeUserActive(id).subscribe(
-                (result: any) => {
-                  if (result.affected > 0) {
-                    this.alertService.toastSuccess('Operation successful');
-                    window.location.reload();
-                  } else {
-                    this.alertService.toastError('Error');
-                  }
-                },
-                (error) => {
-                  this.authService.handleHttpError(error);
-                }
-              );
+          window.location.reload();
         }
-      },
-      (rejected) => {}
-    );
+      });
+    }
   }
 
   searchCustomers() {
@@ -138,7 +149,7 @@ export class CustomersComponent implements OnInit {
         this.authService.currentUser.company_id,
         this.take,
         this.skip,
-        this.search,
+        this.search
       )
       .subscribe(
         (result: any) => {

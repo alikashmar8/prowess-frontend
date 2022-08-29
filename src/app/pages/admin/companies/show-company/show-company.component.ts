@@ -30,12 +30,9 @@ export class AdminShowCompanyComponent implements OnInit {
     this.companiesService.getById(this.company_id).subscribe(
       (data: Company) => {
         this.company = data;
-        console.log(this.company);
-
         this.employees = this.company.users.filter((user) => {
           if (isEmployee(user)) return user;
         });
-        console.log(this.employees);
         this.isLoading = this.loadingService.appLoading(false);
       },
       (err) => {

@@ -59,7 +59,6 @@ export class ThisMonthInvoicesComponent implements OnInit {
   }
 
   async exportExcel(event) {
-    console.log(event);
     const date = new Date(event)
     const dateString = date.toISOString()
     try {

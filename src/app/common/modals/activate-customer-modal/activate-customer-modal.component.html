@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <h4 class="modal-title">Confirmation</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p><span translate>Activating</span> {{userName}}:</p>
+  <div class="row my-5">
+    <div class="col-sm-12 p-0">
+      <div class="m-3">
+        <h4 translate>Fill Invoice:</h4>
+        <div class="form-label-group" id="invoice-container">
+          <label translate>Total amount paid:</label>
+          <div id="range-div">
+            <span id="rangeValue">{{data.invoice_total}}</span>
+            <input class="range col-md-12" type="range" name="range" min="0" max="1000000" step="5000"
+              [(ngModel)]="data.invoice_total">
+          </div>
+          <div class="form-label-group m-4">
+            <label translate>Additional Notes:</label>
+            <input type="text" class="form-control required" required name="notes" [(ngModel)]="data.invoice_notes">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="store()">Confirm</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button>
+</div>

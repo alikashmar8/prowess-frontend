@@ -47,8 +47,6 @@ export class Level3AddressesComponent implements OnInit {
       );
       this.parents = await this.addressesService.GetLevel4Addresses();
       this.addresses = await this.addressesService.GetLevel3Addresses();
-        console.log(this.addresses);
-
       this.isLoading = false;
     } catch (err) {
       this.authService.handleHttpError(err);

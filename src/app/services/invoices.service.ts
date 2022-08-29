@@ -115,8 +115,6 @@ export class InvoicesService {
     search?: string;
     dateSearch?: string;
   }): Promise<any> {
-    console.log(data);
-
     if (!data.dateSearch) {
       data.dateSearch = new Date().toISOString();
     }

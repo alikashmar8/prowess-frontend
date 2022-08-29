@@ -20,7 +20,6 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUser;
-    console.log(this.currentUser);
   }
 
   toggleUsers() {

@@ -116,14 +116,11 @@ export class UpdateCustomerPlansModal implements OnInit {
       }
       const selectedPlansIds = this.selectedPlans.map((plan) => plan.id);
       this.data.ids = selectedPlansIds;
-      console.log('updating before request');
 
       await this.usersService.updateCustomerPlans(
         this.customer_id,
         this.data
       );
-
-      console.log('updating after request');
 
       this.alertService.toastSuccess('Plans updated successfully');
       this.activeModal.close();

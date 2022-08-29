@@ -31,9 +31,7 @@ export class ProfileComponent implements OnInit {
     });
     modalRef.componentInstance.user = this.user;
 
-    modalRef.result.then((result) => {
-      console.log(result);
-    });
+    modalRef.result.then((result) => {});
   }
 
   switchLang(language: string) {

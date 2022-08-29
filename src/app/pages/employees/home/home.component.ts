@@ -11,15 +11,18 @@ import { User } from 'src/models/user.model';
 })
 export class EmployeesHomeComponent implements OnInit {
   stats: {
+    company_balance: number;
     customers_count: number;
     unpaid_invoices_count: number;
     amount_collected_today: number;
   } = {
+    company_balance: 0,
     customers_count: 0,
     unpaid_invoices_count: 0,
     amount_collected_today: 0,
   };
   currentUser: User;
+  isLoading: boolean = true;
 
   constructor(
     private commonService: CommonService,
@@ -31,7 +34,9 @@ export class EmployeesHomeComponent implements OnInit {
     try {
       this.currentUser = this.authService.currentUser;
       this.stats = await this.commonService.getStats();
+      this.isLoading = false;
     } catch (e) {
+      console.log(e);
       this.alertService.toastError('Error fetching dashboard stats');
     }
   }

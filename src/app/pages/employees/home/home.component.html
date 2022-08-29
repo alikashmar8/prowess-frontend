@@ -4,11 +4,11 @@
   </div>
 </div>
 <hr>
-<div class="row">
+<div class="row" *ngIf="!isLoading" >
   <div *ngIf="currentUser.role == 'ADMIN'" class="col-sm-2 box-card m-3 center-elements" translate>
     Balance:
     <br>
-    {{currentUser.company.balance}}
+    {{stats.company_balance}}
   </div>
   <div class="col-sm-2 box-card m-3 center-elements" translate>
     Customers:
@@ -26,3 +26,4 @@
     {{stats.amount_collected_today}}
   </div>
 </div>
+<div *ngIf="isLoading">Loading stats...</div>

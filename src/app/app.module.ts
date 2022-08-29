@@ -28,6 +28,7 @@ import { TabsComponent } from './cards/tabs/tabs/tabs.component';
 import { UserListItemComponent } from './cards/user-list-item/user-list-item.component';
 import { AlertComponent } from './common/alert/alert.component';
 import { LoadingScreenComponent } from './common/loading-screen/loading-screen.component';
+import { ActivateCustomerModal } from './common/modals/activate-customer-modal/activate-customer-modal.component';
 import { ChangePasswordModal } from './common/modals/change-password-modal/change-password-modal.component';
 import { ConfirmationModalComponent } from './common/modals/confirmation-modal/confirmation-modal.component';
 import { CreateItemInvoiceModal } from './common/modals/create-item-invoice-modal/create-item-invoice-modal.component';
@@ -132,6 +133,7 @@ import { ProfileComponent } from './pages/employees/profile/profile.component';
     ProfileComponent,
     ChangePasswordModal,
     UpdateCustomerPlansModal,
+    ActivateCustomerModal,
   ],
   imports: [
     BrowserModule,
@@ -166,7 +168,7 @@ import { ProfileComponent } from './pages/employees/profile/profile.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports:[TranslateModule],
+  exports: [TranslateModule],
 })
 export class AppModule {}
 

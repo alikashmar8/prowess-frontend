@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { usersEndpoint } from 'src/constants/api-constants';
-import { User } from 'src/models/user.model';
 import { getHeaders } from 'src/utils/functions';
 
 @Injectable({
@@ -12,8 +11,6 @@ export class UsersService {
     customer_id: string,
     data: { ids: string[]; invoice_total: number; invoice_note?: string }
   ) {
-    console.log('in service before request');
-
     return await this.http
       .patch(
         usersEndpoint + `${customer_id}/plans`,
@@ -45,5 +42,16 @@ export class UsersService {
     return this.http
       .get(usersEndpoint + `${id}`, { headers: getHeaders() })
       .toPromise();
+  }
+
+  activateCustomer(
+    customer_id: string,
+    data: { invoice_total: number; invoice_notes?: string }
+  ) {
+    return this.http.put(
+      usersEndpoint + `${customer_id}/make-active`,
+      { ...data },
+      { headers: getHeaders() }
+    );
   }
 }
