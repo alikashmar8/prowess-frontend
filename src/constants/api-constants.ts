@@ -1,4 +1,5 @@
-export const backendUrl = 'http://localhost:3000/';
+// export const backendUrl = 'http://localhost:3000/';
+export const backendUrl = 'http://113.30.189.70:3000/';
 export const apiUrl = backendUrl + 'api/';
 
 // admin endpoints
