@@ -30,20 +30,30 @@ export class ConfirmationModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUser;
-    if(this.type == ModalType.COLLECT_INVOICE || this.type == ModalType.FORGIVE_INVOICE){
-      this.companiesService.getCompanyEmployees(this.currentUser.company_id).subscribe(
-        (result: any) => {
-          this.employees = result;
-        },
-        (error) => {
-          this.authService.handleHttpError(error);
-        }
-      );
+    if (
+      this.type == ModalType.COLLECT_INVOICE ||
+      this.type == ModalType.FORGIVE_INVOICE
+    ) {
+      this.companiesService
+        .getCompanyEmployees(this.currentUser.company_id)
+        .subscribe(
+          (result: any) => {
+            this.employees = result;
+          },
+          (error) => {
+            this.authService.handleHttpError(error);
+          }
+        );
     }
   }
 
   submit() {
-    if (this.type == ModalType.COLLECT_INVOICE || this.type == ModalType.FORGIVE_INVOICE) {
+    if (
+      this.type == ModalType.COLLECT_INVOICE ||
+      this.type == ModalType.FORGIVE_INVOICE
+    ) {
+      if (this.currentUser.role == UserRoles.COLLECTOR)
+        this.collector_id = this.currentUser.id;
       if (this.collector_id) {
         this.activeModal.close({
           collector_id: this.collector_id,
