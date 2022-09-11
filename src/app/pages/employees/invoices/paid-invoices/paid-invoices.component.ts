@@ -25,7 +25,8 @@ export class PaidInvoicesComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      this.invoices = await this.invoicesService.getPaidInvoices();
+      let res = await this.invoicesService.getPaidInvoices();
+      this.invoices = res.data;
       this.currentUser = this.authService.currentUser;
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
@@ -34,7 +35,8 @@ export class PaidInvoicesComponent implements OnInit {
     }
   }
 
-  async searchClicked(data?:{search?: string;
+  async searchClicked(data?: {
+    search?: string;
     selectedEmployee?: string;
     selectedPlan?: string;
     startDateFilter?: Date;
@@ -42,18 +44,20 @@ export class PaidInvoicesComponent implements OnInit {
   }) {
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      this.invoices = await this.invoicesService.getPaidInvoices({
+      let res = await this.invoicesService.getPaidInvoices({
         search: data.search,
         employee_id: data.selectedEmployee,
         plan_id: data.selectedPlan,
         startDate: data.startDateFilter,
         endDate: data.endDateFilter,
       });
+      this.invoices = res.data;
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
       this.authService.handleHttpError(err);
       this.isLoading = this.loadingService.appLoading(false);
-    }}
+    }
+  }
 
   async exportPDF() {
     try {

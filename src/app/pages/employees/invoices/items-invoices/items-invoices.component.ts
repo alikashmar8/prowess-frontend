@@ -26,7 +26,8 @@ export class ItemsInvoicesComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try{
       this.loadingService.appLoading(true);
-    this.invoices = await this.invoicesService.getItemsInvoices();
+    let res = await this.invoicesService.getItemsInvoices();
+    this.invoices = res.data
     this.currentUser = this.authService.currentUser;
     this.loadingService.appLoading(false);
     }catch(err){
