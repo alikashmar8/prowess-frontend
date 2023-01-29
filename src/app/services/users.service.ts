@@ -7,6 +7,16 @@ import { getHeaders } from 'src/utils/functions';
   providedIn: 'root',
 })
 export class UsersService {
+  async generateNewInvoice(customer_id: string, plan_id: any) {
+    return await this.http
+      .post(
+        usersEndpoint + `${customer_id}/plans/${plan_id}/generateNewInvoice/`,
+        {},
+        { headers: getHeaders() }
+      )
+      .toPromise();
+  }
+
   async updateCustomerPlans(
     customer_id: string,
     data: { ids: string[]; invoice_total: number; invoice_note?: string }

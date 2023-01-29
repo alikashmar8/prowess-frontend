@@ -4,23 +4,38 @@
   </div>
 </div>
 <hr>
-<div class="row" *ngIf="!isLoading" >
-  <div *ngIf="currentUser.role == 'ADMIN'" class="col-sm-2 box-card m-3 center-elements" translate>
+<div class="row" *ngIf="!isLoading">
+  <div *ngIf="currentUser.role == 'ADMIN'" class="col-sm-2 box-card m-3 bg-success center-elements" translate>
+    <div class="row center-elements">
+      <i class="fa fa-coins fa-2x"></i>
+    </div>
     Balance:
     <br>
     {{stats.company_balance}}
   </div>
-  <div class="col-sm-2 box-card m-3 center-elements" translate>
-    Customers:
+  <div class="col-sm-2 box-card m-3 center-elements bg-warning" translate>
+    <div class="row center-elements">
+      <i class="fa fa-users fa-2x"></i>
+    </div>
     <br>
-    {{stats.customers_count}}
+    <div class="row" translate>
+      Clients:
+      <br>
+      {{stats.customers_count}}
+    </div>
   </div>
-  <div class="col-sm-2 box-card m-3 center-elements" translate>
+  <div class="col-sm-2 box-card m-3 bg-info center-elements" translate>
+    <div class="row center-elements">
+      <i class="fa fa-money-check-alt fa-2x"></i>
+    </div>
     Unpaid Invoice:
     <br>
     {{stats.unpaid_invoices_count}}
   </div>
-  <div class="col-sm-2 box-card m-3 center-elements" translate>
+  <div class="col-sm-2 box-card m-3 bg-lightgrey center-elements" translate>
+    <div class="row center-elements">
+      <i class="fa fa-hand-holding-usd fa-2x"></i>
+    </div>
     Collected Today:
     <br>
     {{stats.amount_collected_today}}

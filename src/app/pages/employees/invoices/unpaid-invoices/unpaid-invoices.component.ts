@@ -25,7 +25,8 @@ export class UnpaidInvoicesComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      this.invoices = await this.invoicesService.getUnpaidInvoices();
+      let res = await this.invoicesService.getUnpaidInvoices();
+      this.invoices = res.data;
       this.currentUser = this.authService.currentUser;
       // get language
       var storedLang: string = getLang();
@@ -52,13 +53,24 @@ export class UnpaidInvoicesComponent implements OnInit {
   }) {
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      this.invoices = await this.invoicesService.getUnpaidInvoices({
+      debugger
+      console.log("start");
+
+      let res = await this.invoicesService.getUnpaidInvoices({
         search: data.search,
         employee_id: data.selectedEmployee,
         plan_id: data.selectedPlan,
         startDate: data.startDateFilter,
         endDate: data.endDateFilter,
       });
+      console.log('res:');
+      console.log(res);
+
+      this.invoices = res.data;
+      console.log('invoices:');
+      console.log(this.invoices);
+
+      debugger
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
       this.authService.handleHttpError(err);

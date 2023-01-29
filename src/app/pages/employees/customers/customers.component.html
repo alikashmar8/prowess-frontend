@@ -1,12 +1,12 @@
 <div *ngIf="!isLoading">
   <div class="row p-3">
     <div class="col-md-9">
-      <h3 translate>All Customers:</h3>
+      <h3 translate>All Clients:</h3>
     </div>
     <div class="col-md-3">
       <button class="btn btn-success" routerLink="/company/customers/create" translate>
         <i class="fa fa-plus m-2"></i>
-        New Customer
+        New Client
       </button>
     </div>
   </div>
@@ -14,7 +14,7 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <input type="text" class="form-control m-2" placeholder="{{'Search' | translate}}" [(ngModel)]="search">
+      <input type="text" class="form-control m-2" placeholder="{{'Search' | translate}}" [(ngModel)]="filters.search">
     </div>
     <div class="col-sm-2">
       <button type="button" class="btn btn-primary m-2" (click)="searchCustomers()" translate>
@@ -22,6 +22,72 @@
         Search
       </button>
     </div>
+    <div class="col-sm-1">
+      <button type="button" class="btn btn-primary m-2" (click)="showHideFilters()" translate>
+        <i class="fa fa-filter"></i>
+      </button>
+    </div>
+  </div>
+  <div class="row px-5 py-3 mx-3 bg-lightgrey rounded bordered" *ngIf="isFiltersDisplayed" style="
+    width: fit-content;
+    box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
+    border: solid 1px #a8a8a8;">
+    <div *ngIf="isLevel5Allowed" class="px-1">
+      <h5><strong>{{currentUser.company.addressLevel5Name}}:</strong></h5>
+      <select [(ngModel)]="filters.level5Address" class="form-control form-select" (change)="level5Selected()">
+        <option *ngFor="let address of level5Addresses" [value]="address.id">{{address.name}}</option>
+      </select>
+    </div>
+    <div *ngIf="isLevel4Allowed" class="px-1">
+      <h5><strong>{{currentUser.company.addressLevel4Name}}:</strong></h5>
+      <select [(ngModel)]="filters.level4Address" class="form-control form-select" [disabled]="!level4Addresses.length"
+        (change)="level4Selected()">
+        <option *ngFor="let address of level4Addresses" [value]="address.id">{{address.name}}</option>
+      </select>
+    </div>
+    <div *ngIf="isLevel3Allowed" class="px-1">
+      <h5><strong>{{currentUser.company.addressLevel3Name}}:</strong></h5>
+      <select [(ngModel)]="filters.level3Address" class="form-control form-select" [disabled]="!level3Addresses.length"
+        (change)="level3Selected()">
+        <option *ngFor="let address of level3Addresses" [value]="address.id">{{address.name}}</option>
+      </select>
+    </div>
+    <div *ngIf="isLevel2Allowed" class="px-1">
+      <h5><strong>{{currentUser.company.addressLevel2Name}}:</strong></h5>
+      <select [(ngModel)]="filters.level2Address" class="form-control form-select" [disabled]="!level2Addresses.length"
+        (change)="level2Selected()">
+        <option *ngFor="let address of level2Addresses" [value]="address.id">{{address.name}}</option>
+      </select>
+    </div>
+    <div *ngIf="isLevel1Allowed" class="px-1">
+      <h5><strong>{{currentUser.company.addressLevel1Name}}:</strong></h5>
+      <select [(ngModel)]="filters.level1Address" class="form-control form-select" [disabled]="!level1Addresses.length">
+        <option *ngFor="let address of level1Addresses" [value]="address.id">{{address.name}}</option>
+      </select>
+    </div>
+    <div class="px-1">
+      <h5><strong translate>Plans:</strong></h5>
+      <select [(ngModel)]="filters.planId" class="form-control form-select">
+        <option *ngFor="let plan of plans" [value]="plan.id">{{plan.name}}</option>
+      </select>
+    </div>
+    <div class="px-1">
+      <h5><strong translate>Employee:</strong></h5>
+      <select [(ngModel)]="filters.employeeId" class="form-control form-select">
+        <option *ngFor="let employee of employees" [value]="employee.id">{{employee.name}}</option>
+      </select>
+    </div>
+    <div class=" px-2">
+      <label for="startDate" translate><strong translate>Start Date:</strong></label>
+      <input type="date" name="startDate" [(ngModel)]="filters.startDate" class="p-2 select rounded w-100 form-control"
+        placeholder="Starting Date">
+    </div>
+    <div class="px-2">
+      <label for="endDate" translate><strong translate>End Date:</strong></label>
+      <input type="date" name="endDate" [(ngModel)]="filters.endDate" class="p-2 select rounded w-100 form-control"
+        placeholder="End Date">
+    </div>
+    <button class="btn btn-primary mx-5 mt-3 p-2" style="height: 3em;" (click)="getPageRecords(1)">Filter</button>
   </div>
   <div *ngIf="customers.length">
     <!-- <div class="search-box ml-2">
@@ -30,15 +96,15 @@
         style="background: #6f86d6; border-radius: 25px;">
     </div> -->
 
-    <div class="table-container">
+    <div class="table-container" style="display: block; overflow-x: auto;">
       <hr>
-      <table class="table table-hover" style="display: block; overflow-x: auto;">
+      <table class="table table-hover" style="">
         <thead class="table-primary ">
           <tr class="bg-info">
-            <th translate>Name</th>
-            <th translate>Plans</th>
+            <th (click)="sortCustomers('user.name')" translate>Name</th>
+            <th (click)="sortCustomers('plans.name')" translate>Plans</th>
             <th translate>Payment Day</th>
-            <th translate>Address</th>
+            <th (click)="sortCustomers('address.name')" translate>Address</th>
             <th translate>Phone Number</th>
             <th translate>Actions</th>
           </tr>
@@ -47,7 +113,7 @@
           <tr *ngFor="let customer of customers; let i = index" [ngClass]="{
             'bg-linear-primary': customer.isActive,
             'bg-danger-light': !customer.isActive
-        }">
+        }" routerLink="/company/customers/{{customer.id}}">
             <td>{{customer.name}}</td>
             <td>
               <span *ngFor="let plan of customer.plans">
@@ -73,7 +139,7 @@
 
         </tbody>
       </table>
-      <div class="row">
+      <div class="row w-100">
         <div class="col-md-10">
           <ul class="pagination ">
             <li class="page-item" [ngClass]="{'active': i+1 == currentPage }"
@@ -90,6 +156,6 @@
 
   </div>
   <div class="row m-5 p-5 alert-danger" *ngIf="!customers.length">
-    <h3 class="col-md-12 px-5 center-elements"> No customers to show!</h3>
+    <h3 class="col-md-12 px-5 center-elements"> No clients to show!</h3>
   </div>
 </div>

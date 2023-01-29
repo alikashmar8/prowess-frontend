@@ -19,4 +19,12 @@ export class CommonService {
       })
       .toPromise();
   }
+
+  uploadExcel(data: FormData) {
+    return this.http.post(apiUrl + 'upload/', data, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${getAccessToken()}`,
+      }),
+    });
+  }
 }

@@ -2,16 +2,26 @@
   <div class="card-body">
     <h2 class="card-title text-center"><span translate>Add</span> {{currentCompany.addressLevel3Name}} </h2>
     <form class="form-signin" (ngSubmit)="store()">
+
+      <div class="form-label-group m-4" *ngIf="!isMaxLevel">
+        <div *ngIf="isLevel5Allowed">
+          <h5><strong>{{currentCompany.addressLevel5Name}}:</strong></h5>
+          <select [(ngModel)]="selectedLevel5Id" class="form-control form-select" (change)="level5Selected()"
+            [disabled]="!level5Addresses.length">
+            <option *ngFor="let address of level5Addresses" [value]="address.id">{{address.name}}</option>
+          </select>
+        </div>
+        <div>
+          {{ currentCompany.addressLevel4Name }}
+          <select [(ngModel)]="selectedLevel4Id" name="level4" class="form-control"
+            [disabled]="!level4Addresses.length">
+            <option *ngFor="let level of level5Addresses" [value]="level.id">{{level.name}}</option>
+          </select>
+        </div>
+      </div>
       <div class="form-label-group m-4">
         <input type="text" name="name" id="name" [(ngModel)]="name" class="form-control common-input px-3"
           placeholder="Name" required autofocus />
-      </div>
-
-      <div class="form-label-group m-4" *ngIf="!isMaxLevel">
-        {{ currentCompany.addressLevel4Name }}
-        <select [(ngModel)]="level4Id" name="level4" class="form-control">
-          <option *ngFor="let level of parents" [value]="level.id">{{level.name}}</option>
-        </select>
       </div>
       <div class="form-label-group m-4">
         <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
@@ -38,7 +48,8 @@
             <i class="fa fa-pen bg-white p-1 rounded m-1" style="font-size: 22px!important;"
               (click)="openEditAddressModal(address.id)"></i>
             <i class="fa fa-minus-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"
-              (click)="openDeleteModal(address.id, address.name)"></i> </div>
+              (click)="openDeleteModal(address.id, address.name)"></i>
+          </div>
         </li>
       </div>
     </ul>

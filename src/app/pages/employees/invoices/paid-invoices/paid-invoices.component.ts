@@ -14,6 +14,7 @@ export class PaidInvoicesComponent implements OnInit {
   isLoading: boolean = true;
   invoices: Invoice[] = [];
   today = new Date();
+  sum = '';
   currentUser: User;
 
   constructor(
@@ -27,6 +28,7 @@ export class PaidInvoicesComponent implements OnInit {
       this.isLoading = this.loadingService.appLoading(true);
       let res = await this.invoicesService.getPaidInvoices();
       this.invoices = res.data;
+      this.sum = res.sum;
       this.currentUser = this.authService.currentUser;
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {

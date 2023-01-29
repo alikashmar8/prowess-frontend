@@ -4,7 +4,6 @@ import { invoicesEndpoint } from 'src/constants/api-constants';
 import { CreateInvoiceDTO } from 'src/dtos/create-invoice.dto';
 import { InvoiceTypes } from 'src/enums/invoices-type.enum';
 import { getHeaders } from 'src/utils/functions';
-import { URLSearchParams } from 'url';
 import { AuthService } from './auth-service.service';
 
 @Injectable({
@@ -66,9 +65,15 @@ export class InvoicesService {
       searchString = `${searchString}&end_date=${data.endDate}`;
     }
     return await this.http
-      .get(invoicesEndpoint + 'unpaid?' + searchString, {
-        headers: getHeaders(),
-      })
+      .get(
+        invoicesEndpoint +
+          '?isPaid=false&type=' +
+          InvoiceTypes.PLANS_INVOICE +
+          searchString,
+        {
+          headers: getHeaders(),
+        }
+      )
       .toPromise();
   }
 
@@ -96,9 +101,16 @@ export class InvoicesService {
       searchString = `${searchString}&end_date=${data.endDate}`;
     }
     return await this.http
-      .get(invoicesEndpoint + '?isPaid=true' + searchString, {
-        headers: getHeaders(),
-      })
+      .get(
+        invoicesEndpoint +
+          '?isPaid=true&type=' +
+          InvoiceTypes.PLANS_INVOICE +
+          '&orderBy=invoice.collected_at' +
+          searchString,
+        {
+          headers: getHeaders(),
+        }
+      )
       .toPromise();
   }
 

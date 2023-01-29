@@ -2,17 +2,35 @@
   <div class="card-body">
     <h2 class="card-title text-center"><span translate>Add</span> {{currentCompany.addressLevel2Name}} </h2>
     <form class="form-signin" (ngSubmit)="store()">
+      <div class="form-label-group m-4" *ngIf="!isMaxLevel">
+        <div *ngIf="isLevel5Allowed">
+          <h5><strong>{{currentCompany.addressLevel5Name}}:</strong></h5>
+          <select [(ngModel)]="selectedLevel5Id" class="form-control form-select" (change)="level5Selected()"
+            [disabled]="!level5Addresses.length">
+            <option *ngFor="let address of level5Addresses" [value]="address.id">{{address.name}}</option>
+          </select>
+        </div>
+        <div *ngIf="isLevel4Allowed">
+          <h5><strong>{{currentCompany.addressLevel4Name}}:</strong></h5>
+          <select [(ngModel)]="selectedLevel4Id" class="form-control form-select" (change)="level4Selected()"
+            [disabled]="!level4Addresses.length">
+            <option *ngFor="let address of level4Addresses" [value]="address.id">{{address.name}}</option>
+          </select>
+        </div>
+        <div *ngIf="isLevel3Allowed">
+          <div>{{currentCompany.addressLevel3Name}}: </div>
+          <select class="form-control" [(ngModel)]="selectedLevel3Id" name="level3"
+            [disabled]="!level3Addresses.length">
+            <option class="form-control option" *ngFor="let level of level3Addresses" [value]="level.id">{{level.name}}
+            </option>
+          </select>
+        </div>
+      </div>
       <div class="form-label-group m-4">
         <input type="text" name="name" id="name" [(ngModel)]="name" class="form-control common-input px-3"
           placeholder="Name" required autofocus />
       </div>
 
-      <div class="form-label-group m-4" *ngIf="!isMaxLevel">
-        <div>{{currentCompany.addressLevel3Name}}: </div>
-        <select class="form-control" [(ngModel)]="level3Id" name="level3">
-          <option class="form-control option" *ngFor="let level of parents" [value]="level.id">{{level.name}}</option>
-        </select>
-      </div>
       <div class="form-label-group m-4">
         <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
           <span *ngIf="!isStoreLoading" translate>Save</span>

@@ -27,19 +27,22 @@
             </div>
           </div>
         </div>
-        <div class="panel-body table-responsive" style="width: 82vw;" >
+        <div class="panel-body table-responsive" style="width: 82vw;">
           <table class="table" id="invoicesTable" #invoicesTable>
             <thead>
               <tr>
                 <th translate>Id</th>
-                <th translate>Customer Name</th>
+                <th translate>Client Name</th>
+                <th translate>Address</th>
                 <th translate>Collector</th>
                 <th translate>Due Date</th>
                 <th *ngIf="showPlans" translate>Plans</th>
                 <th *ngIf="showItems" translate>Items</th>
                 <th *ngIf="showFirstPayment" translate>First Payment?</th>
+                <th translate>Payment Type</th>
                 <th translate>Total</th>
-                <th translate>Is Paid</th>
+                <th *ngIf="showIsPaid" translate>Is Paid</th>
+                <th translate *ngIf="showPaidAt">Paid At</th>
                 <th *ngIf="showActions" translate>Action</th>
               </tr>
             </thead>
@@ -47,7 +50,12 @@
               <tr *ngFor="let invoice of invoices" [class.selectedRow]="rowIsSelected(invoice.id)"
                 (click)="onRowClick(invoice.id)" style="cursor: pointer;">
                 <td>{{invoice.id}}</td>
-                <td>{{ invoice.user.name }}</td>
+                <td>
+                  <a href="company/customers/{{invoice.user.id}}" class="text-white">
+                    {{ invoice.user.name }}
+                  </a>
+                </td>
+                <td>{{ getAddressString(invoice.user.address) }}</td>
                 <td>{{ invoice.user.collector?.name }}</td>
                 <td>{{ invoice.dueDate | date:'yyyy-MM-dd' }}</td>
                 <td *ngIf="showPlans">
@@ -64,8 +72,15 @@
                   <span *ngIf="invoice.isFirstPayment">Yes</span>
                   <span *ngIf="!invoice.isFirstPayment">No</span>
                 </td>
+                <td>
+                  <span *ngIf="invoice.type == InvoiceType.PLANS_INVOICE && invoice.isFirstPayment">First Payment</span>
+                  <span *ngIf="invoice.type == InvoiceType.PLANS_INVOICE && !invoice.isFirstPayment">Monthly
+                    Invoice</span>
+                  <span *ngIf="invoice.type == InvoiceType.ITEMS_INVOICE">Items Invoice</span>
+                </td>
                 <td>{{invoice.total }}</td>
-                <td [ngClass]="{'text-success': invoice.isPaid, 'text-danger': !invoice.isPaid}" style="
+                <td *ngIf="showIsPaid" [ngClass]="{'text-success': invoice.isPaid, 'text-danger': !invoice.isPaid}"
+                  style="
                   font-size: 1em;">
 
                   <span *ngIf="invoice.isPaid">
@@ -76,12 +91,16 @@
                   </span>
                   {{invoice.isPaid }}
                 </td>
-                <td *ngIf="showActions" >
+                <td *ngIf="showPaidAt">
+                  {{ invoice.collected_at | date:'yyyy-MM-dd hh:mm' }}
+                </td>
+                <td *ngIf="showActions">
                   <ul class="action-list">
                     <li><a routerLink="/company/invoices/{{invoice.id}}" data-tip="show">
                         <i class="fa fa-eye" style="font-size: 21px!important;"></i></a>
                     </li>
-                    <li *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role) && showCollectAction">
+                    <li
+                      *ngIf="[UserRole.MANAGER, UserRole.SUPERVISOR, UserRole.COLLECTOR].includes(currentUser.role) && showCollectAction">
                       <a (click)="openCollectModal(invoice.id, invoice.user.name)" data-tip="collect">
                         <i class="fas fa-money-bill-alt" style="font-size: 21px!important;"></i></a>
                     </li>
@@ -96,6 +115,11 @@
 
             </tbody>
           </table>
+
+          <div style="display: grid; justify-content: right;" class="mr-5">
+            <div class="h5 mr-5">Total: {{total}}</div>
+          </div>
+
         </div>
         <!-- <div class="panel-footer">
           <div class="row">

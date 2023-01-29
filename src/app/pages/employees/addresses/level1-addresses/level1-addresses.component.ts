@@ -11,6 +11,9 @@ import { AddressesLevel } from 'src/enums/addresses.enum';
 import { Company } from 'src/models/company.model';
 import { Level1Address } from 'src/models/level1-address.model';
 import { Level2Address } from 'src/models/level2-address.model';
+import { Level3Address } from 'src/models/level3-address.model';
+import { Level4Address } from 'src/models/level4-address.model';
+import { Level5Address } from 'src/models/level5-address.model';
 import { isAddressMaxLevel } from 'src/utils/functions';
 
 @Component({
@@ -20,7 +23,6 @@ import { isAddressMaxLevel } from 'src/utils/functions';
 })
 export class Level1AddressesComponent implements OnInit {
   name: string;
-  level2Id: string;
   isStoreLoading: boolean = false;
   loadingGifUrl: string = loadingGifUrl;
   isLoading: boolean = true;
@@ -29,6 +31,20 @@ export class Level1AddressesComponent implements OnInit {
 
   parents: Level2Address[] = [];
   addresses: Level1Address[] = [];
+
+  level5Addresses: Level5Address[] = [];
+  level4Addresses: Level4Address[] = [];
+  level3Addresses: Level3Address[] = [];
+  level2Addresses: Level2Address[] = [];
+  isLevel5Allowed: boolean = false;
+  isLevel4Allowed: boolean = false;
+  isLevel3Allowed: boolean = false;
+  isLevel2Allowed: boolean = false;
+
+  selectedLevel5Id: string;
+  selectedLevel4Id: string;
+  selectedLevel3Id: string;
+  selectedLevel2Id: string;
 
   constructor(
     private addressesService: AddressesService,
@@ -45,6 +61,49 @@ export class Level1AddressesComponent implements OnInit {
         this.currentCompany.maxLocationLevel,
         AddressesLevel.LEVEL1
       );
+
+      if (!this.isMaxLevel){
+        switch (this.currentCompany.maxLocationLevel) {
+          case AddressesLevel.LEVEL5:
+            this.isLevel5Allowed = true;
+            this.isLevel4Allowed = true;
+            this.isLevel3Allowed = true;
+            this.isLevel2Allowed = true;
+            this.level5Addresses =
+              await this.addressesService.GetLevel5Addresses();
+            break;
+          case AddressesLevel.LEVEL4:
+            this.isLevel5Allowed = false;
+            this.isLevel4Allowed = true;
+            this.isLevel3Allowed = true;
+            this.isLevel2Allowed = true;
+            this.level4Addresses =
+              await this.addressesService.GetLevel4Addresses();
+            break;
+          case AddressesLevel.LEVEL3:
+            this.isLevel5Allowed = false;
+            this.isLevel4Allowed = false;
+            this.isLevel3Allowed = true;
+            this.isLevel2Allowed = true;
+            this.level3Addresses =
+              await this.addressesService.GetLevel3Addresses();
+            break;
+          case AddressesLevel.LEVEL2:
+            this.isLevel5Allowed = false;
+            this.isLevel4Allowed = false;
+            this.isLevel3Allowed = false;
+            this.isLevel2Allowed = true;
+            this.level2Addresses =
+              await this.addressesService.GetLevel2Addresses();
+            break;
+          case AddressesLevel.LEVEL1:
+            this.isLevel5Allowed = false;
+            this.isLevel4Allowed = false;
+            this.isLevel3Allowed = false;
+            this.isLevel2Allowed = false;
+            break;
+        }
+      }
       this.parents = await this.addressesService.GetLevel2Addresses();
       this.addresses = await this.addressesService.GetLevel1Addresses();
       this.isLoading = false;
@@ -61,7 +120,7 @@ export class Level1AddressesComponent implements OnInit {
       return;
     }
 
-    if (!this.isMaxLevel && !this.level2Id) {
+    if (!this.isMaxLevel && !this.selectedLevel2Id) {
       this.isStoreLoading = false;
       this.alertService.toastError(
         `${this.currentCompany.addressLevel2Name} should not be empty!`
@@ -70,7 +129,7 @@ export class Level1AddressesComponent implements OnInit {
     }
 
     this.addressesService
-      .storeLevel1({ name: this.name, parent_id: this.level2Id })
+      .storeLevel1({ name: this.name, parent_id: this.selectedLevel2Id })
       .subscribe(
         (res) => {
           this.alertService.toastSuccess('Address added successfully');
@@ -120,4 +179,44 @@ export class Level1AddressesComponent implements OnInit {
       (rejected) => {}
     );
   }
+
+  async level5Selected() {
+    try {
+      this.level4Addresses = await this.addressesService.getLevel5Children(
+        this.selectedLevel5Id
+      );
+      this.level3Addresses = [];
+      this.level2Addresses = [];
+      this.selectedLevel4Id = null;
+      this.selectedLevel3Id = null;
+      this.selectedLevel2Id = null;
+    } catch (err) {
+      this.authService.handleHttpError(err);
+    }
+  }
+
+  async level4Selected() {
+    try {
+      this.level3Addresses = await this.addressesService.getLevel4Children(
+        this.selectedLevel4Id
+      );
+      this.level2Addresses = [];
+      this.selectedLevel3Id = null;
+      this.selectedLevel2Id = null;
+    } catch (err) {
+      this.authService.handleHttpError(err);
+    }
+  }
+
+  async level3Selected() {
+    try {
+      this.level2Addresses = await this.addressesService.getLevel3Children(
+        this.selectedLevel3Id
+      );
+      this.selectedLevel2Id = null;
+    } catch (err) {
+      this.authService.handleHttpError(err);
+    }
+  }
+
 }

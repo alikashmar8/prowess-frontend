@@ -9,7 +9,7 @@
 
       <div class="form-label-group m-4" *ngIf='!isMaxLevel'>
         {{ currentCompany.addressLevel5Name }}:
-        <select [(ngModel)]="level5Id" name="level5" class="form-control">
+        <select [(ngModel)]="level5Id" name="level5" class="form-control" [disabled]="!parents.length">
           <option *ngFor="let level of parents" [value]="level.id">{{level.name}}</option>
         </select>
       </div>

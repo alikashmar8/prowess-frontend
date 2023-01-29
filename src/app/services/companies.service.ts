@@ -65,14 +65,20 @@ export class CompaniesService {
     company_id: string,
     take: number,
     skip: number,
-    search?: string
+    filters?: any
   ) {
-    if (!search) search = '';
+    let query = '';
+    for (var key in filters) {
+      if (filters.hasOwnProperty(key) && filters[key]) {
+        var val = filters[key];
+        query += '&' + key + '=' + val;
+      }
+    }
 
     return this.http.get(
       companiesEndpoint +
         company_id +
-        `/customers?take=${take}&skip=${skip}&search=${search}`,
+        `/customers?take=${take}&skip=${skip}${query}`,
       {
         headers: getHeaders(),
       }

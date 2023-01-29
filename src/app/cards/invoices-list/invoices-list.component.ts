@@ -5,7 +5,7 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationModalComponent } from 'src/app/common/modals/confirmation-modal/confirmation-modal.component';
@@ -16,10 +16,12 @@ import { CompaniesService } from 'src/app/services/companies.service';
 import { InvoicesService } from 'src/app/services/invoices.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { PlansService } from 'src/app/services/plans.service';
+import { InvoiceTypes } from 'src/enums/invoices-type.enum';
 import { UserRoles } from 'src/enums/user-roles.enum';
 import { Invoice } from 'src/models/invoice.model';
 import { Plan } from 'src/models/plan.model';
 import { User } from 'src/models/user.model';
+import { getAddressString } from 'src/utils/functions';
 import { ModalType } from './../../../enums/modal-type.enum';
 
 @Component({
@@ -29,6 +31,7 @@ import { ModalType } from './../../../enums/modal-type.enum';
 })
 export class InvoicesListComponent implements OnInit {
   @Input('invoices') invoices: Invoice[] = [];
+  @Input() total: string = '0';
   @Input('title') title: string = 'Invoices';
   @Input('showSearchByDate') showSearchByDate: boolean = false;
   @Input() showCollectAction: boolean = true;
@@ -37,6 +40,8 @@ export class InvoicesListComponent implements OnInit {
   @Input() showItems: boolean = false;
   @Input() showFirstPayment: boolean = false;
   @Input() showActions: boolean = true;
+  @Input() showIsPaid: boolean = true;
+  @Input() showPaidAt: boolean = false;
   @Output() searchAction = new EventEmitter<any>();
   @Output() exportPDF = new EventEmitter<any>();
   @Output() exportExcel = new EventEmitter<any>();
@@ -55,6 +60,8 @@ export class InvoicesListComponent implements OnInit {
   selectedPlan: string = '';
   startDateFilter: Date;
   endDateFilter: Date;
+
+  InvoiceType = InvoiceTypes;
 
   constructor(
     private invoicesService: InvoicesService,
@@ -232,5 +239,9 @@ export class InvoicesListComponent implements OnInit {
       },
       (rejected) => {}
     );
+  }
+
+  getAddressString(address) {
+    return getAddressString(address);
   }
 }

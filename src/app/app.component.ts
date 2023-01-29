@@ -3,14 +3,16 @@ import {
   ChangeDetectorRef,
   Component,
   OnDestroy,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { getLang, isMobile } from 'src/utils/functions';
+import { SCREEN_TIMEOUT_IN_SECONDS } from 'src/constants/constants';
+import { getLang, isMobile, setLang } from 'src/utils/functions';
+import IdleTimer from './idleTimer';
 import { AuthService } from './services/auth-service.service';
 import { LoadingService } from './services/loading.service';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +24,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   isAuthenticated = false;
   loadingSub: Subscription;
   showMenu: boolean = true;
+  timer: any;
 
   constructor(
     private authService: AuthService,
@@ -52,6 +55,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadingSub = this.loadingService.loading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
+    this.timer = new IdleTimer({
+      timeout: SCREEN_TIMEOUT_IN_SECONDS, //expired after 10 secs
+      onTimeout: () => {
+        if (this.authService.isAuthenticated()) {
+          this.authService.logout();
+          window.location.reload();
+        }
+      },
+    });
   }
 
   ngAfterViewInit(): void {
@@ -64,9 +76,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     //unsub to avoid leaks
     this.loadingSub.unsubscribe();
+    this.timer.clear();
   }
 
   toggleMenu() {
     this.showMenu = !this.showMenu;
+  }
+
+  switchLang(language: string) {
+    this.translate.use(language);
+    setLang(language);
   }
 }

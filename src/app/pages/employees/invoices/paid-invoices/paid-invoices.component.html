@@ -1,2 +1,3 @@
-<app-invoices-list [invoices]="invoices" [title]="'Paid Invoices'" [showCollectAction]="false" [showForgiveAction]="false" [showPlans]="true" [showFirstPayment]="true"
+<app-invoices-list [invoices]="invoices" [total]="sum" [title]="'Paid Invoices'" [showCollectAction]="false"
+  [showForgiveAction]="false" [showPlans]="true" [showFirstPayment]="false" [showIsPaid]="false" [showPaidAt]="true"
   (searchAction)="searchClicked($event)" (exportPDF)="exportPDF()" (exportExcel)="exportExcel()"></app-invoices-list>

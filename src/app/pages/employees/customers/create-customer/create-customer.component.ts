@@ -44,7 +44,7 @@ export class CreateCustomerComponent implements OnInit {
     plans: [],
     company_id: null,
     paymentDate: new Date().toISOString().split('T')[0],
-    invoice_total: null,
+    invoice_total: 0,
     invoice_notes: null,
   };
 

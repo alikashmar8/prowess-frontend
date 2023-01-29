@@ -6,7 +6,7 @@
       <a routerLink="/admin/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/admin/home')}"
         translate>
         <i class="fas fa-home"></i>
-        {{'Home' | translate}}
+        {{'Dashboard' | translate}}
       </a>
       <a routerLink="admin/companies" class="dashboard-nav-item"
         [ngClass]="{'active': isCurrentRoute('/admin/companies') || isCurrentRoute('/admin/companies/create')}"
@@ -20,15 +20,9 @@
       <a routerLink="company/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/company/home')}"
         translate>
         <i class="fas fa-home"></i>
-        Home
+        Dashboard
       </a>
 
-      <a routerLink='company/customers' class="dashboard-nav-item"
-        [ngClass]="{'active': isCurrentRoute('company/customers') || isCurrentRoute('/company/customers/create')}"
-        translate>
-        <i class="fas fa-users"></i>
-        Customers
-      </a>
       <!--
       <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
             class="fas fa-photo-video"></i> Media </a>
@@ -44,6 +38,32 @@
           <a routerLink='/company/employees/create' class="dashboard-nav-dropdown-item" translate>Add New</a>
         </div>
       </div>
+
+      <a routerLink="/company/sub-companies" class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('/company/sub-companies') || isCurrentRoute('/company/sub-companies/create')}"
+        translate>
+        <i class="fas fa-building"></i>
+        Sub Companies
+      </a>
+
+      <a routerLink="/company/items" class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('/company/items') || isCurrentRoute('/company/items/create')}" translate>
+        <i class="fas fa-box"></i>
+        Items
+      </a>
+
+      <a routerLink="/company/plans" class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('/company/plans') || isCurrentRoute('/company/plans/create')}" translate>
+        <i class="fas fa-network-wired"></i>
+        Plans
+      </a>
+
+      <a routerLink='company/customers' class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('company/customers') || isCurrentRoute('/company/customers/create')}"
+        translate>
+        <i class="fas fa-users"></i>
+        Clients
+      </a>
 
       <div class='dashboard-nav-dropdown' [ngClass]="{'show': showAddresses }">
         <a (click)="toggleAddresses()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white" translate>
@@ -61,12 +81,7 @@
             class="dashboard-nav-dropdown-item">{{currentUser.company.addressLevel1Name}}</a>
         </div>
       </div>
-      <a routerLink="/company/sub-companies" class="dashboard-nav-item"
-        [ngClass]="{'active': isCurrentRoute('/company/sub-companies') || isCurrentRoute('/company/sub-companies/create')}"
-        translate>
-        <i class="fas fa-building"></i>
-        Sub Companies
-      </a>
+
       <div class='dashboard-nav-dropdown' [ngClass]="{'show': showInvoices }">
         <a (click)="toggleInvoices()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white" translate>
           <i class="fas fa-money-check-alt"></i>Invoices</a>
@@ -82,6 +97,21 @@
         </div>
       </div>
 
+      <!-- <a routerLink="/company/profile" class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('/company/profile')}" translate>
+        <i class="fas fa-user"></i>
+        Profile
+      </a> -->
+    </div>
+
+    <!-- Managers Menu -->
+    <div *ngIf="currentUser.role == UserRole.MANAGER">
+      <a routerLink="company/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/company/home')}"
+        translate>
+        <i class="fas fa-home"></i>
+        Dashboard
+      </a>
+
       <a routerLink="/company/items" class="dashboard-nav-item"
         [ngClass]="{'active': isCurrentRoute('/company/items') || isCurrentRoute('/company/items/create')}" translate>
         <i class="fas fa-box"></i>
@@ -93,26 +123,12 @@
         <i class="fas fa-network-wired"></i>
         Plans
       </a>
-      <a routerLink="/company/profile" class="dashboard-nav-item"
-        [ngClass]="{'active': isCurrentRoute('/company/profile')}" translate>
-        <i class="fas fa-user"></i>
-        Profile
-      </a>
-    </div>
-
-    <!-- Managers Menu -->
-    <div *ngIf="currentUser.role == UserRole.MANAGER">
-      <a routerLink="company/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/company/home')}"
-        translate>
-        <i class="fas fa-home"></i>
-        Home
-      </a>
 
       <a routerLink='company/customers' class="dashboard-nav-item"
         [ngClass]="{'active': isCurrentRoute('company/customers') || isCurrentRoute('/company/customers/create')}"
         translate>
         <i class="fas fa-users"></i>
-        Customers
+        Clients
       </a>
 
       <div class='dashboard-nav-dropdown' [ngClass]="{'show': showAddresses }">
@@ -149,23 +165,11 @@
         </div>
       </div>
 
-      <a routerLink="/company/items" class="dashboard-nav-item"
-        [ngClass]="{'active': isCurrentRoute('/company/items') || isCurrentRoute('/company/items/create')}" translate>
-        <i class="fas fa-box"></i>
-        Items
-      </a>
-
-      <a routerLink="/company/plans" class="dashboard-nav-item"
-        [ngClass]="{'active': isCurrentRoute('/company/plans') || isCurrentRoute('/company/plans/create')}" translate>
-        <i class="fas fa-network-wired"></i>
-        Plans
-      </a>
-
-      <a routerLink="/company/profile" class="dashboard-nav-item"
+      <!-- <a routerLink="/company/profile" class="dashboard-nav-item"
         [ngClass]="{'active': isCurrentRoute('/company/profile')}" translate>
         <i class="fas fa-user"></i>
         Profile
-      </a>
+      </a> -->
     </div>
 
     <!-- Supervisors Menu -->
@@ -173,14 +177,14 @@
       <a routerLink="company/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/company/home')}"
         translate>
         <i class="fas fa-home"></i>
-        Home
+        Dashboard
       </a>
 
       <a routerLink='company/customers' class="dashboard-nav-item"
         [ngClass]="{'active': isCurrentRoute('company/customers') || isCurrentRoute('/company/customers/create')}"
         translate>
         <i class="fas fa-users"></i>
-        Customers
+        Clients
       </a>
 
       <div class='dashboard-nav-dropdown' [ngClass]="{'show': showInvoices }">
@@ -196,11 +200,11 @@
         </div>
       </div>
 
-      <a routerLink="/company/profile" class="dashboard-nav-item"
+      <!-- <a routerLink="/company/profile" class="dashboard-nav-item"
         [ngClass]="{'active': isCurrentRoute('/company/profile')}" translate>
         <i class="fas fa-user"></i>
         Profile
-      </a>
+      </a> -->
     </div>
 
     <!-- Collector Menu -->
@@ -208,14 +212,14 @@
       <a routerLink="company/home" class="dashboard-nav-item" [ngClass]="{'active': isCurrentRoute('/company/home')}"
         translate>
         <i class="fas fa-home"></i>
-        Home
+        Dashboard
       </a>
 
       <a routerLink='company/customers' class="dashboard-nav-item"
         [ngClass]="{'active': isCurrentRoute('company/customers') || isCurrentRoute('/company/customers/create')}"
         translate>
         <i class="fas fa-users"></i>
-        Customers
+        Clients
       </a>
 
       <div class='dashboard-nav-dropdown' [ngClass]="{'show': showInvoices }">
@@ -231,11 +235,11 @@
         </div>
       </div>
 
-      <a routerLink="/company/profile" class="dashboard-nav-item"
+      <!-- <a routerLink="/company/profile" class="dashboard-nav-item"
         [ngClass]="{'active': isCurrentRoute('/company/profile')}" translate>
         <i class="fas fa-user"></i>
         Profile
-      </a>
+      </a> -->
     </div>
 
 

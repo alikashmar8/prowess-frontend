@@ -6,7 +6,24 @@
   <div class='dashboard' *ngIf="isAuthenticated">
     <app-navbar [ngClass]="{'hide-menu': !showMenu}"></app-navbar>
     <div class='dashboard-app' [ngStyle]="{'margin-left': !showMenu ? '0': '240px' }">
-      <header class='dashboard-toolbar'><a (click)="toggleMenu()" class="menu-toggle"><i class="fas fa-bars"></i></a>
+      <header class='dashboard-toolbar'>
+        <div class="form-inline">
+          <select class="form-control mx-2" #selectedLang (change)="switchLang(selectedLang.value)" style="
+          width: 55px!important;
+          background: #585f7261;
+          border: 0;">
+            <option *ngFor="let language of translate.getLangs()" [value]="language"
+              [selected]="language === translate.currentLang">
+              {{ language }}
+            </option>
+          </select>
+        </div>
+        <a routerLink="/company/profile" style="font-size: 25px; color: currentColor;">
+          <i class="fas fa-user-circle"></i>
+        </a>
+        <a (click)="toggleMenu()" class="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </a>
       </header>
       <div class='dashboard-content'>
         <div class='container bg-white p-5 rounded'>

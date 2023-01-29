@@ -1,18 +1,20 @@
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationModalComponent } from 'src/app/common/modals/confirmation-modal/confirmation-modal.component';
+import { CreateItemInvoiceModal } from 'src/app/common/modals/create-item-invoice-modal/create-item-invoice-modal.component';
+import { CustomerItemsModal } from 'src/app/common/modals/customer-items-modal/customer-items-modal.component';
+import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { CompaniesService } from 'src/app/services/companies.service';
-import { LoadingService } from 'src/app/services/loading.service';
-import { AddressesLevel } from 'src/enums/addresses.enum';
-import { User } from 'src/models/user.model';
-import { AlertService } from 'src/app/services/alert.service';
-import { CustomerItemsModal } from 'src/app/common/modals/customer-items-modal/customer-items-modal.component';
-import { Invoice } from 'src/models/invoice.model';
 import { InvoicesService } from 'src/app/services/invoices.service';
-import { ConfirmationModalComponent } from 'src/app/common/modals/confirmation-modal/confirmation-modal.component';
+import { LoadingService } from 'src/app/services/loading.service';
+import { UsersService } from 'src/app/services/users.service';
+import { AddressesLevel } from 'src/enums/addresses.enum';
 import { ModalType } from 'src/enums/modal-type.enum';
 import { UserRoles } from 'src/enums/user-roles.enum';
+import { Invoice } from 'src/models/invoice.model';
+import { User } from 'src/models/user.model';
 
 @Component({
   selector: 'app-show-customer',
@@ -24,7 +26,7 @@ export class ShowCustomerComponent implements OnInit {
   customer_id: string;
   customer: User;
   currentUser: User;
-  UserRole = UserRoles
+  UserRole = UserRoles;
 
   items: Invoice[] = [];
 
@@ -33,6 +35,36 @@ export class ShowCustomerComponent implements OnInit {
   isLevel3Allowed: boolean = false;
   isLevel2Allowed: boolean = false;
 
+  monthNamesEn = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  monthNamesAr = [
+    'كانون الأول',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
   constructor(
     private loadingService: LoadingService,
     private companiesService: CompaniesService,
@@ -40,7 +72,8 @@ export class ShowCustomerComponent implements OnInit {
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private alertService: AlertService,
-    private invoicesService: InvoicesService
+    private invoicesService: InvoicesService,
+    private usersService: UsersService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -157,7 +190,7 @@ export class ShowCustomerComponent implements OnInit {
       async (result) => {
         if (result) {
           if (result.collector_id) {
-          this.forgive(invoice_id, result.collector_id);
+            this.forgive(invoice_id, result.collector_id);
           } else {
             alert('Collector cannot be empty');
             return;
@@ -180,5 +213,29 @@ export class ShowCustomerComponent implements OnInit {
         this.authService.handleHttpError(error);
       }
     );
+  }
+
+  openCreateItemInvoiceModal() {
+    const modalRef = this.modalService.open(CreateItemInvoiceModal);
+    modalRef.componentInstance.customer_id = this.customer_id;
+    modalRef.result.then(
+      (result) => {
+        if (result) {
+          this.items.push(result);
+        }
+      },
+      (rejected) => {}
+    );
+  }
+
+  async generateInvoice(plan_id) {
+    const res = confirm('Are you sure you want to generate a new invoice?');
+    if (res) {
+      try {
+        await this.usersService.generateNewInvoice(this.customer.id, plan_id);
+      } catch (err) {
+        this.authService.handleHttpError(err);
+      }
+    }
   }
 }

@@ -1,5 +1,5 @@
 <section *ngIf="!isLoading" style="margin-bottom: 100px;">
-  <h1 style="margin: 20px;" translate>Create Customer</h1>
+  <h1 style="margin: 20px;" translate>Create Client</h1>
   <details (click)='detailsClicked()' #detailsElement>
     <summary>
       <div>
@@ -21,12 +21,12 @@
           [(ngModel)]="data.name">
         <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="email" translate>Email:</label>
         <input type="email" class="form-control" name="email" id="email" aria-describedby="helpId"
           placeholder="ex: user@gmail.com" [(ngModel)]="data.email">
-        <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
-      </div>
+         <small id="helpId" class="form-text text-muted">Help text</small>
+      </div> -->
       <div class="form-group">
         <label for="phone" class="required" translate>Phone Number:</label>
         <input type="text" class="form-control" name="phone" id="phone" aria-describedby="helpId"
@@ -37,14 +37,21 @@
         <label for="paymentDate" translate>Payment Date:</label>
         <input type="date" class="form-control" name="paymentDate" id="paymentDate" aria-describedby="helpId"
           [(ngModel)]="data.paymentDate" required>
-          <script type="text/javascript">
-            $('#paymentDate').datetimepicker({
-                format: 'YYYY-MM-DD',
-                useCurrent: true,
-                sideBySide: true
-            })
+        <script type="text/javascript">
+          $('#paymentDate').datetimepicker({
+            format: 'YYYY-MM-DD',
+            useCurrent: true,
+            sideBySide: true
+          })
         </script>
         <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+      </div>
+      <div class="form-group" *ngIf="authService.currentUser.role == 'ADMIN' || authService.currentUser.role == 'MANAGER' "
+        translate>
+        Collector:
+        <select [(ngModel)]="data.collector_id" class="form-control">
+          <option *ngFor="let collector of collectors" [value]="collector.id">{{collector.name}}</option>
+        </select>
       </div>
     </div>
   </details>
@@ -110,12 +117,6 @@
         <span class="px-5 text-success" *ngIf="!plansIsOpen"> <i class="fa fa-plus" aria-hidden="true"></i> </span>
       </div>
     </summary>
-    <div class="m-5" *ngIf="authService.currentUser.role == 'ADMIN' || authService.currentUser.role == 'MANAGER' "  translate>
-      Collector:
-      <select [(ngModel)]="data.collector_id" class="form-control">
-        <option *ngFor="let collector of collectors" [value]="collector.id">{{collector.name}}</option>
-      </select>
-    </div>
     <div class="m-5" translate>
       Plan:
       <ng-multiselect-dropdown [placeholder]="'Choose plan'" [settings]="dropdownSettings" [data]="dropdownList"
@@ -125,20 +126,24 @@
 
     <div *ngIf="selectedPlans.length > 0" class="m-3">
       <h4 translate>Fill Invoice:</h4>
-      <div class="form-label-group m-4">
-        <label translate>Total amount:</label>
-        <input type="number" class="form-control required" name="totalAmount" required [(ngModel)]="data.invoice_total">
+      <div class="row form-group m-4">
+        <label class="col-md-12" translate>Total amount:</label>
+        <!-- <span id="rangeValue">{{data.invoice_total}}</span> -->
+        <input class="range col-md-8 mx-3" type="range" name="range" min="0" max="1000000" step="5000"
+          [(ngModel)]="data.invoice_total">
+          <input type="number" class="form-control required col-md-2" name="totalAmount" required [(ngModel)]="data.invoice_total" readonly>
+
       </div>
       <div class="form-label-group m-4">
         <label translate>Additional Notes:</label>
-        <input type="text" class="form-control required"  required name="notes" [(ngModel)]="data.invoice_notes">
+        <input type="text" class="form-control required" required name="notes" [(ngModel)]="data.invoice_notes">
       </div>
     </div>
 
   </details>
   <button class="btn btn-primary bg-linear-primary center-elements mx-auto my-5" style="width: 70%;" (click)="store()"
     [disabled]="isStoreLoading">
-    <span *ngIf="!isStoreLoading" translate>Add Customer</span>
+    <span *ngIf="!isStoreLoading" translate>Add Client</span>
     <span *ngIf="isStoreLoading"><img src="{{loadingGif}}" width="20px"></span>
   </button>
 </section>

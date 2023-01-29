@@ -46,14 +46,14 @@
   "Welcome": "Welcome",
   "Balance:": "Balance:",
   "Balance": "Balance",
-  "Customer ID": "Customer ID",
+  "Client ID": "Client ID",
   "Home": "Home",
   "Profile": "Profile",
   "Orders": "Orders",
   "Payments": "Payments",
   "Settings": "Settings",
-  "Customers": "Customers",
+  "Clients": "Clients",
   "Employees": "Employees",
   "All Employees": "All Employees",
-  "All Customers": "All Customers"
+  "All Clients": "All Clients"
   }

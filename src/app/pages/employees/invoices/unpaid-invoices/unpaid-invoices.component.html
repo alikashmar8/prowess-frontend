@@ -1,2 +1,3 @@
-<app-invoices-list [invoices]="invoices" [title]="title" [showPlans]="true"
-  (searchAction)="searchClicked($event)" (exportPDF)="exportPDF()" (exportExcel)="exportExcel()"></app-invoices-list>
+<app-invoices-list [invoices]="invoices" [title]="title" [showPlans]="true" [showFirstPayment]="false"
+  [showIsPaid]="false" (searchAction)="searchClicked($event)" (exportPDF)="exportPDF()" (exportExcel)="exportExcel()">
+</app-invoices-list>

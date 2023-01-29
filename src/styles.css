@@ -645,12 +645,16 @@ abbr[data-title]:focus::after {
   background-color: whitesmoke;
 }
 
+.bg-lightgrey {
+  background-color: lightgrey !important;
+}
+
 .bg-linear-primary {
   background-image: linear-gradient(
     to right,
     rgb(72, 197, 239, 50%) 0%,
     rgb(111, 134, 214, 50%) 100%
-  );
+  ) !important;
 }
 /* END Background colors */
 
@@ -738,7 +742,6 @@ abbr[data-title]:focus::after {
 
 /* END Level selector css */
 
-
 /* START menu styles */
 .hide-menu {
   visibility: hidden;
@@ -784,18 +787,21 @@ input[type="date"]::-webkit-datetime-edit-day-field{
 } */
 /* END input format */
 
-
 /* Base Input */
 .required:after {
-  content:" *";
+  content: " *";
   color: red;
 }
 /* END Base Input */
-
 
 .vr {
   border-right: 1px solid rgb(0, 0, 0);
   height: 100%;
   width: 1px;
   margin: 0 10px;
+}
+
+.scroll-horizontally {
+  overflow-x: auto;
+  display: block;
 }

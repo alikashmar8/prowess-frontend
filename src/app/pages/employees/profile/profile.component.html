@@ -1,18 +1,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4 pull-right">
-      <span class="form-inline">
-        <select class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
-          <option *ngFor="let language of translate.getLangs()" [value]="language"
-            [selected]="language === translate.currentLang">
-            {{ language }}
-          </option>
-        </select>
-      </span>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-8">
       <div class="card">
         <div class="card-body">
           <div class="row">
@@ -86,7 +78,7 @@
 
               </h4>
             </div>
-            <div class="col-sm-12 center-elements">
+            <div class="col-sm-6 center-elements">
               <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
                 (click)="openChangePasswordModal()" translate>
                 Change Password
@@ -94,6 +86,36 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="center-elements">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Choose Excel File:
+            <small class="btn btn-sm btn-secondary" style="font-size: 0.7rem!important;
+            line-height: 1!important;
+            border-radius: 1.2rem!important;">
+              <a href="assets/files/importing-sample.xlsx" class="text-white" translate>
+                download sample
+              </a>
+            </small>
+          </label>
+          <input
+          type="file"
+          name="file"
+          id="file"
+          formControlName="file"
+          (change)="uploadImage($event)"
+          class="form-control common-input px-3"
+          required
+          autofocus
+          min="1"
+        />
+        </div>
+        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+          (click)="uploadExcel()" translate>
+          Import Customers
+        </button>
       </div>
     </div>
   </div>
