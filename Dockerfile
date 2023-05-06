@@ -8,7 +8,7 @@ COPY ./ /usr/local/app/
 # Install all the dependencies
 RUN npm install
 # Generate the build of the application
-RUN npm run build --prod
+# RUN npm run build --prod
 
 # Define nginx for front-end server
 FROM nginx:1.21.6-alpine
