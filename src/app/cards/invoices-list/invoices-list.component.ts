@@ -5,7 +5,8 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationModalComponent } from 'src/app/common/modals/confirmation-modal/confirmation-modal.component';
@@ -27,7 +28,7 @@ import { ModalType } from './../../../enums/modal-type.enum';
 @Component({
   selector: 'app-invoices-list',
   templateUrl: './invoices-list.component.html',
-  styleUrls: ['./invoices-list.component.css'],
+  styleUrls: ['./invoices-list.component.css']
 })
 export class InvoicesListComponent implements OnInit {
   @Input('invoices') invoices: Invoice[] = [];

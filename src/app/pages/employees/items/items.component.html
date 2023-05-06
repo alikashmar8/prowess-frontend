@@ -21,7 +21,12 @@
           'bg-linear-primary': item.isActive,
           'bg-danger-light': !item.isActive
         }">
-          {{item.name}}
+          <span>
+            {{item.name}}
+          </span>
+          <span>
+            {{item.price}} $
+          </span>
           <div class="badge ">
             <i class="fa fa-pen bg-white p-1 rounded m-1" style="font-size: 22px!important;"
               (click)="openEditItemModal(item)"></i>

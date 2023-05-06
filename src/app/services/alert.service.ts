@@ -44,7 +44,7 @@ export class AlertService {
 
   clear() {
     // clear by calling subject.next() without parameters
-    this.subject.next();
+    this.subject.next(true);
   }
 
   toastNotification(
@@ -56,7 +56,7 @@ export class AlertService {
 
     newToastNotification.setMessage(message);
     newToastNotification.setConfig({
-      LayoutType: type, // SUCCESS | INFO | NONE | DANGER | WARNING
+      layoutType: type, // SUCCESS | INFO | NONE | DANGER | WARNING
     });
 
     if (title) {

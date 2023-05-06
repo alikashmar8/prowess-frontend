@@ -21,7 +21,8 @@
           'bg-linear-primary': plan.isActive,
           'bg-danger-light': !plan.isActive
         }">
-          {{plan.name}}
+          <span>{{plan.name}}</span>
+          <span>{{plan.price}} $</span>
           <div class="badge ">
             <i class="fa fa-pen bg-white p-1 rounded m-1" style="font-size: 22px!important;"
               (click)="openEditPlanModal(plan)"></i>

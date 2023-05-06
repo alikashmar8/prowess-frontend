@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { UpdateCustomerPlansModal } from 'src/app/common/modals/update-customer-plans-modal/update-customer-plans-modal.component';
 import { AddressesService } from 'src/app/services/addresses.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -18,7 +17,6 @@ import { Level2Address } from 'src/models/level2-address.model';
 import { Level3Address } from 'src/models/level3-address.model';
 import { Level4Address } from 'src/models/level4-address.model';
 import { Level5Address } from 'src/models/level5-address.model';
-import { Plan } from 'src/models/plan.model';
 import { User } from 'src/models/user.model';
 import { UserRoles } from './../../../../../enums/user-roles.enum';
 
@@ -30,7 +28,6 @@ import { UserRoles } from './../../../../../enums/user-roles.enum';
 export class EditCustomerComponent implements OnInit {
   @ViewChild('detailsElement') detailsElement;
   @ViewChild('addressElement') addressElement;
-  @ViewChild('planElement') planElement;
 
   currentCompany: Company;
   user_id: string;
@@ -164,7 +161,7 @@ export class EditCustomerComponent implements OnInit {
                   this.isLevel4Allowed = false;
                   this.isLevel3Allowed = true;
                   this.isLevel2Allowed = true;
-                  this.level4Addresses =
+                  this.level3Addresses =
                     await this.addressesService.GetLevel3Addresses();
 
                   this.selectedLevel3Id = this.user.address.parent.parent.id;
@@ -216,7 +213,6 @@ export class EditCustomerComponent implements OnInit {
         this.addressIsOpen = false;
         this.plansIsOpen = false;
         this.addressElement.nativeElement.open = false;
-        this.planElement.nativeElement.open = false;
       } else {
         this.detailsIsOpen = false;
       }
@@ -229,22 +225,8 @@ export class EditCustomerComponent implements OnInit {
         this.addressIsOpen = true;
         this.plansIsOpen = false;
         this.detailsElement.nativeElement.open = false;
-        this.planElement.nativeElement.open = false;
       } else {
         this.addressIsOpen = false;
-      }
-    }, 0);
-  }
-  planClicked() {
-    setTimeout(() => {
-      if (this.planElement.nativeElement.open) {
-        this.detailsIsOpen = false;
-        this.addressIsOpen = false;
-        this.plansIsOpen = true;
-        this.addressElement.nativeElement.open = false;
-        this.detailsElement.nativeElement.open = false;
-      } else {
-        this.plansIsOpen = false;
       }
     }, 0);
   }
@@ -347,18 +329,15 @@ export class EditCustomerComponent implements OnInit {
   }
 
   openUpdateCustomerPlansModal() {
-    const modal = this.modalService.open(
-      UpdateCustomerPlansModal,
-      {
-        size: 'lg',
-        centered: true,
-        windowClass: 'modal-md',
-        backdrop: 'static',
-        keyboard: false,
-        // scrollable: true,
-        backdropClass: 'modal-backdrop-custom',
-      }
-    );
+    const modal = this.modalService.open(UpdateCustomerPlansModal, {
+      size: 'lg',
+      centered: true,
+      windowClass: 'modal-md',
+      backdrop: 'static',
+      keyboard: false,
+      // scrollable: true,
+      backdropClass: 'modal-backdrop-custom',
+    });
     modal.componentInstance.customer_id = this.user_id;
   }
 }

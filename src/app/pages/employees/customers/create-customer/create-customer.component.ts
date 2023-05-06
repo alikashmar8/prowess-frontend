@@ -223,7 +223,7 @@ export class CreateCustomerComponent implements OnInit {
       return;
     }
 
-    if (!this.data.paymentDate) {
+    if (!this.data.paymentDate || this.data.paymentDate.toDate() < 29) {
       this.alertService.toastError('Customer payment date should be provided');
       this.isStoreLoading = false;
       return;

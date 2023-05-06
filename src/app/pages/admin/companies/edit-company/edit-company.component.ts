@@ -75,7 +75,7 @@ export class AdminEditCompanyComponent implements OnInit {
     this.companiesService
       .adminUpdate(this.company_id, {
         name: this.company.name,
-        balance: this.company.balance,
+        balance: Number(this.company.balance),
         maxCollectorsNumber: this.company.maxCollectorsNumber,
         createdBy_id: this.company.createdBy_id,
         maxCustomersNumber: this.company.maxCustomersNumber,
