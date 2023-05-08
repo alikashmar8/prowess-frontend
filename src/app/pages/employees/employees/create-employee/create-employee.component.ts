@@ -23,7 +23,7 @@ export class CreateEmployeeComponent implements OnInit {
   employee: CreateEmployeeDTO = {
     name: null,
     password: null,
-    company_id: this.authService.currentUser.company.id,
+    company_id: null,
     role: null,
     username: null,
     email: null,
@@ -45,6 +45,7 @@ export class CreateEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.employee.role = this.userRoles[0];
+    this.employee.company_id = this.authService.currentUser.company.id;
   }
 
   store() {
