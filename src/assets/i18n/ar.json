@@ -254,7 +254,7 @@
   "Price:": "السعر:",
   "Companies:": "الشركات:",
   "No companies available!": "لا تتوفر أي شركات!",
-  "New Company": "شركة جديدة",
+  "New Company": "شركة   جديدة",
   "Companies": "الشركات",
   "Edit Company": "تعديل الشركة",
   "Addresses levels:": "مستويات العناوين:",
@@ -266,5 +266,6 @@
   "Status": "الحالة",
   "Year To Date": "منذ سنة",
   "Generate Invoice": "إنشاء فاتورة",
-  "Price": "السعر"
+  "Price": "السعر",
+  "Last Payment Date": "تاريخ آخر دفعة"
 }

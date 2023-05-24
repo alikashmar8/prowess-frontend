@@ -98,12 +98,13 @@
 
     <div class="table-container" style="display: block; overflow-x: auto;">
       <hr>
-      <table class="table table-hover" style="">
+      <table class="table table-hover">
         <thead class="table-primary ">
           <tr class="bg-info">
             <th (click)="sortCustomers('user.name')" translate>Name</th>
             <th (click)="sortCustomers('plans.name')" translate>Plans</th>
             <th translate>Payment Day</th>
+            <th translate>Last Payment Date</th>
             <th (click)="sortCustomers('address.name')" translate>Address</th>
             <th translate>Phone Number</th>
             <th translate>Actions</th>
@@ -121,6 +122,7 @@
               </span>
             </td>
             <td>{{customer.paymentDate | date: 'dd'}}</td>
+            <td>{{customer?.lastPaidInvoice?.collected_at | date: 'yyyy-MM-dd'}}</td>
             <td>{{ getAddressString(customer.address) }}</td>
             <td>{{customer.phoneNumber}}</td>
             <td>
