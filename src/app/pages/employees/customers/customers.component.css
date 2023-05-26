@@ -1,10 +1,22 @@
-.table-container{
+.table-container {
   width: 70vw;
 }
 
+td,
+th {
+  padding: 0.5px !important;
+  border: 1px solid lightgrey;
+}
+.bg-linear-primary {
+  background-image: linear-gradient(
+    to right,
+    rgb(72, 197, 239, 10%) 0%,
+    rgb(111, 134, 214, 20%) 100%
+  ) !important;
+}
+
 @media screen and (max-width: 768px) {
-  .table-container{
+  .table-container {
     width: 90vw;
   }
-
 }

@@ -99,13 +99,25 @@
     <div class="table-container" style="display: block; overflow-x: auto;">
       <hr>
       <table class="table table-hover">
-        <thead class="table-primary ">
+        <thead class="table-primary">
           <tr class="bg-info">
-            <th (click)="sortCustomers('user.name')" translate>Name</th>
-            <th (click)="sortCustomers('plans.name')" translate>Plans</th>
+            <th (click)="sortCustomers('user.name')" translate>
+              Name
+              <i class="fa"
+                [ngClass]="{'fa-sort': !filters.orderBy, 'fa-sort-asc': filters.orderBy === 'user.name', 'fa-sort-desc': filters.orderBy === '-user.name'}"></i>
+            </th>
+            <th (click)="sortCustomers('plans.name')" translate>
+              Plans
+              <i class="fa"
+                [ngClass]="{'fa-sort': !filters.orderBy, 'fa-sort-asc': filters.orderBy === 'plans.name', 'fa-sort-desc': filters.orderBy === '-plans.name'}"></i>
+            </th>
             <th translate>Payment Day</th>
             <th translate>Last Payment Date</th>
-            <th (click)="sortCustomers('address.name')" translate>Address</th>
+            <th (click)="sortCustomers('address.name')" translate>
+              Address
+              <i class="fa"
+                [ngClass]="{'fa-sort': !filters.orderBy, 'fa-sort-asc': filters.orderBy === 'address.name', 'fa-sort-desc': filters.orderBy === '-address.name'}"></i>
+            </th>
             <th translate>Phone Number</th>
             <th translate>Actions</th>
           </tr>

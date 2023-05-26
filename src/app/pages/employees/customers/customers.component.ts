@@ -63,7 +63,7 @@ export class CustomersComponent implements OnInit {
     level1Address: null,
     orderBy: null,
     startDate: null,
-    endDate: null
+    endDate: null,
   };
 
   constructor(

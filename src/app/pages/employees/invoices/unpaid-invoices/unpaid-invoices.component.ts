@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { InvoicesService } from 'src/app/services/invoices.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -13,6 +13,7 @@ import { getLang } from 'src/utils/functions';
 export class UnpaidInvoicesComponent implements OnInit {
   isLoading: boolean = true;
   invoices: Invoice[] = [];
+  sum = '';
   today = new Date();
   currentUser;
   title = '';
@@ -27,6 +28,7 @@ export class UnpaidInvoicesComponent implements OnInit {
       this.isLoading = this.loadingService.appLoading(true);
       let res = await this.invoicesService.getUnpaidInvoices();
       this.invoices = res.data;
+      this.sum = res.sum;
       this.currentUser = this.authService.currentUser;
       // get language
       var storedLang: string = getLang();
@@ -50,11 +52,14 @@ export class UnpaidInvoicesComponent implements OnInit {
     selectedPlan?: string;
     startDateFilter?: Date;
     endDateFilter?: Date;
+    selectedLevel5Address?: string;
+    selectedLevel4Address?: string;
+    selectedLevel3Address?: string;
+    selectedLevel2Address?: string;
+    selectedLevel1Address?: string;
   }) {
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      debugger
-      console.log("start");
 
       let res = await this.invoicesService.getUnpaidInvoices({
         search: data.search,
@@ -62,15 +67,15 @@ export class UnpaidInvoicesComponent implements OnInit {
         plan_id: data.selectedPlan,
         startDate: data.startDateFilter,
         endDate: data.endDateFilter,
+        level5Address: data.selectedLevel5Address,
+        level4Address: data.selectedLevel4Address,
+        level3Address: data.selectedLevel3Address,
+        level2Address: data.selectedLevel2Address,
+        level1Address: data.selectedLevel1Address,
       });
-      console.log('res:');
-      console.log(res);
 
       this.invoices = res.data;
-      console.log('invoices:');
-      console.log(this.invoices);
-
-      debugger
+      this.sum = res.sum;
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
       this.authService.handleHttpError(err);
@@ -80,7 +85,6 @@ export class UnpaidInvoicesComponent implements OnInit {
 
   async exportPDF() {
     try {
-
       this.isLoading = this.loadingService.appLoading(true);
       const ids = this.invoices.map((invoice) => invoice.id);
       const res = await this.invoicesService.downloadInvoicesPdf(ids);

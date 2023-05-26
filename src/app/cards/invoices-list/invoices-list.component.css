@@ -51,7 +51,7 @@
 }
 .panel .panel-heading .form-control::placeholder {
   color: rgba(255, 255, 255, 0.5);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
 }
 .panel .panel-body {
@@ -60,7 +60,7 @@
 .panel .panel-body .table thead tr th {
   color: #fff;
   background-color: rgba(255, 255, 255, 0.2);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
   padding: 12px;
@@ -68,7 +68,7 @@
 }
 .panel .panel-body .table tbody tr td {
   color: #fff;
-  font-size: 15px;
+  font-size: 14px;
   padding: 10px 12px;
   vertical-align: middle;
   border: none;
@@ -87,7 +87,7 @@
 }
 .panel .panel-body .table tbody .action-list li a {
   color: #fff;
-  font-size: 15px;
+  font-size: 14px;
   position: relative;
   z-index: 1;
   transition: all 0.3s ease 0s;
@@ -100,7 +100,7 @@
   content: attr(data-tip);
   color: #fff;
   background-color: #111;
-  font-size: 12px;
+  font-size: 14px;
   padding: 5px 7px;
   border-radius: 4px;
   text-transform: capitalize;

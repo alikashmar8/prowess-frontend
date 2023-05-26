@@ -43,6 +43,11 @@ export class PaidInvoicesComponent implements OnInit {
     selectedPlan?: string;
     startDateFilter?: Date;
     endDateFilter?: Date;
+    selectedLevel5Address?: string;
+    selectedLevel4Address?: string;
+    selectedLevel3Address?: string;
+    selectedLevel2Address?: string;
+    selectedLevel1Address?: string;
   }) {
     try {
       this.isLoading = this.loadingService.appLoading(true);
@@ -52,8 +57,14 @@ export class PaidInvoicesComponent implements OnInit {
         plan_id: data.selectedPlan,
         startDate: data.startDateFilter,
         endDate: data.endDateFilter,
+        level5Address: data.selectedLevel5Address,
+        level4Address: data.selectedLevel4Address,
+        level3Address: data.selectedLevel3Address,
+        level2Address: data.selectedLevel2Address,
+        level1Address: data.selectedLevel1Address,
       });
       this.invoices = res.data;
+      this.sum = res.sum;
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
       this.authService.handleHttpError(err);

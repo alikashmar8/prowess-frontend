@@ -105,8 +105,8 @@ export class CreateCustomerComponent implements OnInit {
                     textField: 'name',
                     selectAllText: 'Select All',
                     unSelectAllText: 'UnSelect All',
-                    itemsShowLimit: 2,
-                    limitSelection: 2,
+                    itemsShowLimit: 1,
+                    limitSelection: 1,
                     allowSearchFilter: true,
                   };
                   switch (this.currentCompany.maxLocationLevel) {

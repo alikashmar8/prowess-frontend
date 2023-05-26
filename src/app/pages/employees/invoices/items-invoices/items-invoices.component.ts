@@ -41,6 +41,11 @@ export class ItemsInvoicesComponent implements OnInit {
     selectedPlan?: string;
     startDateFilter?: Date;
     endDateFilter?: Date;
+    selectedLevel5Address?: string;
+    selectedLevel4Address?: string;
+    selectedLevel3Address?: string;
+    selectedLevel2Address?: string;
+    selectedLevel1Address?: string;
   }) {
     try {
       this.isLoading = this.loadingService.appLoading(true);

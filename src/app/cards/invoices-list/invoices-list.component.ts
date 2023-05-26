@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationModalComponent } from 'src/app/common/modals/confirmation-modal/confirmation-modal.component';
@@ -28,7 +28,7 @@ import { ModalType } from './../../../enums/modal-type.enum';
 @Component({
   selector: 'app-invoices-list',
   templateUrl: './invoices-list.component.html',
-  styleUrls: ['./invoices-list.component.css']
+  styleUrls: ['./invoices-list.component.css'],
 })
 export class InvoicesListComponent implements OnInit {
   @Input('invoices') invoices: Invoice[] = [];
@@ -61,6 +61,11 @@ export class InvoicesListComponent implements OnInit {
   selectedPlan: string = '';
   startDateFilter: Date;
   endDateFilter: Date;
+  selectedLevel5Address: string;
+  selectedLevel4Address: string;
+  selectedLevel3Address: string;
+  selectedLevel2Address: string;
+  selectedLevel1Address: string;
 
   InvoiceType = InvoiceTypes;
 
@@ -218,6 +223,11 @@ export class InvoicesListComponent implements OnInit {
     modalRef.componentInstance.endDateFilter = this.endDateFilter;
     modalRef.componentInstance.selectedEmployee = this.selectedEmployee;
     modalRef.componentInstance.selectedPlan = this.selectedPlan;
+    modalRef.componentInstance.level5Address = this.selectedLevel5Address;
+    modalRef.componentInstance.level4Address = this.selectedLevel4Address;
+    modalRef.componentInstance.level3Address = this.selectedLevel3Address;
+    modalRef.componentInstance.level2Address = this.selectedLevel2Address;
+    modalRef.componentInstance.level1Address = this.selectedLevel1Address;
     if (this.showItems) {
       modalRef.componentInstance.showPlansFilter = false;
     }
@@ -229,12 +239,22 @@ export class InvoicesListComponent implements OnInit {
           this.endDateFilter = result.endDateFilter;
           this.selectedEmployee = result.selectedEmployee;
           this.selectedPlan = result.selectedPlan;
+          this.selectedLevel1Address = result.level1Address;
+          this.selectedLevel2Address = result.level2Address;
+          this.selectedLevel3Address = result.level3Address;
+          this.selectedLevel4Address = result.level4Address;
+          this.selectedLevel5Address = result.level5Address;
           this.searchAction.emit({
             search: result.search,
             startDateFilter: result.startDateFilter,
             endDateFilter: result.endDateFilter,
             selectedEmployee: result.selectedEmployee,
             selectedPlan: result.selectedPlan,
+            selectedLevel5Address: this.selectedLevel5Address,
+            selectedLevel4Address: this.selectedLevel4Address,
+            selectedLevel3Address: this.selectedLevel3Address,
+            selectedLevel2Address: this.selectedLevel2Address,
+            selectedLevel1Address: this.selectedLevel1Address,
           });
         }
       },

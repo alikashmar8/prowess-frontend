@@ -33,7 +33,7 @@ export class CreateItemInvoiceModal implements OnInit {
     dueDate: new Date(),
     extraAmount: 0,
     isFirstPayment: false,
-    isPaid: true,
+    isPaid: false,
     total: 0,
     type: InvoiceTypes.ITEMS_INVOICE,
     user_id: this.customer_id,

@@ -12,6 +12,40 @@
         [(ngModel)]="search" name="search" id="locality">
     </div>
     <div class="row">
+      <div *ngIf="isLevel5Allowed" class="col-sm-6 p-3">
+        <h5><strong>{{currentUser.company.addressLevel5Name}}:</strong></h5>
+        <select [(ngModel)]="level5Address" class="form-control form-select" (change)="level5Selected()">
+          <option *ngFor="let address of level5Addresses" [value]="address.id">{{address.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="isLevel4Allowed" class="col-sm-6 p-3">
+        <h5><strong>{{currentUser.company.addressLevel4Name}}:</strong></h5>
+        <select [(ngModel)]="level4Address" class="form-control form-select"
+          [disabled]="!level4Addresses.length" (change)="level4Selected()">
+          <option *ngFor="let address of level4Addresses" [value]="address.id">{{address.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="isLevel3Allowed" class="col-sm-6 p-3">
+        <h5><strong>{{currentUser.company.addressLevel3Name}}:</strong></h5>
+        <select [(ngModel)]="level3Address" class="form-control form-select"
+          [disabled]="!level3Addresses.length" (change)="level3Selected()">
+          <option *ngFor="let address of level3Addresses" [value]="address.id">{{address.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="isLevel2Allowed" class="col-sm-6 p-3">
+        <h5><strong>{{currentUser.company.addressLevel2Name}}:</strong></h5>
+        <select [(ngModel)]="level2Address" class="form-control form-select"
+          [disabled]="!level2Addresses.length" (change)="level2Selected()">
+          <option *ngFor="let address of level2Addresses" [value]="address.id">{{address.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="isLevel1Allowed" class="col-sm-6 p-3">
+        <h5><strong>{{currentUser.company.addressLevel1Name}}:</strong></h5>
+        <select [(ngModel)]="level1Address" class="form-control form-select"
+          [disabled]="!level1Addresses.length">
+          <option *ngFor="let address of level1Addresses" [value]="address.id">{{address.name}}</option>
+        </select>
+      </div>
       <div class="col-sm-6 p-3" *ngIf="[UserRole.ADMIN, UserRole.MANAGER].includes(currentUser.role)">
         <label for="employee" translate>Filter by employee:</label>
         <select name="employee" class="form-control w-100" placeholder="Select Employee" [(ngModel)]="selectedEmployee">
@@ -22,7 +56,7 @@
           </ng-container>
         </select>
       </div>
-      <div class="col-sm-6 p-3" *ngIf="showPlansFilter" >
+      <div class="col-sm-6 p-3" *ngIf="showPlansFilter">
         <label for="plan" translate>Filter by plan:</label>
         <select name="plan" [(ngModel)]="selectedPlan" class=" form-control w-100">
           <option value disabled hidden translate>Select Plan</option>
@@ -63,7 +97,8 @@
       <button class="btn btn-info m-2" (click)="clearFilters()" translate>
         Clear Filters
       </button>
-      <button type="button" class="btn btn-outline-dark m-2" (click)="activeModal.dismiss(false)" translate>Close</button>
+      <button type="button" class="btn btn-outline-dark m-2" (click)="activeModal.dismiss(false)"
+        translate>Close</button>
       <button type="button" class="btn btn-primary m-2" (click)="onSearch()" translate>Search</button>
     </div>
   </div>

@@ -10,12 +10,19 @@ import { AuthService } from './auth-service.service';
   providedIn: 'root',
 })
 export class InvoicesService {
+  constructor(private authService: AuthService, private http: HttpClient) {}
+
   async getItemsInvoices(data?: {
     search?: string;
     employee_id?: string;
     plan_id?: string;
     startDate?: Date;
     endDate?: Date;
+    level5Address?: string;
+    level4Address?: string;
+    level3Address?: string;
+    level2Address?: string;
+    level1Address?: string;
   }): Promise<any> {
     let searchString = '?type=' + InvoiceTypes.ITEMS_INVOICE;
     if (data?.search) {
@@ -33,13 +40,23 @@ export class InvoicesService {
     if (data?.endDate) {
       searchString = `${searchString}&end_date=${data.endDate}`;
     }
+    if (data?.level1Address) {
+      searchString = `${searchString}&level1Address=${data.level1Address}`;
+    } else if (data?.level2Address) {
+      searchString = `${searchString}&level2Address=${data.level2Address}`;
+    } else if (data?.level3Address) {
+      searchString = `${searchString}&level3Address=${data.level3Address}`;
+    } else if (data?.level4Address) {
+      searchString = `${searchString}&level4Address=${data.level2Address}`;
+    } else if (data?.level5Address) {
+      searchString = `${searchString}&level5Address=${data.level1Address}`;
+    }
     return await this.http
       .get(invoicesEndpoint + searchString, {
         headers: getHeaders(),
       })
       .toPromise();
   }
-  constructor(private authService: AuthService, private http: HttpClient) {}
 
   async getUnpaidInvoices(data?: {
     search?: string;
@@ -47,6 +64,11 @@ export class InvoicesService {
     plan_id?: string;
     startDate?: Date;
     endDate?: Date;
+    level5Address?: string;
+    level4Address?: string;
+    level3Address?: string;
+    level2Address?: string;
+    level1Address?: string;
   }): Promise<any> {
     let searchString = '';
     if (data?.search) {
@@ -63,6 +85,17 @@ export class InvoicesService {
     }
     if (data?.endDate) {
       searchString = `${searchString}&end_date=${data.endDate}`;
+    }
+    if (data?.level1Address) {
+      searchString = `${searchString}&level1Address=${data.level1Address}`;
+    } else if (data?.level2Address) {
+      searchString = `${searchString}&level2Address=${data.level2Address}`;
+    } else if (data?.level3Address) {
+      searchString = `${searchString}&level3Address=${data.level3Address}`;
+    } else if (data?.level4Address) {
+      searchString = `${searchString}&level4Address=${data.level2Address}`;
+    } else if (data?.level5Address) {
+      searchString = `${searchString}&level5Address=${data.level1Address}`;
     }
     return await this.http
       .get(
@@ -83,6 +116,11 @@ export class InvoicesService {
     plan_id?: string;
     startDate?: Date;
     endDate?: Date;
+    level5Address?: string;
+    level4Address?: string;
+    level3Address?: string;
+    level2Address?: string;
+    level1Address?: string;
   }): Promise<any> {
     let searchString = '';
     if (data?.search) {
@@ -99,6 +137,17 @@ export class InvoicesService {
     }
     if (data?.endDate) {
       searchString = `${searchString}&end_date=${data.endDate}`;
+    }
+    if (data?.level1Address) {
+      searchString = `${searchString}&level1Address=${data.level1Address}`;
+    } else if (data?.level2Address) {
+      searchString = `${searchString}&level2Address=${data.level2Address}`;
+    } else if (data?.level3Address) {
+      searchString = `${searchString}&level3Address=${data.level3Address}`;
+    } else if (data?.level4Address) {
+      searchString = `${searchString}&level4Address=${data.level2Address}`;
+    } else if (data?.level5Address) {
+      searchString = `${searchString}&level5Address=${data.level1Address}`;
     }
     return await this.http
       .get(
