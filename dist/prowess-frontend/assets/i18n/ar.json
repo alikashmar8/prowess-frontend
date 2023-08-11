@@ -267,5 +267,6 @@
   "Year To Date": "منذ سنة",
   "Generate Invoice": "إنشاء فاتورة",
   "Price": "السعر",
-  "Last Payment Date": "تاريخ آخر دفعة"
+  "Last Payment Date": "تاريخ آخر دفعة",
+  "Note that your balance will be affected accordingly": "سوف يتم الخصم من رصيدك عند تغير فئة الموظف "
 }
