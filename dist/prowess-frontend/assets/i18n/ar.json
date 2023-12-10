@@ -269,5 +269,6 @@
   "Price": "السعر",
   "Last Payment Date": "تاريخ آخر دفعة",
   "Note that your balance will be affected accordingly": "سوف يتم الخصم من رصيدك عند تغير فئة الموظف ",
-  "Edit Balance": "تعديل الحساب"
+  "Edit Balance": "تعديل الحساب",
+  "Total Received By Employees:": "المجموع المحصل من قبل الموظفين"
 }
