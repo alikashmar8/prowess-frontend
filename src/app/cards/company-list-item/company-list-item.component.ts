@@ -4,6 +4,7 @@ import { DeleteModalComponent } from 'src/app/common/modals/delete-modal/delete-
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { CompaniesService } from 'src/app/services/companies.service';
+import { InputType } from 'src/enums/input-type.enum';
 import { Company } from 'src/models/company.model';
 
 @Component({
@@ -44,5 +45,29 @@ export class CompanyListItemComponent {
       },
       (rejected) => {}
     );
+  }
+
+  async openEditBalanceModal(company: Company) {
+    const result = await this.alertService.dynamicInputDialog({
+      label: 'balance',
+      inputType: InputType.NUMBER,
+      value: company.balance,
+    });
+
+    if (result && Number(result) != this.company.balance) {
+      this.companiesServices
+        .adminUpdateBalance(company.id, {
+          balance: result,
+        })
+        .subscribe(
+          (res) => {
+            this.alertService.toastSuccess('Balance updated successfully!');
+            window.location.reload();
+          },
+          (err) => {
+            this.authService.handleHttpError(err);
+          }
+        );
+    }
   }
 }
