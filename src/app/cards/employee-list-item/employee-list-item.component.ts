@@ -1,12 +1,15 @@
-import { User } from './../../../models/user.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeleteModalComponent } from 'src/app/common/modals/delete-modal/delete-modal.component';
 import { RenewUserModalComponent } from 'src/app/common/modals/renew-user-modal/renew-user-modal.component';
-import { CompaniesService } from 'src/app/services/companies.service';
+import { ShowEmployeeModal } from 'src/app/common/modals/show-employee-modal/show-employee-modal.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
-import { DeleteModalComponent } from 'src/app/common/modals/delete-modal/delete-modal.component';
-import { ShowEmployeeModal } from 'src/app/common/modals/show-employee-modal/show-employee-modal.component';
+import { CompaniesService } from 'src/app/services/companies.service';
+import { UsersService } from 'src/app/services/users.service';
+import { UserRoles } from 'src/enums/user-roles.enum';
+import { InputType } from './../../../enums/input-type.enum';
+import { User } from './../../../models/user.model';
 
 @Component({
   selector: 'app-employee-list-item',
@@ -17,12 +20,14 @@ export class EmployeeListItemComponent implements OnInit {
   @Input() employee: User;
 
   isActive: boolean = true;
+  InputType = InputType;
 
   constructor(
     private modalService: NgbModal,
     private companiesService: CompaniesService,
     private alertService: AlertService,
-    private authService: AuthService
+    private authService: AuthService,
+    private usersService: UsersService
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +61,7 @@ export class EmployeeListItemComponent implements OnInit {
     );
   }
 
-  openDeleteModal(employeeId: string, employeeName: string){
+  openDeleteModal(employeeId: string, employeeName: string) {
     const modalRef = this.modalService.open(DeleteModalComponent);
     modalRef.componentInstance.name = employeeName;
     modalRef.result.then(
@@ -81,10 +86,36 @@ export class EmployeeListItemComponent implements OnInit {
     );
   }
 
-  openDetailModal(employee){
+  openDetailModal(employee) {
     const modalRef = this.modalService.open(ShowEmployeeModal, { size: 'lg' });
     modalRef.componentInstance.employee = this.employee;
+  }
 
-
+  async openRoleEdit(fieldName: string, type: InputType) {
+    const newValue = await this.alertService.dynamicInputDialog({
+      label: 'Note that your balance will be affected accordingly',
+      inputType: InputType.SELECT,
+      value: this.employee.role,
+      options: [
+        { label: 'Manager', value: UserRoles.MANAGER },
+        { label: 'Supervisor', value: UserRoles.SUPERVISOR },
+        { label: 'Collector', value: UserRoles.COLLECTOR },
+      ],
+    });
+    if (newValue && newValue != this.employee.role) {
+      this.usersService
+        .updateRole(this.employee.id, {
+          newRole: newValue,
+        })
+        .subscribe(
+          (res) => {
+            this.alertService.toastSuccess('Employee updated successfully!');
+            window.location.reload();
+          },
+          (err) => {
+            this.authService.handleHttpError(err);
+          }
+        );
+    }
   }
 }

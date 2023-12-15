@@ -1,7 +1,5 @@
-<div class="job-box d-md-flex align-items-center justify-content-between mb-30 bg-white rounded px-4"
-  style="background-image: linear-gradient(to right, rgb(72, 197, 239, 50%) 0%, rgb(111, 134, 214, 50%) 100%); border-radius: 25px!important;
-  font-size: small;"
-  *ngIf="employee">
+<div class="job-box d-md-flex align-items-center justify-content-between mb-30 bg-white rounded px-4" style="background-image: linear-gradient(to right, rgb(72, 197, 239, 50%) 0%, rgb(111, 134, 214, 50%) 100%); border-radius: 25px!important;
+  font-size: small;" *ngIf="employee">
   <div class="job-left ml-2 my-1 d-md-flex align-items-center flex-wrap row">
     <div class="col-md-1" style="padding: 0;">
       <div class="img-holder d-lg-flex glow" [ngStyle]="{
@@ -29,7 +27,11 @@
         </li> -->
         <li class="mr-md-4">
           <i class="fa fa-user mr-2"></i>
-          <span>{{employee.role}}</span>
+          <span>
+            {{employee.role}}
+            <i *ngIf="isActive" class="fa fa-pencil  px-2" aria-hidden="true"
+              (click)="openRoleEdit('name', InputType.TEXT)"></i>
+          </span>
         </li>
         <li class="mr-md-4" translate>
           <i class="fa fa-calendar-times"></i>
@@ -49,8 +51,8 @@
     </div>
 
     <div class="row">
-      <button class="btn btn-sm d-block w-100 d-sm-inline-block btn-info m-1"
-        (click)="openDetailModal(employee)" translate>Details</button>
+      <button class="btn btn-sm d-block w-100 d-sm-inline-block btn-info m-1" (click)="openDetailModal(employee)"
+        translate>Details</button>
     </div>
 
     <div class="row" *ngIf="employee.role != 'ADMIN'">
