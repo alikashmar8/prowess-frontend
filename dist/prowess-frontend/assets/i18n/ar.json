@@ -192,6 +192,7 @@
   "Last 12 months": "آخر 12 شهر",
   "Date": "التاريخ",
   "Amount": "المبلغ",
+  "Amount:": "المبلغ:",
   "Customer Items": "بضاعة الزبون",
   "Items Purchases:": "مشتريات:",
   "Notes:": "ملاحظات:",
@@ -270,5 +271,12 @@
   "Last Payment Date": "تاريخ آخر دفعة",
   "Note that your balance will be affected accordingly": "سوف يتم الخصم من رصيدك عند تغير فئة الموظف ",
   "Edit Balance": "تعديل الحساب",
-  "Total Received By Employees:": "المجموع المحصل من قبل الموظفين"
+  "Total Received By Employees:": "المجموع المحصل من قبل الموظفين",
+  "Balance Due": "المتأخرات",
+  "Customer Name": "إسم الزبون",
+  "Page": "صفحة",
+  "of": "من",
+  "Add Received Amount": "إضافة مبلغ مستلم",
+  "Received Amounts": "المبالغ المستلمة",
+  "Months": "الأشهر"
 }
