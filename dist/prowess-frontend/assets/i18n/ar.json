@@ -298,5 +298,10 @@
   "Date Started:": "تاريخ البدء:",
   "Date Created": "تاريخ الإنشاء",
   "Date Created:": "تاريخ الإنشاء:",
-  "Add Item": "إضافة بضاعة"
+  "Add Item": "إضافة بضاعة",
+  "Customer": "الزبون",
+  "General": "عام",
+  "Supporting Employees": "الموظفين المساعدين",
+  "Task Category": "فئة المهمة",
+  "Priority": "الأولوية"
 }
