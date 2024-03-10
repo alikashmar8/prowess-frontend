@@ -1,5 +1,6 @@
 import { UserRoles } from 'src/enums/user-roles.enum';
 import { Company } from './company.model';
+import { EmployeeTask } from './employee-task.model';
 import { Invoice } from './invoice.model';
 import { Level1Address } from './level1-address.model';
 import { Plan } from './plan.model';
@@ -17,6 +18,7 @@ export class User {
   isSuperAdmin: boolean;
   balance: number;
   paymentDate?: Date;
+  note?: string;
   address_id?: string;
   company_id?: string;
   collector_id?: string;
@@ -29,4 +31,6 @@ export class User {
   created_at: Date;
   updated_at: Date;
   unpaidInvoices?: Invoice[];
+  assignedTasks: EmployeeTask[];
+  customerTasks: EmployeeTask[];
 }

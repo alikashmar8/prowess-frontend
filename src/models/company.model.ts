@@ -1,15 +1,30 @@
-import { AddressesLevel } from 'src/enums/addresses.enum';
+import { Currency } from 'src/enums/currency.enum';
+import { getCurrencySymbol } from 'src/utils/functions';
+import { AddressesLevel } from './../enums/addresses.enum';
+import { CollectingType } from './../enums/collecting-type.enum';
+import { InvoicesSortingType } from './../enums/invoices-sorting-type';
 import { User } from './user.model';
 
 export class Company {
   id: string;
   name: string;
   balance: number;
+  phoneNumber: string;
+  secondaryPhoneNumber?: string;
+  email?: string;
   maxManagersNumber: number;
   maxSupervisorsNumber: number;
   maxCollectorsNumber: number;
   maxCustomersNumber: number;
+  managerAccountPrice: number;
+  supervisorAccountPrice: number;
+  collectorAccountPrice: number;
+  currency: Currency;
+  collectingType: CollectingType;
+  invoicesSortingType: InvoicesSortingType;
+  currencySymbol?: string;
   maxLocationLevel: AddressesLevel;
+  allowDataImport: boolean;
   addressLevel1Name: string;
   addressLevel2Name: string;
   addressLevel3Name: string;
