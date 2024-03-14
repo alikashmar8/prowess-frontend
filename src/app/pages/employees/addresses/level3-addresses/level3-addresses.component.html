@@ -15,7 +15,7 @@
           {{ currentCompany.addressLevel4Name }}
           <select [(ngModel)]="selectedLevel4Id" name="level4" class="form-control"
             [disabled]="!level4Addresses.length">
-            <option *ngFor="let level of level5Addresses" [value]="level.id">{{level.name}}</option>
+            <option *ngFor="let level of level4Addresses" [value]="level.id">{{level.name}}</option>
           </select>
         </div>
       </div>
@@ -45,9 +45,9 @@
             </span>
           </div>
           <div class="badge">
-            <i class="fa fa-pen bg-white p-1 rounded m-1" style="font-size: 22px!important;"
+            <i class="fa fa-pen bg-white text-black p-1 rounded m-1" style="font-size: 22px!important;"
               (click)="openEditAddressModal(address.id)"></i>
-            <i class="fa fa-minus-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"
+            <i class="fa fa-minus-circle bg-white text-black p-1 rounded m-1" style="font-size: 21px!important;"
               (click)="openDeleteModal(address.id, address.name)"></i>
           </div>
         </li>
