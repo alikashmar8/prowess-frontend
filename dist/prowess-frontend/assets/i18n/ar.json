@@ -305,5 +305,9 @@
   "Task Category": "فئة المهمة",
   "Priority": "الأولوية",
   "Note": "ملاحظة",
-  "Note:": "ملاحظة:"
+  "Note:": "ملاحظة:",
+  "Task Reasons": "أسباب المهام",
+  "Employee Task Reasons:": "أسباب مهام الموظفين:",
+  "Add New Employee Task Reason": "إضافة سبب مهمة موظف جديد",
+  "Add New Task Reason": "إضافة سبب مهمة جديد"
 }
