@@ -4,4 +4,5 @@ export enum InputType {
   NUMBER = 'number',
   SELECT = 'select',
   IMAGE = 'image',
+  DATE = 'date',
 }
