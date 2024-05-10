@@ -1,1 +1,44 @@
-<p>admin-home works!</p>
+<div class="row">
+  <div class="col-sm-12 center-elements">
+    <h1 translate>Welcome Admin</h1>
+  </div>
+</div>
+<hr>
+<div class="row" *ngIf="!isLoading">
+  <div class="col-sm-2 box-card m-3 bg-success center-elements" translate>
+    <div class="row center-elements">
+      <i class="fa fa-users fa-2x"></i>
+    </div>
+    Total Customers:
+    <br>
+    {{stats.totalCustomers}}
+  </div>
+  <div class="col-sm-2 box-card m-3 center-elements bg-warning" translate>
+    <div class="row center-elements">
+      <i class="fa fa-hand-holding-usd fa-2x"></i>
+    </div>
+    <br>
+    <div class="row" translate>
+      Invoices Collected Today On System:
+      <br>
+      {{stats.invoicesCollectedToday}}
+    </div>
+  </div>
+  <div class="col-sm-2 box-card m-3 bg-info center-elements" translate>
+    <div class="row center-elements">
+      <i class="fa fa-briefcase fa-2x"></i>
+    </div>
+    Total Active Employees:
+    <br>
+    {{stats.totalActiveEmployees}}
+  </div>
+  <div class="col-sm-2 box-card m-3 bg-lightgrey center-elements" translate>
+    <div class="row center-elements">
+      <i class="fa fa-coins fa-2x"></i>
+    </div>
+    Projected Monthly Income:
+    <br>
+    {{stats.projectedMonthlyIncome}} $
+  </div>
+</div>
+<div *ngIf="isLoading">Loading stats...</div>
