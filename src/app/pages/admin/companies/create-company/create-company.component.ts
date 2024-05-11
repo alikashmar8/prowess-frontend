@@ -1,13 +1,14 @@
+import { InvoicesSortingType } from './../../../../../enums/invoices-sorting-type';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { CompaniesService } from 'src/app/services/companies.service';
-import { LoadingService } from 'src/app/services/loading.service';
 import { Company } from 'src/models/company.model';
 import { loadingGifUrl } from './../../../../../constants/constants';
 import { AdminCreateCompanyDTO } from './../../../../../dtos/create-company.dto';
 import { AddressesLevel } from './../../../../../enums/addresses.enum';
+import { CollectingType } from './../../../../../enums/collecting-type.enum';
+import { Currency } from 'src/enums/currency.enum';
 
 @Component({
   selector: 'app-create-company',
@@ -20,11 +21,21 @@ export class AdminCreateCompanyComponent implements OnInit {
   company: AdminCreateCompanyDTO = {
     name: null,
     balance: null,
+    phoneNumber: null,
+    secondaryPhoneNumber: null,
+    email: null,
     maxManagersNumber: null,
     maxSupervisorsNumber: null,
     maxCollectorsNumber: null,
     maxCustomersNumber: null,
+    managerAccountPrice: 20,
+    supervisorAccountPrice: 15,
+    collectorAccountPrice: 15,
+    currency: Currency.USD,
+    collectingType: CollectingType.MONTHLY,
+    invoicesSortingType: InvoicesSortingType.DUE_DATE,
     maxLocationLevel: null,
+    allowDataImport: false,
     addressLevel1Name: null,
     addressLevel2Name: null,
     addressLevel3Name: null,
@@ -40,11 +51,13 @@ export class AdminCreateCompanyComponent implements OnInit {
   isLevel4Checked: boolean = false;
   isLevel5Checked: boolean = false;
 
+  CollectingType = CollectingType;
+  InvoicesSortingType = InvoicesSortingType;
+  Currency = Currency;
+
   constructor(
     private companiesService: CompaniesService,
-    private loadingService: LoadingService,
     private alertService: AlertService,
-    private router: Router,
     private authService: AuthService
   ) {}
 
@@ -59,6 +72,7 @@ export class AdminCreateCompanyComponent implements OnInit {
     if (
       !this.company.name ||
       !this.company.balance ||
+      !this.company.phoneNumber ||
       !this.company.maxCollectorsNumber ||
       !this.company.maxCustomersNumber ||
       !this.company.maxLocationLevel ||
@@ -84,11 +98,21 @@ export class AdminCreateCompanyComponent implements OnInit {
         this.company = {
           name: null,
           balance: null,
+          phoneNumber: null,
+          secondaryPhoneNumber: null,
+          email: null,
           maxManagersNumber: null,
           maxSupervisorsNumber: null,
           maxCollectorsNumber: null,
           maxCustomersNumber: null,
+          managerAccountPrice: null,
+          supervisorAccountPrice: null,
+          collectorAccountPrice: null,
+          currency: Currency.USD,
+          collectingType: CollectingType.MONTHLY,
+          invoicesSortingType: InvoicesSortingType.DUE_DATE,
           maxLocationLevel: null,
+          allowDataImport: false,
           addressLevel1Name: null,
           addressLevel2Name: null,
           addressLevel3Name: null,
