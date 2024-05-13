@@ -1,3 +1,4 @@
+import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { invoicesEndpoint } from 'src/constants/api-constants';
@@ -18,11 +19,14 @@ export class InvoicesService {
     plan_id?: string;
     startDate?: Date;
     endDate?: Date;
+    isPaid?: string;
     level5Address?: string;
     level4Address?: string;
     level3Address?: string;
     level2Address?: string;
     level1Address?: string;
+    take?: number;
+    skip?: number;
   }): Promise<any> {
     let searchString = '?type=' + InvoiceTypes.ITEMS_INVOICE;
     if (data?.search) {
@@ -39,6 +43,15 @@ export class InvoicesService {
     }
     if (data?.endDate) {
       searchString = `${searchString}&end_date=${data.endDate}`;
+    }
+    if (data?.isPaid) {
+      searchString = `${searchString}&isPaid=${data.isPaid}`;
+    }
+    if (data?.take) {
+      searchString = `${searchString}&take=${data.take}`;
+    }
+    if (data?.take) {
+      searchString = `${searchString}&skip=${data.skip}`;
     }
     if (data?.level1Address) {
       searchString = `${searchString}&level1Address=${data.level1Address}`;
@@ -69,10 +82,12 @@ export class InvoicesService {
     level3Address?: string;
     level2Address?: string;
     level1Address?: string;
+    take?: number;
+    skip?: number;
   }): Promise<any> {
-    let searchString = '';
+    let searchString = '&';
     if (data?.search) {
-      searchString = `search=${data.search}`;
+      searchString = `${searchString}search=${data.search}`;
     }
     if (data?.employee_id) {
       searchString = `${searchString}&employee_id=${data.employee_id}`;
@@ -85,6 +100,12 @@ export class InvoicesService {
     }
     if (data?.endDate) {
       searchString = `${searchString}&end_date=${data.endDate}`;
+    }
+    if (data?.take) {
+      searchString = `${searchString}&take=${data.take}`;
+    }
+    if (data?.skip) {
+      searchString = `${searchString}&skip=${data.skip}`;
     }
     if (data?.level1Address) {
       searchString = `${searchString}&level1Address=${data.level1Address}`;
@@ -121,6 +142,8 @@ export class InvoicesService {
     level3Address?: string;
     level2Address?: string;
     level1Address?: string;
+    take?: number;
+    skip?: number;
   }): Promise<any> {
     let searchString = '';
     if (data?.search) {
@@ -137,6 +160,12 @@ export class InvoicesService {
     }
     if (data?.endDate) {
       searchString = `${searchString}&end_date=${data.endDate}`;
+    }
+    if (data?.take) {
+      searchString = `${searchString}&take=${data.take}`;
+    }
+    if (data?.skip) {
+      searchString = `${searchString}&skip=${data.skip}`;
     }
     if (data?.level1Address) {
       searchString = `${searchString}&level1Address=${data.level1Address}`;

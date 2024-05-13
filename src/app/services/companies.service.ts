@@ -40,6 +40,12 @@ export class CompaniesService {
     });
   }
 
+  adminUpdateBalance(id: string, data: { balance: number }) {
+    return this.http.patch(adminCompaniesEndpoint + id + '/balance', data, {
+      headers: getHeaders(),
+    });
+  }
+
   adminDelete(id: string) {
     return this.http.delete(adminCompaniesEndpoint + id, {
       headers: getHeaders(),

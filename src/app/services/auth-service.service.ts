@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { apiUrl } from 'src/constants/api-constants';
 import { User } from 'src/models/user.model';
-import { getHeaders } from 'src/utils/functions';
+import { getCurrencySymbol, getHeaders } from 'src/utils/functions';
 import { AlertService } from './alert.service';
 
 @Injectable({
@@ -43,6 +43,10 @@ export class AuthService {
   loginByUsername(data: { username: string; password: string }) {
     return this.http.post<any>(`${apiUrl}auth/login`, data).pipe(
       map((user) => {
+        const currencySymbol = getCurrencySymbol(user?.user?.company?.currency);
+        if (user?.user?.company)
+          // case super admin
+          user.user.company.currencySymbol = currencySymbol;
         localStorage.setItem('currentUser', JSON.stringify(user.user));
         localStorage.setItem('access_token', user.access_token);
         this.currentUserSubject.next(user);
@@ -159,9 +163,33 @@ export class AuthService {
     data: { oldPassword: string; newPassword: string; confirmPassword: string }
   ) {
     return await this.http
-      .patch<any>(`${apiUrl}auth/${id}/update-password`, data, {
-        headers: getHeaders(),
-      })
+      .patch<any>(
+        `${apiUrl}auth/${id}/update-password`,
+        { ...data, employeeId: id },
+        {
+          headers: getHeaders(),
+        }
+      )
+      .toPromise();
+  }
+
+  async adminUpdateEmployeePassword(
+    id,
+    data: {
+      oldPassword: string;
+      newPassword: string;
+      confirmPassword: string;
+      employeeId?: string;
+    }
+  ) {
+    return await this.http
+      .patch<any>(
+        `${apiUrl}auth/update-employee-password`,
+        { ...data, employeeId: id },
+        {
+          headers: getHeaders(),
+        }
+      )
       .toPromise();
   }
 }

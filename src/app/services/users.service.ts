@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { usersEndpoint } from 'src/constants/api-constants';
 import { getHeaders } from 'src/utils/functions';
 
@@ -7,6 +8,8 @@ import { getHeaders } from 'src/utils/functions';
   providedIn: 'root',
 })
 export class UsersService {
+  constructor(private http: HttpClient) {}
+
   async generateNewInvoice(customer_id: string, plan_id: any) {
     return await this.http
       .post(
@@ -29,8 +32,6 @@ export class UsersService {
       )
       .toPromise();
   }
-
-  constructor(private http: HttpClient) {}
 
   makeUserActive(id: string) {
     return this.http.put(
@@ -62,6 +63,35 @@ export class UsersService {
       usersEndpoint + `${customer_id}/make-active`,
       { ...data },
       { headers: getHeaders() }
+    );
+  }
+
+  update(employeeId: string, data: { [x: string]: any }) {
+    return this.http.patch(usersEndpoint + employeeId, data, {
+      headers: getHeaders(),
+    });
+  }
+
+  updateRole(employeeId: string, data: { [x: string]: any }) {
+    return this.http.patch(usersEndpoint + employeeId + '/roles', data, {
+      headers: getHeaders(),
+    });
+  }
+
+  delete(id: string) {
+    return this.http.delete(usersEndpoint + `${id}`, { headers: getHeaders() });
+  }
+
+  async getCustomersWithPendingUnpaidInvoices(params: {
+    take: number;
+    skip: number;
+  }): Promise<any> {
+    let queryParam = `?skip=${params.skip}&take=${params.take}`;
+    return await firstValueFrom(
+      this.http.get<{ data: any[] }>(
+        `${usersEndpoint}pending-unpaid${queryParam}`,
+        { headers: getHeaders() }
+      )
     );
   }
 }
