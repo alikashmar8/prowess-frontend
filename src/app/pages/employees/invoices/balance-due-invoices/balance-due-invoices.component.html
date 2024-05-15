@@ -1,0 +1,58 @@
+<div *ngIf="isLoading">Loading...</div>
+<div *ngIf="!isLoading" class="balance-due-container" style="font-size: small;">
+  <table class="table table-striped table-bordered scroll-horizontally">
+    <thead>
+      <tr>
+        <th translate>Customer Name</th>
+        <th *ngFor="let month of months">{{ month.name }}</th>
+        <th translate>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Use Angular *ngFor directive to iterate over customers array -->
+      <tr *ngFor="let customer of customers">
+        <td>
+          <a href="company/customers/{{customer.id}}" class="">
+            {{ customer.name }}
+          </a>
+        </td>
+        <!-- Use nested *ngFor directive to iterate over the months -->
+        <td *ngFor="let month of months">
+          <!-- Use Angular *ngIf directive to check if the invoice exists for the month -->
+          <ng-container *ngIf="customer.invoices[month.number]">
+            <!-- Use another nested *ngFor directive to iterate over invoices for each month -->
+
+            <span *ngFor="let invoice of customer.invoices[month.number]">
+              <a routerLink="/company/invoices/{{invoice.id}}" data-tip="show"
+                style="text-decoration:none; color: black;">
+                <span class="p-1 m-1 bg-danger rounded">{{ invoice.total }}{{currentUser.company.currencySymbol}}</span>
+              </a>
+            </span>
+
+          </ng-container>
+        </td>
+        <td>{{ customer.total }}{{currentUser.company.currencySymbol}}</td>
+      </tr>
+      <tr>
+        <td colspan="11"></td>
+        <td translate>Total</td>
+        <td>{{ total }}{{currentUser.company.currencySymbol}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Pagination -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="pagination">
+        <i class="fa fa-arrow-left mx-2 p-1 rounded" [ngClass]="{
+          'bg-lightgrey': currentPage == 1,
+          'bg-primary': currentPage > 1
+          }" (click)="previousPage()" [disabled]="currentPage === 1"></i>
+        <span><span translate>Page</span> {{ currentPage }} <span translate>of</span> {{ totalPages }}</span>
+        <i class="fa fa-arrow-right mx-2 p-1 rounded" [ngClass]="{
+          'bg-lightgrey': currentPage == totalPages,
+          'bg-primary': currentPage < totalPages
+      }" (click)="nextPage()" [disabled]="currentPage === totalPages"></i>
+      </div>
+    </div>
+  </div>
