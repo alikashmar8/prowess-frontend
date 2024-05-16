@@ -1,0 +1,27 @@
+<div *ngIf="passedData.label">
+  <h5 translate>{{ passedData.label }}</h5>
+</div>
+
+<div *ngIf="passedData.inputType == InputType.TEXT">
+  <input type="text" [(ngModel)]="passedData.value" class="form-control">
+</div>
+
+<div *ngIf="passedData.inputType == InputType.CHECKBOX">
+  <input type="checkbox" [(ngModel)]="passedData.value">
+</div>
+
+<div *ngIf="passedData.inputType == InputType.NUMBER">
+  <input type="number" [(ngModel)]="passedData.value" class="form-control">
+</div>
+<div *ngIf="passedData.inputType == InputType.SELECT">
+  <select [(ngModel)]="passedData.value" class="form-control">
+    <option *ngFor="let option of passedData.options" value="{{option.value}}">{{option.label}}</option>
+  </select>
+</div>
+<div *ngIf="passedData.inputType == InputType.IMAGE">
+  <img [src]="passedData.value" alt="no display" width="100px">
+  <input type="file" name="icon" id="icon" (change)="uploadImage($event)" class="" required autofocus />
+</div>
+<div *ngIf="passedData.inputType == InputType.DATE">
+  <input type="datetime-local" [(ngModel)]="passedData.value" class="form-control">
+</div>
