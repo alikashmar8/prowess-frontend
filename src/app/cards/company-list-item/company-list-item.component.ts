@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth-service.service';
 import { CompaniesService } from 'src/app/services/companies.service';
 import { InputType } from 'src/enums/input-type.enum';
 import { Company } from 'src/models/company.model';
+import { User } from 'src/models/user.model';
 
 @Component({
   selector: 'app-company-list-item',
@@ -14,13 +15,16 @@ import { Company } from 'src/models/company.model';
 })
 export class CompanyListItemComponent {
   @Input('company') company: Company;
+  currentUser: User;
 
   constructor(
     private modalService: NgbModal,
     private companiesServices: CompaniesService,
     private alertService: AlertService,
     private authService: AuthService
-  ) {}
+  ) {
+    this.currentUser = this.authService.currentUser;
+  }
 
   openDeleteModal() {
     const modalRef = this.modalService.open(DeleteModalComponent);

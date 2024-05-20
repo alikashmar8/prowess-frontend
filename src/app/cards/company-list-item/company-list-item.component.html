@@ -1,9 +1,12 @@
 <div class="list-item row">
-  <div class="col-md-1"><a routerLink="/admin/companies/{{company.id}}" data-abc="true"><span class="w-48 avatar gd-info">{{ company.name[0] }}</span></a>
+  <div class="col-md-1"><a routerLink="/admin/companies/{{company.id}}" data-abc="true"><span
+        class="w-48 avatar gd-info">{{ company.name[0] }}</span></a>
   </div>
 
-  <div class="flex col-md-5"> <a routerLink="/admin/companies/{{company.id}}" class="item-author text-color" data-abc="true">{{company.name }}</a>
-    <div class="item-except text-muted text-sm h-1x">Balance: {{company.balance}} $</div>
+  <div class="flex col-md-5"> <a routerLink="/admin/companies/{{company.id}}" class="item-author text-color"
+      data-abc="true">{{company.name }}</a>
+    <div class="item-except text-muted text-sm h-1x">Balance: {{company.balance}} {{company.currency}}
+    </div>
   </div>
 
   <div class="no-wrap col-md-6">
