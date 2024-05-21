@@ -4,11 +4,11 @@
       <div class="panel">
         <div class="panel-heading">
           <div class="row">
-            <div class="col col-sm-6 col-xs-6">
-              <h4 class="title">{{ title }}</h4>
+            <div class="col-sm-6 col-xs-6">
+              <h3 class="title mt-2 ml-3">{{ title }}</h3>
             </div>
             <div class="col-sm-6 col-xs-6 text-right">
-              <div class="btn_group">
+              <div class="btn-group">
                 <button type="button" class="btn btn-default m-1" title="Search" (click)="openFilterModal()">
                   <i class="fa fa-filter" aria-hidden="true"></i>
                 </button>
@@ -16,21 +16,19 @@
                     class="fa fa-file-pdf"></i></button> -->
                 <button type="button" class="btn btn-default m-1" title="Export to Excel" (click)="downloadAsExcel()"><i
                     class="fas fa-file-excel"></i></button>
-                <div *ngIf="showSearchByDate">
-                  <div class="row m-1">
-                    <h6 class="title col">Choose month:</h6>
-                    <input type="month" class="form-control col" id="month" name="month" [(ngModel)]="monthSearch" />
-                  </div>
+                <div *ngIf="showSearchByDate" class="row m-1">
+                  <h6 class="title col">Choose month:</h6>
+                  <input type="month" class="form-control col" id="month" name="month" [(ngModel)]="monthSearch" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="panel-body table-responsive" >
-          <table class="table" id="invoicesTable" #invoicesTable>
+        <div class="panel-body table-responsive" style="overflow-x: auto; width: 0; min-width: 100%;">
+          <table class="table table-striped" id="invoicesTable" #invoicesTable>
             <thead>
               <tr>
-                <th translate>Id</th>
+                <!-- <th translate>Id</th> -->
                 <th translate>Client Name</th>
                 <th translate>Address</th>
                 <th translate>Collector</th>
@@ -48,14 +46,14 @@
             <tbody>
               <tr *ngFor="let invoice of invoices" [class.selectedRow]="rowIsSelected(invoice.id)"
                 (click)="onRowClick(invoice.id)" style="cursor: pointer;">
-                <td>{{invoice.id}}</td>
+                <!-- <td>{{invoice.id}}</td> -->
                 <td>
-                  <a href="company/customers/{{invoice.user.id}}" class="text-white">
+                  <a href="company/customers/{{invoice.user.id}}" class="">
                     {{ invoice.user.name }}
                   </a>
                 </td>
                 <td>{{ getAddressString(invoice.user.address) }}</td>
-                <td>{{ invoice.user.collector?.name }}</td>
+                <td>{{ invoice .isPaid ? invoice.collectedBy?.name : invoice.user.collector?.name }}</td>
                 <td>{{ invoice.dueDate | date:'yyyy-MM-dd' }}</td>
                 <td *ngIf="showPlans">
                   <span *ngFor="let plan of invoice.plans">
@@ -77,22 +75,17 @@
                     Invoice</span>
                   <span *ngIf="invoice.type == InvoiceType.ITEMS_INVOICE">Items Invoice</span>
                 </td>
-                <td>{{invoice.total }}</td>
-                <td *ngIf="showIsPaid" [ngClass]="{'text-success': invoice.isPaid, 'text-danger': !invoice.isPaid}"
-                  style="
-                  font-size: 1em;">
-
+                <td>{{invoice.total}}</td>
+                <td *ngIf="showIsPaid" [ngClass]="{'text-success': invoice.isPaid, 'text-danger': !invoice.isPaid}">
                   <span *ngIf="invoice.isPaid">
                     <i class="fa fa-check" aria-hidden="true"></i>
                   </span>
                   <span *ngIf="!invoice.isPaid">
                     <i class="fa fa-times" aria-hidden="true"></i>
                   </span>
-                  {{invoice.isPaid }}
+                  {{invoice.isPaid}}
                 </td>
-                <td *ngIf="showPaidAt">
-                  {{ invoice.collected_at | date:'yyyy-MM-dd hh:mm' }}
-                </td>
+                <td *ngIf="showPaidAt">{{ invoice.collected_at | date:'yyyy-MM-dd hh:mm' }}</td>
                 <td *ngIf="showActions">
                   <ul class="action-list">
                     <li><a routerLink="/company/invoices/{{invoice.id}}" data-tip="show">
@@ -111,36 +104,46 @@
                   </ul>
                 </td>
               </tr>
-
             </tbody>
           </table>
 
-          <div style="display: grid; justify-content: right;" class="mr-5">
-            <div class="h5 mr-5">Total: {{total}}</div>
+          <div class="text-right mr-5">
+            <div class="h5">Total: {{total}} {{currentUser.company.currencySymbol}}</div>
           </div>
-
         </div>
-        <!-- <div class="panel-footer">
+
+        <hr class="mx-5" style="border: 1px solid black;">
+
+        <div class="panel-footer">
           <div class="row">
-            <div class="col col-sm-6 col-xs-6">showing <b>5</b> out of <b>25</b> entries</div>
-            <div class="col-sm-6 col-xs-6">
-              <ul class="pagination hidden-xs pull-right">
-                <li><a href="#"></a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">></a></li>
-              </ul>
-              <ul class="pagination visible-xs pull-right">
-                <li><a href="#"></a></li>
-                <li><a href="#">></a></li>
-              </ul>
+            <div class="row w-100">
+              <div class="col-md-10">
+                <ul class="pagination" style="overflow-x: auto;">
+                  <li class="page-item" [ngClass]="{'active': i+1 == currentPage }"
+                    *ngFor='let in of counter(totalPages);let i = index' (click)="submitDataRequest(i+1)">
+                    <a href="javascript:void(0);" class="page-link">{{i+1}}</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-md-1">
+                <select [(ngModel)]="take" class="" (change)="submitDataRequest(1)">
+                  <option value="10">10</option>
+                  <option value="30">30</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                  <option value="300">300</option>
+                  <option value="500">500</option>
+                  <option value="1000">1000</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                Total: {{totalRecords}} <span translate>invoices</span>
+              </div>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
+
     </div>
   </div>
 </div>

@@ -6,7 +6,6 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ViewEncapsulation,
 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationModalComponent } from 'src/app/common/modals/confirmation-modal/confirmation-modal.component';
@@ -35,6 +34,7 @@ export class InvoicesListComponent implements OnInit {
   @Input() total: string = '0';
   @Input('title') title: string = 'Invoices';
   @Input('showSearchByDate') showSearchByDate: boolean = false;
+  @Input() showIsPaidFilter: boolean = false;
   @Input() showCollectAction: boolean = true;
   @Input() showForgiveAction: boolean = true;
   @Input() showPlans: boolean = false;
@@ -43,6 +43,10 @@ export class InvoicesListComponent implements OnInit {
   @Input() showActions: boolean = true;
   @Input() showIsPaid: boolean = true;
   @Input() showPaidAt: boolean = false;
+  @Input() take: number = 10;
+  @Input() skip: number = 0;
+  @Input() currentPage: number = 1;
+  @Input() totalRecords: number = 0;
   @Output() searchAction = new EventEmitter<any>();
   @Output() exportPDF = new EventEmitter<any>();
   @Output() exportExcel = new EventEmitter<any>();
@@ -56,9 +60,12 @@ export class InvoicesListComponent implements OnInit {
   selectedId: string;
   employees: User[] = [];
   plans: Plan[] = [];
+  totalPages: number =
+    this.totalRecords > 0 ? Math.ceil(this.totalRecords / this.take) : 1;
 
   selectedEmployee: string = '';
   selectedPlan: string = '';
+  isPaid: string = '';
   startDateFilter: Date;
   endDateFilter: Date;
   selectedLevel5Address: string;
@@ -108,6 +115,11 @@ export class InvoicesListComponent implements OnInit {
     } catch (error) {
       this.authService.handleHttpError(error);
     }
+  }
+
+  ngAfterViewChecked() {
+    this.totalPages =
+      this.totalRecords > 0 ? Math.ceil(this.totalRecords / this.take) : 1;
   }
 
   onRowClick(id: number) {
@@ -196,14 +208,6 @@ export class InvoicesListComponent implements OnInit {
     );
   }
 
-  submitSearch() {
-    const data = {
-      search: this.search,
-      dateSearch: this.monthSearch,
-    };
-    this.searchAction.emit(data);
-  }
-
   public downloadAsPDF() {
     this.exportPDF.emit(this.monthSearch);
   }
@@ -223,6 +227,8 @@ export class InvoicesListComponent implements OnInit {
     modalRef.componentInstance.endDateFilter = this.endDateFilter;
     modalRef.componentInstance.selectedEmployee = this.selectedEmployee;
     modalRef.componentInstance.selectedPlan = this.selectedPlan;
+    modalRef.componentInstance.showIsPaidFilter = this.showIsPaidFilter;
+    modalRef.componentInstance.isPaid = this.isPaid;
     modalRef.componentInstance.level5Address = this.selectedLevel5Address;
     modalRef.componentInstance.level4Address = this.selectedLevel4Address;
     modalRef.componentInstance.level3Address = this.selectedLevel3Address;
@@ -239,23 +245,13 @@ export class InvoicesListComponent implements OnInit {
           this.endDateFilter = result.endDateFilter;
           this.selectedEmployee = result.selectedEmployee;
           this.selectedPlan = result.selectedPlan;
+          this.isPaid = result.isPaid;
           this.selectedLevel1Address = result.level1Address;
           this.selectedLevel2Address = result.level2Address;
           this.selectedLevel3Address = result.level3Address;
           this.selectedLevel4Address = result.level4Address;
           this.selectedLevel5Address = result.level5Address;
-          this.searchAction.emit({
-            search: result.search,
-            startDateFilter: result.startDateFilter,
-            endDateFilter: result.endDateFilter,
-            selectedEmployee: result.selectedEmployee,
-            selectedPlan: result.selectedPlan,
-            selectedLevel5Address: this.selectedLevel5Address,
-            selectedLevel4Address: this.selectedLevel4Address,
-            selectedLevel3Address: this.selectedLevel3Address,
-            selectedLevel2Address: this.selectedLevel2Address,
-            selectedLevel1Address: this.selectedLevel1Address,
-          });
+          this.submitDataRequest(1);
         }
       },
       (rejected) => {}
@@ -264,5 +260,29 @@ export class InvoicesListComponent implements OnInit {
 
   getAddressString(address) {
     return getAddressString(address);
+  }
+
+  counter(i: number) {
+    return new Array(i);
+  }
+
+  submitDataRequest(pageNumber) {
+    const skip = (pageNumber - 1) * this.take;
+    this.currentPage = pageNumber;
+    this.searchAction.emit({
+      search: this.search,
+      startDateFilter: this.startDateFilter,
+      endDateFilter: this.endDateFilter,
+      selectedEmployee: this.selectedEmployee,
+      selectedPlan: this.selectedPlan,
+      isPaid: this.isPaid,
+      selectedLevel5Address: this.selectedLevel5Address,
+      selectedLevel4Address: this.selectedLevel4Address,
+      selectedLevel3Address: this.selectedLevel3Address,
+      selectedLevel2Address: this.selectedLevel2Address,
+      selectedLevel1Address: this.selectedLevel1Address,
+      take: this.take,
+      skip: skip,
+    });
   }
 }
