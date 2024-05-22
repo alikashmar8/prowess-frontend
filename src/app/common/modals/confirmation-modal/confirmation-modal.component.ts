@@ -48,22 +48,34 @@ export class ConfirmationModalComponent implements OnInit {
   }
 
   submit() {
-    if (
-      this.type == ModalType.COLLECT_INVOICE ||
-      this.type == ModalType.FORGIVE_INVOICE
-    ) {
-      if (this.currentUser.role == UserRoles.COLLECTOR)
-        this.collector_id = this.currentUser.id;
-      if (this.collector_id) {
-        this.activeModal.close({
-          collector_id: this.collector_id,
-        });
-      } else {
-        this.alertService.toastError('A collector should be selected first');
-        return;
-      }
-    } else {
-      this.activeModal.close(true);
+    switch (this.type) {
+      case ModalType.COLLECT_INVOICE:
+        return this.submitCollectInvoice();
+      case ModalType.FORGIVE_INVOICE:
+        return this.submitForgiveInvoice();
+      default:
+        this.activeModal.close(false);
+        break;
     }
+  }
+
+  submitCollectInvoice() {
+    if (this.currentUser.role == UserRoles.COLLECTOR)
+      this.collector_id = this.currentUser.id;
+    if (this.collector_id) {
+      this.activeModal.close({
+        collector_id: this.collector_id,
+      });
+    } else {
+      this.alertService.toastError('A collector should be selected first');
+      return;
+    }
+  }
+
+  submitForgiveInvoice() {
+    this.collector_id = this.currentUser.id;
+    this.activeModal.close({
+      collector_id: this.collector_id,
+    });
   }
 }
