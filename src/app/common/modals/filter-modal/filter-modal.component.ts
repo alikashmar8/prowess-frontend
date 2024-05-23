@@ -33,11 +33,13 @@ export class FilterModalComponent implements OnInit {
   @Input() selectedEmployee: string = '';
   @Input() selectedPlan: string = '';
   @Input() showPlansFilter: boolean = true;
+  @Input() showIsPaidFilter: boolean = false;
   @Input() level5Address: string = '';
   @Input() level4Address: string = '';
   @Input() level3Address: string = '';
   @Input() level2Address: string = '';
   @Input() level1Address: string = '';
+  @Input() isPaid: string = '';
   // TODO: combine selected values into filters = {} object
   UserRole = UserRoles;
   currentUser: User;
@@ -110,7 +112,6 @@ export class FilterModalComponent implements OnInit {
       this.alertService.toastError('End date must be greater than start date');
       return;
     }
-
     this.activeModal.close({
       search: this.search,
       selectedEmployee: this.selectedEmployee,
@@ -122,6 +123,7 @@ export class FilterModalComponent implements OnInit {
       level3Address: this.level3Address,
       level2Address: this.level2Address,
       level1Address: this.level1Address,
+      isPaid: this.isPaid,
     });
   }
 
@@ -131,6 +133,7 @@ export class FilterModalComponent implements OnInit {
     this.selectedPlan = '';
     this.startDateFilter = null;
     this.endDateFilter = null;
+    this.isPaid = '';
   }
 
   async level5Selected() {

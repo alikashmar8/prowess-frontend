@@ -12,59 +12,6 @@
         [(ngModel)]="search" name="search" id="locality">
     </div>
     <div class="row">
-      <div *ngIf="isLevel5Allowed" class="col-sm-6 p-3">
-        <h5><strong>{{currentUser.company.addressLevel5Name}}:</strong></h5>
-        <select [(ngModel)]="level5Address" class="form-control form-select" (change)="level5Selected()">
-          <option *ngFor="let address of level5Addresses" [value]="address.id">{{address.name}}</option>
-        </select>
-      </div>
-      <div *ngIf="isLevel4Allowed" class="col-sm-6 p-3">
-        <h5><strong>{{currentUser.company.addressLevel4Name}}:</strong></h5>
-        <select [(ngModel)]="level4Address" class="form-control form-select"
-          [disabled]="!level4Addresses.length" (change)="level4Selected()">
-          <option *ngFor="let address of level4Addresses" [value]="address.id">{{address.name}}</option>
-        </select>
-      </div>
-      <div *ngIf="isLevel3Allowed" class="col-sm-6 p-3">
-        <h5><strong>{{currentUser.company.addressLevel3Name}}:</strong></h5>
-        <select [(ngModel)]="level3Address" class="form-control form-select"
-          [disabled]="!level3Addresses.length" (change)="level3Selected()">
-          <option *ngFor="let address of level3Addresses" [value]="address.id">{{address.name}}</option>
-        </select>
-      </div>
-      <div *ngIf="isLevel2Allowed" class="col-sm-6 p-3">
-        <h5><strong>{{currentUser.company.addressLevel2Name}}:</strong></h5>
-        <select [(ngModel)]="level2Address" class="form-control form-select"
-          [disabled]="!level2Addresses.length" (change)="level2Selected()">
-          <option *ngFor="let address of level2Addresses" [value]="address.id">{{address.name}}</option>
-        </select>
-      </div>
-      <div *ngIf="isLevel1Allowed" class="col-sm-6 p-3">
-        <h5><strong>{{currentUser.company.addressLevel1Name}}:</strong></h5>
-        <select [(ngModel)]="level1Address" class="form-control form-select"
-          [disabled]="!level1Addresses.length">
-          <option *ngFor="let address of level1Addresses" [value]="address.id">{{address.name}}</option>
-        </select>
-      </div>
-      <div class="col-sm-6 p-3" *ngIf="[UserRole.ADMIN, UserRole.MANAGER].includes(currentUser.role)">
-        <label for="employee" translate>Filter by employee:</label>
-        <select name="employee" class="form-control w-100" placeholder="Select Employee" [(ngModel)]="selectedEmployee">
-          <option value disabled hidden translate>Select Employee</option>
-          <ng-container *ngFor="let employee of employees">
-            <option *ngIf="employee.role != UserRole.ADMIN" [value]="employee.id">{{employee.name}}
-            </option>
-          </ng-container>
-        </select>
-      </div>
-      <div class="col-sm-6 p-3" *ngIf="showPlansFilter">
-        <label for="plan" translate>Filter by plan:</label>
-        <select name="plan" [(ngModel)]="selectedPlan" class=" form-control w-100">
-          <option value disabled hidden translate>Select Plan</option>
-          <ng-container *ngFor="let plan of plans">
-            <option *ngIf="plan.isActive" [value]="plan.id">{{plan.name}}</option>
-          </ng-container>
-        </select>
-      </div>
       <div class="col-sm-6 p-3">
         <label for="startDate" translate>Start Date:</label>
         <input type="date" name="startDate" [(ngModel)]="startDateFilter"
@@ -88,6 +35,66 @@
           ;
           padding: 12px!important;
           " placeholder="Starting Date">
+      </div>
+      <div *ngIf="isLevel5Allowed" class="col-sm-6 p-3">
+        <h5><strong>{{currentUser.company.addressLevel5Name}}:</strong></h5>
+        <select [(ngModel)]="level5Address" class="form-control form-select" (change)="level5Selected()">
+          <option *ngFor="let address of level5Addresses" [value]="address.id">{{address.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="isLevel4Allowed" class="col-sm-6 p-3">
+        <h5><strong>{{currentUser.company.addressLevel4Name}}:</strong></h5>
+        <select [(ngModel)]="level4Address" class="form-control form-select" [disabled]="!level4Addresses.length"
+          (change)="level4Selected()">
+          <option *ngFor="let address of level4Addresses" [value]="address.id">{{address.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="isLevel3Allowed" class="col-sm-6 p-3">
+        <h5><strong>{{currentUser.company.addressLevel3Name}}:</strong></h5>
+        <select [(ngModel)]="level3Address" class="form-control form-select" [disabled]="!level3Addresses.length"
+          (change)="level3Selected()">
+          <option *ngFor="let address of level3Addresses" [value]="address.id">{{address.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="isLevel2Allowed" class="col-sm-6 p-3">
+        <h5><strong>{{currentUser.company.addressLevel2Name}}:</strong></h5>
+        <select [(ngModel)]="level2Address" class="form-control form-select" [disabled]="!level2Addresses.length"
+          (change)="level2Selected()">
+          <option *ngFor="let address of level2Addresses" [value]="address.id">{{address.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="isLevel1Allowed" class="col-sm-6 p-3">
+        <h5><strong>{{currentUser.company.addressLevel1Name}}:</strong></h5>
+        <select [(ngModel)]="level1Address" class="form-control form-select" [disabled]="!level1Addresses.length">
+          <option *ngFor="let address of level1Addresses" [value]="address.id">{{address.name}}</option>
+        </select>
+      </div>
+      <div class="col-sm-6 p-3" *ngIf="[UserRole.ADMIN, UserRole.MANAGER].includes(currentUser.role)">
+        <label for="employee" translate>Filter by employee:</label>
+        <select name="employee" class="form-control w-100" placeholder="Select Employee" [(ngModel)]="selectedEmployee">
+          <option value disabled hidden translate>Select Employee</option>
+          <ng-container *ngFor="let employee of employees">
+            <option *ngIf="employee.role != UserRole.ADMIN" [value]="employee.id">{{employee.name}}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="col-sm-6 p-3" *ngIf="showPlansFilter">
+        <label for="plan" translate>Filter by plan:</label>
+        <select name="plan" [(ngModel)]="selectedPlan" class=" form-control w-100">
+          <option value disabled hidden translate>Select Plan</option>
+          <ng-container *ngFor="let plan of plans">
+            <option *ngIf="plan.isActive" [value]="plan.id">{{plan.name}}</option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="col-sm-6 p-3" *ngIf="showIsPaidFilter">
+        <label for="plan" translate>Is Paid:</label>
+        <select name="plan" [(ngModel)]="isPaid" class=" form-control w-100">
+          <option value disabled hidden translate></option>
+          <option value="true" translate>True</option>
+          <option value="false" translate>False</option>
+        </select>
       </div>
     </div>
   </div>
