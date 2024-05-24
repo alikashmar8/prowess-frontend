@@ -1,11 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  COLLECTOR_RENEW_AMOUNT,
-  MANAGER_RENEW_AMOUNT,
-  SUPERVISOR_RENEW_AMOUNT
-} from 'src/constants/constants';
 import { UserRoles } from 'src/enums/user-roles.enum';
+import { User } from './../../../../models/user.model';
+import { AuthService } from './../../../services/auth-service.service';
 
 @Component({
   selector: 'app-renew-user-modal',
@@ -14,20 +11,25 @@ import { UserRoles } from 'src/enums/user-roles.enum';
 })
 export class RenewUserModalComponent implements OnInit {
   @Input() userRole: UserRoles;
+  currentUser: User;
 
   amountToDeduct: number = 0;
-  constructor(public activeModal: NgbActiveModal) {}
+  constructor(
+    public activeModal: NgbActiveModal,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
+    this.currentUser = this.authService.currentUser;
     switch (this.userRole) {
       case UserRoles.MANAGER:
-        this.amountToDeduct = MANAGER_RENEW_AMOUNT;
+        this.amountToDeduct = this.currentUser.company.managerAccountPrice;
         break;
       case UserRoles.SUPERVISOR:
-        this.amountToDeduct = SUPERVISOR_RENEW_AMOUNT;
+        this.amountToDeduct = this.currentUser.company.supervisorAccountPrice;
         break;
       case UserRoles.COLLECTOR:
-        this.amountToDeduct = COLLECTOR_RENEW_AMOUNT;
+        this.amountToDeduct = this.currentUser.company.collectorAccountPrice;
         break;
     }
   }
