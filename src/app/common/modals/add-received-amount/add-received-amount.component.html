@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Add Received Amount</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <!-- <p><span translate>Activating</span> {{userName}}:</p> -->
+  <div>
+    <h5><strong translate>Amount:</strong></h5>
+    <input class="form-control" type="number" name="amount" [(ngModel)]="data.amount">
+  </div>
+  <div class="px-1">
+    <h5><strong translate>Employee:</strong></h5>
+    <select [(ngModel)]="data.employeeId" class="form-control form-select">
+      <option *ngFor="let employee of employees" [value]="employee.id">{{employee.name}}</option>
+    </select>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="store()">Confirm</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button>
+</div>
