@@ -6,18 +6,40 @@
 </div>
 <div class="modal-body">
   <div class="row">
-    <div class="col-sm-6"><strong translate>Name:</strong> {{employee.name}}</div>
+    <div class="col-sm-6"><strong translate>Name:</strong> {{employee.name}}
+      <i class="fa fa-pencil border rounded p-2" aria-hidden="true" (click)="openFieldEdit('name', InputType.TEXT)"></i>
+    </div>
     <div class="col-sm-6"><strong translate>Username:</strong>
-      {{employee.username}}</div>
+      {{employee.username}}
+      <i class="fa fa-pencil border rounded p-2" aria-hidden="true"
+        (click)="openFieldEdit('username', InputType.TEXT)"></i>
+    </div>
   </div>
   <div class="row">
-    <div class="col-sm-6"><strong translate>Email:</strong> {{employee.email}}</div>
-    <div class="col-sm-6"><strong translate>Phone Number:</strong> {{employee.phoneNumber}}</div>
+    <div class="col-sm-6">
+      <strong translate>Email:</strong> {{employee.email}}
+      <i class="fa fa-pencil border rounded p-2" aria-hidden="true"
+        (click)="openFieldEdit('email', InputType.TEXT)"></i>
+    </div>
+    <div class="col-sm-6"><strong translate>Phone Number:</strong> {{employee.phoneNumber}}
+      <i class="fa fa-pencil border rounded p-2" aria-hidden="true"
+        (click)="openFieldEdit('phoneNumber', InputType.TEXT)"></i>
+    </div>
   </div>
   <div class="row">
     <div class="col-sm-6"><strong translate>Is Active:</strong> {{employee.isActive}}</div>
     <div class="col-sm-6"><strong translate>Expiry Date:</strong> {{employee.expiryDate | date: "dd/MM/yyyy"}}</div>
   </div>
+  <hr style="border-top: 1px solid #000000;">
+  <h5 style="font-weight: bold;" translate>Actions</h5>
+  <button type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+    (click)="openChangePasswordModal()" translate>
+    Change Password
+  </button>
+  <button *ngIf="employee.role != 'ADMIN'" class="btn btn-outline-primary mx-1" (click)="openRenewModal()">
+    <span translate>Renew</span>
+  </button>
+
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)" translate>Close</button>
