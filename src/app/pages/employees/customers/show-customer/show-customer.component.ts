@@ -10,11 +10,14 @@ import { CompaniesService } from 'src/app/services/companies.service';
 import { InvoicesService } from 'src/app/services/invoices.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UsersService } from 'src/app/services/users.service';
+import { monthNamesAr, monthNamesEn } from 'src/constants/constants';
 import { AddressesLevel } from 'src/enums/addresses.enum';
 import { ModalType } from 'src/enums/modal-type.enum';
 import { UserRoles } from 'src/enums/user-roles.enum';
 import { Invoice } from 'src/models/invoice.model';
 import { User } from 'src/models/user.model';
+import { getLang } from 'src/utils/functions';
+import { AddEmployeeTaskModalComponent } from '../../employee-tasks/add-employee-task-modal/add-employee-task-modal.component';
 
 @Component({
   selector: 'app-show-customer',
@@ -35,35 +38,7 @@ export class ShowCustomerComponent implements OnInit {
   isLevel3Allowed: boolean = false;
   isLevel2Allowed: boolean = false;
 
-  monthNamesEn = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-
-  monthNamesAr = [
-    'كانون الأول',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+  months: string[] = [];
 
   constructor(
     private loadingService: LoadingService,
@@ -122,6 +97,9 @@ export class ShowCustomerComponent implements OnInit {
           this.isLevel2Allowed = false;
           break;
       }
+
+      const lang = getLang();
+      this.months = lang === 'en' ? monthNamesEn : monthNamesAr;
 
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
@@ -233,9 +211,24 @@ export class ShowCustomerComponent implements OnInit {
     if (res) {
       try {
         await this.usersService.generateNewInvoice(this.customer.id, plan_id);
+        this.alertService.toastSuccess('Invoice generated successfully');
+        window.location.reload();
       } catch (err) {
         this.authService.handleHttpError(err);
       }
     }
   }
+
+  // openCreateEmployeeTaskModal(){
+  //   const modalRef = this.modalService.open(AddEmployeeTaskModalComponent, {
+  //     size: 'lg',
+  //   });
+  //   modalRef.componentInstance.customer = this.customer;
+  //   modalRef.result.then((result) => {
+  //     if (result) {
+  //       // Refresh tasks
+  //       window.location.reload();
+  //     }
+  //   });
+  // }
 }
