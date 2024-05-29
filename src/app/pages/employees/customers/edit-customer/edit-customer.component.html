@@ -1,9 +1,11 @@
 <section *ngIf="!isLoading" style="margin-bottom: 100px;">
   <div class="row">
-    <div class="col-sm-8">  <h1 style="margin: 20px;" translate>Edit Customer</h1>
-</div>
-    <div class="col-sm-4">
-      <button class="btn btn-primary" style="float: right; margin-top: 20px;" (click)="openUpdateCustomerPlansModal()" translate>Update Plans</button>
+    <div class="col-sm-8">
+      <h1 style="margin: 20px;" translate>Edit Customer</h1>
+    </div>
+    <div class="col-sm-4" *ngIf="authService.currentUser.role != UserRoles.COLLECTOR">
+      <button class="btn btn-primary" style="float: right; margin-top: 20px;" (click)="openUpdateCustomerPlansModal()"
+        translate>Update Plans</button>
     </div>
   </div>
   <details (click)='detailsClicked()' #detailsElement>
@@ -40,11 +42,16 @@
         <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
       </div>
       <div class="form-group">
+        <label for="note" translate>Note:</label>
+        <input type="text" class="form-control" name="note" id="note" aria-describedby="helpId" [(ngModel)]="data.note">
+      </div>
+      <div class="form-group">
         <label for="paymentDate" translate>Payment Date:</label>
         <input type="date" class="form-control" name="paymentDate" id="paymentDate" aria-describedby="helpId"
           [(ngModel)]="data.paymentDate" required>
       </div>
-      <div class="form-group" *ngIf="authService.currentUser.role == 'ADMIN' || authService.currentUser.role == 'MANAGER' " translate>
+      <div class="form-group"
+        *ngIf="authService.currentUser.role == 'ADMIN' || authService.currentUser.role == 'MANAGER' " translate>
         Collector:
         <select [(ngModel)]="data.collector_id" class="form-control">
           <option *ngFor="let collector of collectors" [value]="collector.id">{{collector.name}}</option>
@@ -74,19 +81,22 @@
     </div>
     <div *ngIf="isLevel4Allowed">
       <h5><strong>{{currentCompany.addressLevel4Name}}:</strong></h5>
-      <select [(ngModel)]="selectedLevel4Id" class="form-control form-select" [disabled]="!level4Addresses.length" (change)="level4Selected()">
+      <select [(ngModel)]="selectedLevel4Id" class="form-control form-select" [disabled]="!level4Addresses.length"
+        (change)="level4Selected()">
         <option *ngFor="let address of level4Addresses" [value]="address.id">{{address.name}}</option>
       </select>
     </div>
     <div *ngIf="isLevel3Allowed">
       <h5><strong>{{currentCompany.addressLevel3Name}}:</strong></h5>
-      <select [(ngModel)]="selectedLevel3Id" class="form-control form-select" [disabled]="!level3Addresses.length" (change)="level3Selected()" >
+      <select [(ngModel)]="selectedLevel3Id" class="form-control form-select" [disabled]="!level3Addresses.length"
+        (change)="level3Selected()">
         <option *ngFor="let address of level3Addresses" [value]="address.id">{{address.name}}</option>
       </select>
     </div>
     <div *ngIf="isLevel2Allowed">
       <h5><strong>{{currentCompany.addressLevel2Name}}:</strong></h5>
-      <select [(ngModel)]="selectedLevel2Id" class="form-control form-select" [disabled]="!level2Addresses.length" (change)="level2Selected()">
+      <select [(ngModel)]="selectedLevel2Id" class="form-control form-select" [disabled]="!level2Addresses.length"
+        (change)="level2Selected()">
         <option *ngFor="let address of level2Addresses" [value]="address.id">{{address.name}}</option>
       </select>
     </div>
@@ -96,9 +106,10 @@
         <option *ngFor="let address of level1Addresses" [value]="address.id">{{address.name}}</option>
       </select>
     </div>
-    </details>
-  <button class="btn btn-primary bg-linear-primary center-elements mx-auto my-5" style="width: 70%;" (click)="update()" [disabled]="isStoreLoading">
+  </details>
+  <button class="btn btn-primary bg-linear-primary center-elements mx-auto my-5" style="width: 70%;" (click)="update()"
+    [disabled]="isStoreLoading">
     <span *ngIf="!isStoreLoading" translate>Edit Client</span>
-    <span *ngIf="isStoreLoading" ><img src="{{loadingGif}}" width="20px" ></span>
+    <span *ngIf="isStoreLoading"><img src="{{loadingGif}}" width="20px"></span>
   </button>
 </section>

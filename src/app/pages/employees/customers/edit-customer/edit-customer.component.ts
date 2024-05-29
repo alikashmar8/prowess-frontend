@@ -41,6 +41,7 @@ export class EditCustomerComponent implements OnInit {
     name: null,
     email: null,
     phoneNumber: null,
+    note: null,
     address_id: null,
     plans: [],
     collector_id: null,
@@ -69,6 +70,8 @@ export class EditCustomerComponent implements OnInit {
   selectedLevel3Id: string = null;
   selectedLevel2Id: string = null;
 
+  public UserRoles = UserRoles;
+
   // dropdownList = [];
   // selectedPlans = [];
   // dropdownSettings: IDropdownSettings = {};
@@ -77,7 +80,6 @@ export class EditCustomerComponent implements OnInit {
     private companiesService: CompaniesService,
     private loadingService: LoadingService,
     private authService: AuthService,
-    private plansService: PlansService,
     private alertService: AlertService,
     private route: ActivatedRoute,
     private addressesService: AddressesService,
@@ -109,6 +111,7 @@ export class EditCustomerComponent implements OnInit {
                 name: this.user.name,
                 email: this.user.email,
                 phoneNumber: this.user.phoneNumber,
+                note: this.user.note,
                 address_id: this.user.address_id,
                 collector_id: this.user.collector.id,
                 plans: [],
