@@ -39,6 +39,7 @@ export class CreateCustomerComponent implements OnInit {
     name: null,
     email: null,
     phoneNumber: null,
+    note: null,
     address_id: null,
     collector_id: null,
     plans: [],
@@ -223,7 +224,7 @@ export class CreateCustomerComponent implements OnInit {
       return;
     }
 
-    if (!this.data.paymentDate || this.data.paymentDate.toDate() < 29) {
+    if (!this.data.paymentDate || new Date(this.data.paymentDate).getDate() >= 29) {
       this.alertService.toastError('Customer payment date should be provided');
       this.isStoreLoading = false;
       return;
@@ -242,8 +243,8 @@ export class CreateCustomerComponent implements OnInit {
       this.isStoreLoading = false;
       return;
     }
-    if (this.selectedPlans.length > 2) {
-      this.alertService.toastError('Selected plans should not exceed 2 plans!');
+    if (this.selectedPlans.length > 1) {
+      this.alertService.toastError('You can only select 1 plan!');
       this.isStoreLoading = false;
       return;
     }
@@ -278,11 +279,12 @@ export class CreateCustomerComponent implements OnInit {
           name: null,
           email: null,
           phoneNumber: null,
+          note: null,
           address_id: null,
           collector_id: null,
           plans: [],
           company_id: null,
-          paymentDate: new Date(),
+          paymentDate: new Date().toISOString().split('T')[0],
           invoice_total: null,
           invoice_notes: null,
         };
