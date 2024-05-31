@@ -32,6 +32,13 @@
     width: fit-content;
     box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
     border: solid 1px #a8a8a8;">
+    <div class="px-2">
+      <label for="isActive" translate><strong translate>Is Active</strong>?</label>
+      <select [(ngModel)]="filters.isActive" class="form-control form-select">
+        <option value="true" translate>True</option>
+        <option value="false" translate>False</option>
+      </select>
+    </div>
     <div *ngIf="isLevel5Allowed" class="px-1">
       <h5><strong>{{currentUser.company.addressLevel5Name}}:</strong></h5>
       <select [(ngModel)]="filters.level5Address" class="form-control form-select" (change)="level5Selected()">
@@ -87,7 +94,11 @@
       <input type="date" name="endDate" [(ngModel)]="filters.endDate" class="p-2 select rounded w-100 form-control"
         placeholder="End Date">
     </div>
-    <button class="btn btn-primary mx-5 mt-3 p-2" style="height: 3em;" (click)="getPageRecords(1)">Filter</button>
+    <div class="row">
+      <button class="btn btn-secondary mx-5 mt-3 p-2 col-md-4" style="height: 3em;" (click)="resetFilters()">Reset</button>
+      <button class="btn btn-primary mx-5 mt-3 p-2 col-md-4" style="height: 3em;" (click)="getPageRecords(1)">Filter</button>
+    </div>
+
   </div>
   <div *ngIf="customers.length">
     <!-- <div class="search-box ml-2">
@@ -126,11 +137,11 @@
           <tr *ngFor="let customer of customers; let i = index" [ngClass]="{
             'bg-linear-primary': customer.isActive,
             'bg-danger-light': !customer.isActive
-        }" routerLink="/company/customers/{{customer.id}}">
-            <td>{{customer.name}}</td>
+        }">
+            <td><a href="/company/customers/{{customer.id}}">{{customer.name}}</a></td>
             <td>
               <span *ngFor="let plan of customer.plans">
-                {{plan.name}},
+                {{plan.name}}
               </span>
             </td>
             <td>{{customer.paymentDate | date: 'dd'}}</td>
@@ -143,11 +154,17 @@
               <abbr data-title="Show Customer"><i class="fa fa-eye bg-white p-1 rounded m-1"
                   style="font-size: 21px!important;" routerLink="/company/customers/{{customer.id}}"></i></abbr>
               <abbr *ngIf="!customer.isActive" data-title="Enable Customer"
-                (click)="openEnableDisableModal(customer.id, customer.name, customer.isActive)"><i
-                  class="fa fa-check-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i></abbr>
+                (click)="openEnableDisableModal(customer.id, customer.name, customer.isActive)">
+                <i class="fa fa-check-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i>
+              </abbr>
+              <abbr *ngIf="!customer.isActive && currentUser.role == UserRole.ADMIN" data-title="Delete Customer"
+                (click)="deleteCustomer(customer)">
+                <i class="fa fa-trash bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i>
+              </abbr>
               <abbr *ngIf="customer.isActive" data-title="Disable Customer"
-                (click)="openEnableDisableModal(customer.id, customer.name, customer.isActive)"><i
-                  class="fa fa-minus-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i></abbr>
+                (click)="openEnableDisableModal(customer.id, customer.name, customer.isActive)">
+                <i class="fa fa-minus-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i>
+              </abbr>
             </td>
           </tr>
 
@@ -155,12 +172,23 @@
       </table>
       <div class="row w-100">
         <div class="col-md-10">
-          <ul class="pagination ">
+          <ul class="pagination" style="overflow-x: auto;">
             <li class="page-item" [ngClass]="{'active': i+1 == currentPage }"
               *ngFor='let in of counter(totalPages);let i = index' (click)="getPageRecords(i+1)">
               <a href="javascript:void(0);" class="page-link">{{i+1}}</a>
             </li>
           </ul>
+        </div>
+        <div class="col-md-1">
+          <select [(ngModel)]="take" class="" (change)="getPageRecords(1)">
+            <option value="10">10</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="300">300</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+          </select>
         </div>
         <div class="col-md-2">
           Total: {{totalRecords}}

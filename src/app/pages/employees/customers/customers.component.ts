@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivateCustomerModal } from 'src/app/common/modals/activate-customer-modal/activate-customer-modal.component';
+import { DeleteModalComponent } from 'src/app/common/modals/delete-modal/delete-modal.component';
 import { EnableDisableUserComponent } from 'src/app/common/modals/enable-disable-user/enable-disable-user.component';
 import { AddressesService } from 'src/app/services/addresses.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -10,6 +11,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { PlansService } from 'src/app/services/plans.service';
 import { UsersService } from 'src/app/services/users.service';
 import { AddressesLevel } from 'src/enums/addresses.enum';
+import { UserRoles } from 'src/enums/user-roles.enum';
 import { Level1Address } from 'src/models/level1-address.model';
 import { Level2Address } from 'src/models/level2-address.model';
 import { Level3Address } from 'src/models/level3-address.model';
@@ -52,10 +54,12 @@ export class CustomersComponent implements OnInit {
   plans: Plan[] = [];
   employees: User[] = [];
 
+  UserRole = UserRoles;
   filters = {
     search: null,
     planId: null,
     employeeId: null,
+    isActive: null,
     level5Address: null,
     level4Address: null,
     level3Address: null,
@@ -136,7 +140,8 @@ export class CustomersComponent implements OnInit {
         (result: any) => {
           this.customers = result.data;
           this.totalRecords = result.count;
-          this.totalPages = result.count > 0 ? Math.ceil(result.count / 10) : 1;
+          this.totalPages =
+            result.count > 0 ? Math.ceil(result.count / this.take) : 1;
           this.plansService
             .getCompanyPlans(this.currentUser.company.id)
             .subscribe((plans: any[]) => {
@@ -184,7 +189,8 @@ export class CustomersComponent implements OnInit {
       .subscribe(
         (result: any) => {
           this.customers = result.data;
-          this.totalPages = result.count > 0 ? Math.ceil(result.count / 10) : 1;
+          this.totalPages =
+            result.count > 0 ? Math.ceil(result.count / this.take) : 1;
           this.currentPage = page;
           this.isLoading = this.loadingService.appLoading(false);
         },
@@ -259,7 +265,8 @@ export class CustomersComponent implements OnInit {
         (result: any) => {
           this.customers = result.data;
           this.totalRecords = result.count;
-          this.totalPages = result.count > 0 ? Math.ceil(result.count / 10) : 1;
+          this.totalPages =
+            result.count > 0 ? Math.ceil(result.count / this.take) : 1;
           this.isLoading = this.loadingService.appLoading(false);
         },
         (err) => {
@@ -333,5 +340,48 @@ export class CustomersComponent implements OnInit {
     else this.filters.orderBy = value;
 
     this.getPageRecords(1);
+  }
+
+  async deleteCustomer(customer: User) {
+    const modalRef = this.modalService.open(DeleteModalComponent);
+    modalRef.componentInstance.name = customer.name;
+    modalRef.result.then(
+      (result) => {
+        if (result) {
+          this.usersService.delete(customer.id).subscribe(
+            (result: any) => {
+              if (result?.affected > 0) {
+                this.alertService.toastSuccess('Customer deleted successfully');
+                window.location.reload();
+              } else {
+                this.alertService.toastError('Error deleting customer');
+              }
+            },
+            (error) => {
+              this.authService.handleHttpError(error);
+            }
+          );
+        }
+      },
+      (rejected) => {}
+    );
+  }
+
+  resetFilters(){
+    this.filters = {
+      search: null,
+      planId: null,
+      employeeId: null,
+      isActive: null,
+      level5Address: null,
+      level4Address: null,
+      level3Address: null,
+      level2Address: null,
+      level1Address: null,
+      orderBy: null,
+      startDate: null,
+      endDate: null,
+    };
+    this.searchCustomers();
   }
 }
