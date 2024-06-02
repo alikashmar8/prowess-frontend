@@ -2,14 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { CompaniesService } from 'src/app/services/companies.service';
-import {
-  COLLECTOR_RENEW_AMOUNT,
-  loadingGifUrl,
-  MANAGER_RENEW_AMOUNT,
-  SUPERVISOR_RENEW_AMOUNT,
-} from 'src/constants/constants';
+import { loadingGifUrl } from 'src/constants/constants';
 import { CreateEmployeeDTO } from 'src/dtos/create-employee.dto';
 import { UserRoles } from 'src/enums/user-roles.enum';
+import { User } from 'src/models/user.model';
 import { getEnumArray } from 'src/utils/functions';
 
 @Component({
@@ -18,6 +14,7 @@ import { getEnumArray } from 'src/utils/functions';
   styleUrls: ['./create-employee.component.css'],
 })
 export class CreateEmployeeComponent implements OnInit {
+  currentUser: User;
   nextMonth = new Date(new Date().setMonth(new Date().getMonth() + 1));
 
   employee: CreateEmployeeDTO = {
@@ -44,6 +41,7 @@ export class CreateEmployeeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.currentUser = this.authService.currentUser;
     this.employee.role = this.userRoles[0];
     this.employee.company_id = this.authService.currentUser.company.id;
   }
@@ -77,18 +75,22 @@ export class CreateEmployeeComponent implements OnInit {
     let amountToDeduct = 0;
     switch (this.employee.role) {
       case UserRoles.MANAGER:
-        amountToDeduct = MANAGER_RENEW_AMOUNT;
+        amountToDeduct =
+          this.authService.currentUser.company.managerAccountPrice;
         break;
       case UserRoles.SUPERVISOR:
-        amountToDeduct = SUPERVISOR_RENEW_AMOUNT;
+        amountToDeduct =
+          this.authService.currentUser.company.supervisorAccountPrice;
         break;
       case UserRoles.COLLECTOR:
-        amountToDeduct = COLLECTOR_RENEW_AMOUNT;
+        amountToDeduct =
+          this.authService.currentUser.company.collectorAccountPrice;
         break;
     }
 
     let accepted = confirm(
-      amountToDeduct + ' $ will be deducted from your account'
+      amountToDeduct +
+        ` ${this.currentUser.company.currencySymbol} will be deducted from your account`
     );
 
     if (!accepted) {
