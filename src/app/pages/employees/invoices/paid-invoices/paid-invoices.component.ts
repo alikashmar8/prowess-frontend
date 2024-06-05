@@ -16,6 +16,9 @@ export class PaidInvoicesComponent implements OnInit {
   today = new Date();
   sum = '';
   currentUser: User;
+  take: number = 10;
+  skip: number = 0;
+  totalRecords: number = 0;
 
   constructor(
     private invoicesService: InvoicesService,
@@ -26,9 +29,13 @@ export class PaidInvoicesComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      let res = await this.invoicesService.getPaidInvoices();
+      let res = await this.invoicesService.getPaidInvoices({
+        take: this.take,
+        skip: this.skip,
+      });
       this.invoices = res.data;
       this.sum = res.sum;
+      this.totalRecords = res.count;
       this.currentUser = this.authService.currentUser;
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
@@ -48,6 +55,8 @@ export class PaidInvoicesComponent implements OnInit {
     selectedLevel3Address?: string;
     selectedLevel2Address?: string;
     selectedLevel1Address?: string;
+    take?: number;
+    skip?: number;
   }) {
     try {
       this.isLoading = this.loadingService.appLoading(true);
@@ -62,9 +71,12 @@ export class PaidInvoicesComponent implements OnInit {
         level3Address: data.selectedLevel3Address,
         level2Address: data.selectedLevel2Address,
         level1Address: data.selectedLevel1Address,
+        take: data.take,
+        skip: data.skip,
       });
       this.invoices = res.data;
       this.sum = res.sum;
+      this.totalRecords = res.count;
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
       this.authService.handleHttpError(err);
