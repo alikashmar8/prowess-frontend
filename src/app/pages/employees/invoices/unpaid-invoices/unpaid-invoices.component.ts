@@ -17,6 +17,10 @@ export class UnpaidInvoicesComponent implements OnInit {
   today = new Date();
   currentUser;
   title = '';
+  take: number = 10;
+  skip: number = 0;
+  totalRecords: number = 0;
+
   constructor(
     private invoicesService: InvoicesService,
     private loadingService: LoadingService,
@@ -26,9 +30,13 @@ export class UnpaidInvoicesComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      let res = await this.invoicesService.getUnpaidInvoices();
+      let res = await this.invoicesService.getUnpaidInvoices({
+        take: this.take,
+        skip: this.skip,
+      });
       this.invoices = res.data;
       this.sum = res.sum;
+      this.totalRecords = res.count;
       this.currentUser = this.authService.currentUser;
       // get language
       var storedLang: string = getLang();
@@ -57,6 +65,8 @@ export class UnpaidInvoicesComponent implements OnInit {
     selectedLevel3Address?: string;
     selectedLevel2Address?: string;
     selectedLevel1Address?: string;
+    take?: number;
+    skip?: number;
   }) {
     try {
       this.isLoading = this.loadingService.appLoading(true);
@@ -72,10 +82,13 @@ export class UnpaidInvoicesComponent implements OnInit {
         level3Address: data.selectedLevel3Address,
         level2Address: data.selectedLevel2Address,
         level1Address: data.selectedLevel1Address,
+        take: data.take,
+        skip: data.skip,
       });
 
       this.invoices = res.data;
       this.sum = res.sum;
+      this.totalRecords = res.count;
       this.isLoading = this.loadingService.appLoading(false);
     } catch (err) {
       this.authService.handleHttpError(err);
