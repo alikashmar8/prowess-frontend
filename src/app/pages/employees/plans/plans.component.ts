@@ -4,7 +4,9 @@ import { EditPlanModalComponent } from 'src/app/common/modals/edit-plan-modal/ed
 import { AuthService } from 'src/app/services/auth-service.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { PlansService } from 'src/app/services/plans.service';
+import { UserRoles } from 'src/enums/user-roles.enum';
 import { Plan } from 'src/models/plan.model';
+import { User } from 'src/models/user.model';
 
 @Component({
   selector: 'app-plans',
@@ -14,6 +16,8 @@ import { Plan } from 'src/models/plan.model';
 export class PlansComponent implements OnInit {
   isLoading: boolean = true;
   plans: Plan[] = [];
+  currentUser: User;
+  UserRole = UserRoles;
 
   constructor(
     private loadingService: LoadingService,
@@ -24,6 +28,7 @@ export class PlansComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = this.loadingService.appLoading(true);
+    this.currentUser = this.authService.currentUser;
     this.plansService
       .getCompanyPlans(this.authService.currentUser.company_id)
       .subscribe((result: Plan[]) => {

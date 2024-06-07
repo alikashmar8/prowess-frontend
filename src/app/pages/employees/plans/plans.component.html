@@ -22,14 +22,17 @@
           'bg-danger-light': !plan.isActive
         }">
           <span>{{plan.name}}</span>
-          <span>{{plan.price}} $</span>
+          <span>{{plan.price}} {{currentUser.company.currencySymbol}}</span>
           <div class="badge ">
-            <i class="fa fa-pen bg-white p-1 rounded m-1" style="font-size: 22px!important;"
+            <i class="fa fa-pen bg-white text-black p-1 rounded m-1" style="font-size: 22px!important;"
+              *ngIf="currentUser.role == UserRole.ADMIN || currentUser.role == UserRole.MANAGER"
               (click)="openEditPlanModal(plan)"></i>
-            <i *ngIf="!plan.isActive" class="fa fa-check-circle bg-white p-1 rounded m-1"
-              style="font-size: 21px!important;" (click)="updateStatus(plan, true)"></i>
-            <i *ngIf="plan.isActive" class="fa fa-minus-circle bg-white p-1 rounded m-1"
-              style="font-size: 21px!important;" (click)="updateStatus(plan, false)"></i>
+            <i *ngIf="!plan.isActive && (currentUser.role == UserRole.ADMIN || currentUser.role == UserRole.MANAGER)"
+              class="fa fa-check-circle bg-white text-black p-1 rounded m-1" style="font-size: 21px!important;"
+              (click)="updateStatus(plan, true)"></i>
+            <i *ngIf="plan.isActive && (currentUser.role == UserRole.ADMIN || currentUser.role == UserRole.MANAGER)"
+              class="fa fa-minus-circle bg-white text-black p-1 rounded m-1" style="font-size: 21px!important;"
+              (click)="updateStatus(plan, false)"></i>
           </div>
         </li>
       </div>
