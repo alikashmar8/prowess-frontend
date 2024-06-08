@@ -89,7 +89,7 @@
       </div>
     </div>
     <div class="col-sm-4">
-      <div class="center-elements">
+      <div class="center-elements" *ngIf="user.company.allowDataImport">
         <div class="mb-3">
           <label for="formFile" class="form-label">Choose Excel File:
             <small class="btn btn-sm btn-secondary" style="font-size: 0.7rem!important;
@@ -100,17 +100,8 @@
               </a>
             </small>
           </label>
-          <input
-          type="file"
-          name="file"
-          id="file"
-          formControlName="file"
-          (change)="uploadImage($event)"
-          class="form-control common-input px-3"
-          required
-          autofocus
-          min="1"
-        />
+          <input type="file" name="file" id="file" formControlName="file" (change)="uploadImage($event)"
+            class="form-control common-input px-3" required autofocus min="1" />
         </div>
         <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
           (click)="uploadExcel()" translate>

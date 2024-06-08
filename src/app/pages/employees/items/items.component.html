@@ -25,14 +25,14 @@
             {{item.name}}
           </span>
           <span>
-            {{item.price}} $
+            {{item.price}} {{currentUser.company.currencySymbol}}
           </span>
           <div class="badge ">
-            <i class="fa fa-pen bg-white p-1 rounded m-1" style="font-size: 22px!important;"
+            <i class="fa fa-pen bg-white text-black p-1 rounded m-1" style="font-size: 22px!important;"
               (click)="openEditItemModal(item)"></i>
-            <i *ngIf="!item.isActive" class="fa fa-check-circle bg-white p-1 rounded m-1"
+            <i *ngIf="!item.isActive" class="fa fa-check-circle bg-white text-black p-1 rounded m-1"
               style="font-size: 21px!important;" (click)="updateStatus(item, true)"></i>
-            <i *ngIf="item.isActive" class="fa fa-minus-circle bg-white p-1 rounded m-1"
+            <i *ngIf="item.isActive" class="fa fa-minus-circle bg-white text-black p-1 rounded m-1"
               style="font-size: 21px!important;" (click)="updateStatus(item, false)"></i>
           </div>
         </li>
