@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
+import { UserRoles } from 'src/enums/user-roles.enum';
 import { User } from 'src/models/user.model';
 
 @Component({
@@ -16,6 +17,8 @@ export class ChangePasswordModal implements OnInit {
   newPassword: string = '';
   confirmPassword: string = '';
 
+  submittedAction: any;
+
   constructor(
     private authService: AuthService,
     private alertService: AlertService,
@@ -23,10 +26,11 @@ export class ChangePasswordModal implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.authService.currentUser.id != this.user.id) {
-      this.alertService.error('You are not allowed to change this password.');
-      this.activeModal.dismiss();
-    }
+    // if (this.authService.currentUser.id != this.user.id) {
+    //   this.alertService.error('You are not allowed to change this password.');
+    //   this.activeModal.dismiss();
+    // }
+    // specify action to be submitted when the form is submitted:
   }
 
   async update() {
@@ -44,12 +48,24 @@ export class ChangePasswordModal implements OnInit {
         return;
       }
 
-      await this.authService.updatePassword(this.user.id, {
-        oldPassword: this.oldPassword,
-        newPassword: this.newPassword,
-        confirmPassword: this.confirmPassword,
-      });
-      this.alertService.success('Password updated successfully.');
+      if (
+        this.authService.currentUser.role == UserRoles.ADMIN &&
+        this.authService.currentUser.id != this.user.id
+      ) {
+        await this.authService.adminUpdateEmployeePassword(this.user.id, {
+          oldPassword: this.oldPassword,
+          newPassword: this.newPassword,
+          confirmPassword: this.confirmPassword,
+        });
+      } else {
+        await this.authService.updatePassword(this.user.id, {
+          oldPassword: this.oldPassword,
+          newPassword: this.newPassword,
+          confirmPassword: this.confirmPassword,
+        });
+      }
+
+      this.alertService.toastSuccess('Password updated successfully.');
       this.activeModal.close();
     } catch (err) {
       this.authService.handleHttpError(err);
