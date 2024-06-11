@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Received Amounts</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <div class="row">
+    <div class="col-sm-4 p-3">
+      <label for="startDate" translate>Start Date:</label>
+      <input type="date" name="startDate" [(ngModel)]="filters.fromDate" class="p-2 select rounded w-100 form-control"
+        style="padding: 12px!important;" placeholder="Starting Date">
+    </div>
+    <div class="col-sm-4 p-3">
+      <label for="endDate" translate>End Date:</label>
+      <input type="date" name="endDate" [(ngModel)]="filters.toDate" class="p-2 select rounded w-100 form-control"
+        style="padding: 12px!important;" placeholder="Starting Date">
+    </div>
+    <div class="col-sm-4 mt-4">
+      <button class="btn btn-primary mt-4" (click)="loadAmounts()" translate>Filter</button>
+    </div>
+  </div>
+  <div *ngIf="receivedAmounts == null" translate>Loading...</div>
+  <div *ngIf="receivedAmounts != null">
+    <table class="table table-striped table-inverse table-responsive" style="display: inline-table;">
+      <thead class="thead-inverse">
+        <tr>
+          <th>#</th>
+          <th translate>Employee</th>
+          <th translate>Amount</th>
+          <th translate>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let receivedAmount of receivedAmounts; let i = index">
+          <td scope="row"></td>
+          <td>{{receivedAmount.employee.name}}</td>
+          <td>{{receivedAmount.amount}}</td>
+          <td>{{receivedAmount.receivedDate | date: 'yyyy-MM-dd HH:mm'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- <div class="modal-footer"> -->
+<!-- <button type="button" class="btn btn-success" (click)="store()">Confirm</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button> -->
+<!-- </div> -->
