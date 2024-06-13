@@ -1,9 +1,9 @@
 <div class="list-item row">
-  <div class="col-md-1"><a routerLink="/admin/companies/{{company.id}}" data-abc="true"><span
+  <div class="col-md-1"><a routerLink="{{ urlPrefix }}{{company.id}}" data-abc="true"><span
         class="w-48 avatar gd-info">{{ company.name[0] }}</span></a>
   </div>
 
-  <div class="flex col-md-5"> <a routerLink="/admin/companies/{{company.id}}" class="item-author text-color"
+  <div class="flex col-md-5"> <a routerLink="{{ urlPrefix }}{{company.id}}" class="item-author text-color"
       data-abc="true">{{company.name }}</a>
     <div class="item-except text-muted text-sm h-1x">Balance: {{company.balance}} {{company.currency}}
     </div>
@@ -11,7 +11,7 @@
 
   <div class="no-wrap col-md-6">
     <button class="btn btn-primary m-2" (click)="openEditBalanceModal(company)" translate>Edit Balance</button>
-    <button class="btn btn-primary m-2" routerLink="/admin/companies/{{company.id}}/edit" translate>Edit</button>
+    <button class="btn btn-primary m-2" routerLink="{{ urlPrefix }}{{company.id}}/edit" translate>Edit</button>
     <button class="btn btn-danger m-2" (click)="openDeleteModal()" translate>Delete</button>
   </div>
 </div>

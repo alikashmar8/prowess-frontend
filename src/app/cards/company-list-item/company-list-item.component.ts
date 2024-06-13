@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteModalComponent } from 'src/app/common/modals/delete-modal/delete-modal.component';
+import { UpdateCompanyBalanceModalComponent } from 'src/app/common/modals/update-company-balance-modal/update-company-balance-modal.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { CompaniesService } from 'src/app/services/companies.service';
-import { InputType } from 'src/enums/input-type.enum';
 import { Company } from 'src/models/company.model';
 import { User } from 'src/models/user.model';
 
@@ -17,6 +17,8 @@ export class CompanyListItemComponent {
   @Input('company') company: Company;
   currentUser: User;
 
+  urlPrefix: string = '';
+
   constructor(
     private modalService: NgbModal,
     private companiesServices: CompaniesService,
@@ -24,6 +26,7 @@ export class CompanyListItemComponent {
     private authService: AuthService
   ) {
     this.currentUser = this.authService.currentUser;
+    this.urlPrefix = this.currentUser.isSuperAdmin ? '/admin/companies/' : '/company/sub-companies/';
   }
 
   openDeleteModal() {
@@ -52,26 +55,7 @@ export class CompanyListItemComponent {
   }
 
   async openEditBalanceModal(company: Company) {
-    const result = await this.alertService.dynamicInputDialog({
-      label: 'balance',
-      inputType: InputType.NUMBER,
-      value: company.balance,
-    });
-
-    if (result && Number(result) != this.company.balance) {
-      this.companiesServices
-        .adminUpdateBalance(company.id, {
-          balance: result,
-        })
-        .subscribe(
-          (res) => {
-            this.alertService.toastSuccess('Balance updated successfully!');
-            window.location.reload();
-          },
-          (err) => {
-            this.authService.handleHttpError(err);
-          }
-        );
-    }
+    const modalRef = this.modalService.open(UpdateCompanyBalanceModalComponent);
+    modalRef.componentInstance.companyId = company.id;
   }
 }
