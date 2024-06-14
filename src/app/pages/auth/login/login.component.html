@@ -3,7 +3,9 @@
   <div class="row main-content bg-success text-center" style="width: 400px">
     <div class="col-md-4 text-center company__info">
       <span class="company__logo">
-        <h2><img src="assets/images/logoSmall.png" class='m-1' style='width: -webkit-fill-available'> </h2>
+        <h2><img src="assets/images/logoSmall.png" class='m-1'
+            style='width: -moz-available; width: -webkit-fill-available;'> </h2>
+        <h5>Prowess</h5>
       </span>
     </div>
     <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
@@ -29,12 +31,8 @@
               </button>
             </div>
             <span class="form-inline">
-              <select
-                  class="form-control"
-                  #selectedLang
-                  (change)="switchLang(selectedLang.value)">
-                <option *ngFor="let language of translate.getLangs()"
-                  [value]="language"
+              <select class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
+                <option *ngFor="let language of translate.getLangs()" [value]="language"
                   [selected]="language === translate.currentLang">
                   {{ language }}
                 </option>
