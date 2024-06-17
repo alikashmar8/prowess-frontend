@@ -11,7 +11,7 @@
     </div>
     Balance:
     <br>
-    {{stats.company_balance}}
+    {{stats.company_balance}} {{currentUser.company.currencySymbol}}
   </div>
   <div class="col-sm-2 box-card m-3 center-elements bg-warning" translate>
     <div class="row center-elements">
@@ -38,7 +38,23 @@
     </div>
     Collected Today:
     <br>
-    {{stats.amount_collected_today}}
+    Invoices: {{stats.amount_collected_today}} {{currentUser.company.currencySymbol}}
+    <br>
+    Items: {{stats.items_amount_collected_today}} {{currentUser.company.currencySymbol}}
+  </div>
+  <div *ngIf="[UserRoles.ADMIN, UserRoles.MANAGER].includes(currentUser.role)"
+    class="col-sm-2 box-card m-3 bg-success bg-gradient center-elements" translate>
+    <div class="row center-elements">
+      <i class="fa fa-money-bill fa-2x"></i>
+    </div>
+    Total Received By Employees:
+    <br>
+    {{stats.total_collected_by_employees}} {{currentUser.company.currencySymbol}}
+    <br>
+    <div>
+      <i class="fa fa-list bg-white rounded p-2 m-2" aria-hidden="true" (click)="openListAmountsModal()"></i>
+      <i class="fa fa-plus bg-white rounded p-2 m-2" aria-hidden="true" (click)="openAddAmountModal()"></i>
+    </div>
   </div>
 </div>
 <div *ngIf="isLoading">Loading stats...</div>
