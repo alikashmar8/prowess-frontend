@@ -18,7 +18,7 @@
     <a *ngFor="let invoice of invoices"
       class="list-group-item list-group-item-action flex-column align-items-start m-2">
       <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{invoice.total}} $
+        <h5 class="mb-1">{{invoice.total}} {{currentUser.company.currencySymbol}}
         </h5>
         <small>{{invoice.created_at | date: 'yyyy-MM-dd HH:mm' }}
           <br>
