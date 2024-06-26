@@ -116,14 +116,6 @@ h1,
   padding: 1.25rem;
 }
 
-.card-header {
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-  text-align: center;
-}
-
 .dashboard {
   display: -webkit-box;
   display: -webkit-flex;
@@ -147,7 +139,9 @@ h1,
   -ms-flex-positive: 2;
   flex-grow: 2;
   margin-top: 50px;
-  min-width: 1000px;
+  /* min-width: 1000px; */
+  width: 85vw;
+  position: relative;
 }
 
 .dashboard-content {
@@ -159,8 +153,10 @@ h1,
 }
 
 .dashboard-nav {
-  min-width: 238px;
-  position: fixed;
+  width: 15vw;
+  height: 100vh !important;
+  /* min-width: 238px; */
+  position: relative;
   left: 0;
   top: 0;
   bottom: 0;
@@ -382,8 +378,8 @@ h1,
 
 @media (min-width: 992px) {
   .dashboard-app {
-    margin-left: 238px;
-    min-width: 1000px;
+    /* margin-left: 238px; */
+    /* min-width: 1000px; */
   }
 }
 
@@ -394,8 +390,14 @@ h1,
 }
 
 @media (max-width: 992px) {
+  .dashboard-app {
+    width: 95vw;
+    margin-left: 0 !important;
+  }
+
   .dashboard-nav {
     /* display: none; */
+    width: 100vw;
     position: fixed;
     top: 0;
     right: 0;
@@ -407,9 +409,7 @@ h1,
   .dashboard-nav.mobile-show {
     display: block;
   }
-}
 
-@media (max-width: 992px) {
   .dashboard-nav header .menu-toggle {
     display: -webkit-box;
     display: -webkit-flex;
@@ -426,7 +426,7 @@ h1,
 
 @media (max-width: 575px) {
   .dashboard-app {
-    min-width: 300px;
+    /* min-width: 300px; */
   }
 }
 
@@ -810,4 +810,14 @@ input[type="date"]::-webkit-datetime-edit-day-field{
 
 .modal-backdrop {
   display: none;
+}
+
+.balance-due-container {
+  /* width: fit-content; */
+}
+/* mobile design */
+@media (max-width: 992px) {
+  .balance-due-container {
+    /* width: 80vh; */
+  }
 }
