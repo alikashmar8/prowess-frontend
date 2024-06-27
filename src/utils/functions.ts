@@ -1,9 +1,10 @@
-import { Level1Address } from 'src/models/level1-address.model';
 import { HttpHeaders } from '@angular/common/http';
+import { monthNamesAr, monthNamesEn } from 'src/constants/constants';
 import { AddressesLevel } from 'src/enums/addresses.enum';
 import { UserRoles } from 'src/enums/user-roles.enum';
+import { Level1Address } from 'src/models/level1-address.model';
 import { User } from 'src/models/user.model';
-import { Address } from '../models/address.model';
+import { Currency } from './../enums/currency.enum';
 
 export function getAccessToken() {
   return localStorage.getItem('access_token');
@@ -182,18 +183,44 @@ export function isMobile() {
   return window.innerWidth <= 900;
 }
 
-
-export function getLang():string{
-  if (localStorage){
-      return localStorage['lang'] || "";
-  }
-  else{
-      return "";
+export function getLang(): string {
+  if (localStorage) {
+    return localStorage['lang'] || '';
+  } else {
+    return '';
   }
 }
 
-export function setLang(language: string){
-  if (localStorage){
-      localStorage['lang'] = language;
+export function setLang(language: string) {
+  if (localStorage) {
+    localStorage['lang'] = language;
+  }
+}
+
+export function getMonthName(monthIndex: number): string {
+  const monthNames: string[] = getLang() == 'ar' ? monthNamesAr : monthNamesEn;
+  return monthNames[monthIndex];
+}
+
+export function getCurrencySymbol(currency: Currency) {
+  switch (currency) {
+    case Currency.USD:
+      return '$';
+    case Currency.EUR:
+      return '€';
+    case Currency.AUD:
+      return '$';
+    case Currency.TRY:
+      return '₺';
+    case Currency.RUB:
+      return '₽';
+    case Currency.AED:
+      return 'د.إ';
+    case Currency.SAR:
+      return 'ر.س';
+    case Currency.LBP:
+      return 'ل.ل';
+    default:
+      return '$';
   }
 }
