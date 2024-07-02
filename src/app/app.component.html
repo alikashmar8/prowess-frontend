@@ -5,7 +5,7 @@
   </div>
   <div class='dashboard' *ngIf="isAuthenticated">
     <app-navbar [ngClass]="{'hide-menu': !showMenu}"></app-navbar>
-    <div class='dashboard-app' [ngStyle]="{'margin-left': !showMenu ? '0': '240px' }">
+    <div class='dashboard-app' [ngStyle]="{'margin-left': !showMenu ? '-15vw': '0' }">
       <header class='dashboard-toolbar'>
         <div class="form-inline">
           <select class="form-control mx-2" #selectedLang (change)="switchLang(selectedLang.value)" style="
@@ -18,15 +18,17 @@
             </option>
           </select>
         </div>
-        <a routerLink="/company/profile" style="font-size: 25px; color: currentColor;">
+        <a routerLink="/company/profile" class="mx-2" style="font-size: 25px; color: currentColor;">
           <i class="fas fa-user-circle"></i>
+        </a>
+        <a href="#" (click)="logout()" class="mx-2" style="font-size: 25px; color: currentColor;"><i class="fas fa-sign-out-alt"></i>
         </a>
         <a (click)="toggleMenu()" class="menu-toggle">
           <i class="fas fa-bars"></i>
         </a>
       </header>
-      <div class='dashboard-content'>
-        <div class='container bg-white p-5 rounded'>
+      <div class='dashboard-content' style="z-index: 1;">
+        <div class='container bg-white p-4 rounded'>
           <app-alert></app-alert>
           <router-outlet></router-outlet>
         </div>

@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   OnDestroy,
-  OnInit
+  OnInit,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -86,5 +86,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   switchLang(language: string) {
     this.translate.use(language);
     setLang(language);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']).then(() => {
+      window.location.reload();
+    });
   }
 }
