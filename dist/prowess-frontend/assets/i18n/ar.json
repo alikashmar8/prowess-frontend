@@ -335,5 +335,16 @@
   "Amount to update": "المبلغ المراد تحديثه",
   "Submit": "تأكيد",
   "Allow Data Import:": "السماح بإستيراد البيانات:",
-  "Invoices Sorting Type:": "نوع ترتيب الفواتير:"
+  "Invoices Sorting Type:": "نوع ترتيب الفواتير:",
+  "Current Counter Value:": "القيمة الحالية للعداد:",
+  "Invoices Type:": "نوع الفواتير:",
+  "Per Plan Monthly": "شهري لكل إشتراك",
+  "Per Counter": "لكل عداد",
+  "Price Per Counter:": "السعر لكل عداد:",
+  "Last Counter Value:": "القيمة الأخيرة للعداد:",
+  "Invoice Total:": "إجمالي الفاتورة:",
+  "From/To Counter Value:": "من/إلى قيمة العداد:",
+  "Is Per Counter:": "حسب العداد:",
+  "Is Per Counter?": "حسب العداد؟",
+  "Last Counter Value": "القيمة الأخيرة للعداد"
 }
