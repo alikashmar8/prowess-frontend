@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Generate Invoice</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div *ngIf="isLoading">Loading...</div>
+  <div *ngIf="!isLoading">
+    <div *ngIf="currentUser.company.invoicesType == CompanyInvoicesType.PER_PLAN_MONTHLY" translate>
+      Are you sure you want to generate an invoice for the next month?
+    </div>
+
+    <div *ngIf="currentUser.company.invoicesType == CompanyInvoicesType.PER_COUNTER" translate>
+      <div *ngIf="!customer.isPerCounter" translate>
+        Are you sure you want to generate an invoice for the next month?
+      </div>
+
+      <div *ngIf="customer.isPerCounter" translate>
+        <div class="form-group">
+          <label for="note" translate>Last Counter Value:</label>
+          <h5>{{ customer.lastCounterValue }}</h5>
+        </div>
+
+        <div class="form-group">
+          <label for="counterValue" translate>Current Counter Value:</label>
+          <input type="number" class="form-control" name="counterValue" id="counterValue" aria-describedby="helpId"
+            [(ngModel)]="data.counterValue" min="{{ currentUser.lastCounterValue }}"
+            (ngModelChange)="calculateInvoiceTotal()">
+        </div>
+
+        <div class="form-group">
+          <label for="dueDate" translate>Due Date:</label>
+          <input type="date" class="form-control" name="dueDate" id="dueDate" aria-describedby="helpId"
+            [(ngModel)]="data.dueDate" required>
+        </div>
+
+        <div class="form-group">
+          <label for="paymentDate" translate>Invoice Total:</label>
+          <h5>{{ invoiceTotal }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="submit()">Confirm</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Close</button>
+</div>
