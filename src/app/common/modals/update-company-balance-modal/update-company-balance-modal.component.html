@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Update Balance</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row" *ngIf="isLoading">Loading...</div>
+  <div class="row" *ngIf="!isLoading">
+    <div class="col-sm-6" *ngIf="parentCompany && !currentUser.isSuperAdmin">
+      <p translate>Your balance:</p>
+      <h5>{{ parentCompany.balance * 1 - amount * 1 }}</h5>
+    </div>
+
+    <div class="col-sm-6">
+      <p translate>{{ company.name }} balance:</p>
+      <h5>{{ company.balance * 1 + amount * 1 }}</h5>
+    </div>
+
+    <div>
+      <p translate>Amount to update:</p>
+      <input type="number" class="form-control" [(ngModel)]="amount" />
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="submit()" translate>Submit</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)" translate>Close</button>
+</div>
