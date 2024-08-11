@@ -1,0 +1,55 @@
+<div *ngIf="!isLoading">
+  <div class="row">
+    <div class="col-md-8">
+      <h2 translate>Employee Task Reasons:</h2>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-primary" (click)="openNewTaskReasonModal()" translate>Add New Task Reason</button>
+    </div>
+  </div>
+  <ul>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th translate>Name</th>
+          <th translate>Description</th>
+          <th translate>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reason of taskReasons">
+          <td>{{reason.name}}
+            <i class="fa fa-pencil border rounded p-2 mx-2" aria-hidden="true"
+              (click)="openUpdateNameModal(reason)"></i>
+          </td>
+          <td>
+            {{reason.description}}
+            <i class="fa fa-pencil border rounded p-2 mx-2" aria-hidden="true"
+              (click)="openUpdateDescriptionModal(reason)"></i>
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="deleteTaskReason(reason)" translate>Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </ul>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="pagination">
+        <i class="fa fa-arrow-left mx-2 p-1 rounded" [ngClass]="{
+        'bg-lightgrey': currentPage == 1,
+        'bg-primary': currentPage > 1
+        }" (click)="previousPage()" [disabled]="currentPage === 1"></i>
+        <span><span translate>Page</span> {{ currentPage }} <span translate>of</span> {{ totalPages }}</span>
+        <i class="fa fa-arrow-right mx-2 p-1 rounded" [ngClass]="{
+        'bg-lightgrey': currentPage == totalPages,
+        'bg-primary': currentPage < totalPages
+    }" (click)="nextPage()" [disabled]="currentPage === totalPages"></i>
+      </div>
+    </div>
+  </div>
+
+</div>
