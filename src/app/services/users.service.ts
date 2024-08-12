@@ -10,11 +10,17 @@ import { getHeaders } from 'src/utils/functions';
 export class UsersService {
   constructor(private http: HttpClient) {}
 
-  async generateNewInvoice(customer_id: string, plan_id: any) {
+  async generateNewInvoice(data: {
+    customer_id: string;
+    plan_id: any;
+    counterValue: number;
+    dueDate: Date;
+  }) {
     return await this.http
       .post(
-        usersEndpoint + `${customer_id}/plans/${plan_id}/generateNewInvoice/`,
-        {},
+        usersEndpoint +
+          `${data.customer_id}/plans/${data.plan_id}/generateNewInvoice/`,
+        data,
         { headers: getHeaders() }
       )
       .toPromise();

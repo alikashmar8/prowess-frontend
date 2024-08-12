@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { CreateCustomerDTO } from 'src/dtos/create-customer.dto';
 import { CreateEmployeeDTO } from 'src/dtos/create-employee.dto';
 import { UserRoles } from 'src/enums/user-roles.enum';
@@ -22,32 +23,66 @@ export class CompaniesService {
     return this.http.get(adminCompaniesEndpoint, { headers: getHeaders() });
   }
 
+  getSubCompanies() {
+    return this.http.get(companiesEndpoint + 'sub-companies?take=50&skip=0', {
+      headers: getHeaders(),
+    });
+  }
+
   adminStore(company: AdminCreateCompanyDTO) {
     return this.http.post(adminCompaniesEndpoint, company, {
       headers: getHeaders(),
     });
   }
 
+  storeSubCompany(company: AdminCreateCompanyDTO) {
+    return this.http.post(companiesEndpoint + 'sub-companies', company, {
+      headers: getHeaders(),
+    });
+  }
+
   getById(id: string) {
-    return this.http.get(adminCompaniesEndpoint + id, {
+    return this.http.get(companiesEndpoint + id, {
       headers: getHeaders(),
     });
   }
 
-  adminUpdate(id: string, data: AdminEditCompanyDTO) {
-    return this.http.put(adminCompaniesEndpoint + id, data, {
+  async getByIdAsync(id: string): Promise<any> {
+    return await firstValueFrom(
+      this.http.get(companiesEndpoint + id, {
+        headers: getHeaders(),
+      })
+    );
+  }
+
+  update(id: string, data: AdminEditCompanyDTO) {
+    const currentUser = this.authService.currentUser;
+    const url = currentUser.isSuperAdmin
+      ? adminCompaniesEndpoint
+      : companiesEndpoint + 'sub-companies/';
+    return this.http.put(url + id, data, {
       headers: getHeaders(),
     });
   }
 
-  adminUpdateBalance(id: string, data: { balance: number }) {
+  adminUpdateBalance(id: string, data: { amount: number }) {
     return this.http.patch(adminCompaniesEndpoint + id + '/balance', data, {
       headers: getHeaders(),
     });
   }
 
+  updateSubCompanyBalance(id: string, data: { amount: number }) {
+    return this.http.patch(companiesEndpoint + id + '/balance', data, {
+      headers: getHeaders(),
+    });
+  }
+
   adminDelete(id: string) {
-    return this.http.delete(adminCompaniesEndpoint + id, {
+    const currentUser = this.authService.currentUser;
+    const url = currentUser.isSuperAdmin
+      ? adminCompaniesEndpoint
+      : companiesEndpoint + 'sub-companies/';
+    return this.http.delete(url + id, {
       headers: getHeaders(),
     });
   }
