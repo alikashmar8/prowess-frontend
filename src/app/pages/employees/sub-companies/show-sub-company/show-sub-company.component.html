@@ -1,0 +1,138 @@
+<div *ngIf="!isLoading">
+  <div class="profile-head mb-5 row">
+    <div class="col-md-10">
+      <h5>
+        {{company.name}}
+      </h5>
+      <div class="profile-rating">
+        <h6>Phone Number: {{company.phoneNumber}}</h6>
+      </div>
+      <div class="profile-rating">
+        <h6>Secondary Phone Number: {{company.secondaryPhoneNumber ? company.secondaryPhoneNumber : 'N/A' }}</h6>
+      </div>
+      <div class="profile-rating">
+        <h6>Balance: {{company.balance}} {{company.currency}}</h6>
+      </div>
+    </div>
+    <div class="">
+      <button class="btn btn-warning px-3 text-white" routerLink="/company/sub-companies/{{company.id}}/edit">
+        <i class="fas fa-pen"></i> Edit
+      </button>
+    </div>
+  </div>
+  <my-tabs>
+    <my-tab [tabTitle]="'General'">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="profile-rating">
+            <div class="row">
+              <span class="col-md-6">Max managers:</span>
+              <span>
+                {{company.maxManagersNumber}}
+              </span>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+              <span class="col-md-6">Max supervisors:</span>
+              <span>{{company.maxSupervisorsNumber}}</span>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+              <span class="col-md-6">Max collectors:</span>
+              <span>{{company.maxCollectorsNumber}}</span>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+              <span class="col-md-6">Max Clients:</span><span>{{company.maxCustomersNumber}}</span>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+              <span class="col-md-6">Max location level:</span>
+              <span> {{company.maxLocationLevel}}</span>
+            </div>
+            <br>
+            <br>
+            <div class="row" *ngIf="company.parentCompany">
+              <span class="col-md-6">Parent Company:</span>
+              <span> {{company.parentCompany.name}} - id:
+                {{company.parentCompany.id}}</span>
+            </div>
+            <div class="row" *ngIf="company.createdBy">
+              <span class="col-md-6">Created By:</span>
+              <span>{{company.createdBy.name}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </my-tab>
+    <my-tab tabTitle="Employees">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="main-box clearfix">
+              <div class="table-responsive">
+                <table class="table user-list">
+                  <thead>
+                    <tr>
+                      <th><span>User</span></th>
+                      <th><span>Expiry Date</span></th>
+                      <th class="text-center"><span>Status</span></th>
+                      <th><span>Email</span></th>
+                      <th><span>Actions</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let employee of employees">
+                      <td>
+                        <a href="#" class="user-link">{{employee.name}}</a>
+                        <span class="user-subhead">{{employee.role}}</span>
+                      </td>
+                      <td class="text-center">
+                        <div *ngIf="employee.expiryDate">
+                          {{employee.expiryDate}}
+                        </div>
+                        <div *ngIf="!employee.expiryDate">
+                          <span class="label label-success">null</span>
+                        </div>
+                      </td>
+                      <td class="text-center">
+                        <div *ngIf="employee.isActive">
+                          <h6 class="text-success">Active</h6>
+                        </div>
+                        <div *ngIf="!employee.isActive">
+                          <h6 class="text-danger">InActive</h6>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="#">{{employee.email}}</a>
+                      </td>
+                      <td>
+                        <a href="#" class="table-link primary ">
+                          <span class="fa-stack">
+                            <!-- <i class="fa fa-square fa-stack-2x"></i> -->
+                            <i class="fa fa-search-plus p-1" style="border:2px solid; border-radius: 5px;"></i>
+                          </span>
+                        </a>
+                        <a href="#" class="table-link danger  ">
+                          <span class="fa-stack">
+                            <i class="fas fa-trash-alt p-1" style="border:2px solid; border-radius: 5px;"></i>
+                            <!-- <i class="fa fa-square fa-stack-2x"></i> -->
+                            <!-- <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i> -->
+                          </span>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </my-tab>
+  </my-tabs>
+</div>
