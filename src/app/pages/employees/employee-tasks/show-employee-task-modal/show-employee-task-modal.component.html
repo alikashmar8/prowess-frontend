@@ -1,0 +1,40 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div *ngIf="isLoading">Loading...</div>
+
+  <div *ngIf="!isLoading" class="row">
+    <div class="col-sm-6"><strong translate>Employee:</strong> {{task.employee?.name}}
+      <!-- <i class="fa fa-pencil border rounded p-2" aria-hidden="true" (click)="openFieldEdit('name', InputType.TEXT)"></i> -->
+    </div>
+    <div class="col-sm-6"><strong translate>Customer:</strong>
+      {{task.customer?.name ?? 'N/A'}}
+    </div>
+    <div class="col-sm-6">
+      <strong translate>Task Type:</strong> {{ task.taskType?.name }}
+    </div>
+    <div class="col-sm-6"><strong translate>Description:</strong> {{task.description}}
+    </div>
+    <div class="col-sm-6"><strong translate>Result:</strong> {{task.result}}</div>
+    <div class="col-sm-6"><strong translate>Priority:</strong> {{ task.priority }}</div>
+    <div class="col-sm-6"><strong translate>Status:</strong> {{ task.status }}</div>
+    <div class="col-sm-6"><strong translate>Start Date:</strong> {{task.startDate | date: "dd/MM/yyyy hh:mm"}}</div>
+    <div class="col-sm-6"><strong translate>Finish Date:</strong> {{task.finishDate | date: "dd/MM/yyyy hh:mm"}}
+    </div>
+    <div class="col-sm-6"><strong translate>Created Date:</strong> {{task.createdAt | date: "dd/MM/yyyy hh:mm"}}
+    </div>
+    <strong translate>Supporting Employees:</strong>
+    <div class="col-sm-12">
+      <ul>
+        <li *ngFor="let supportingEmployee of task?.supportingEmployees">{{supportingEmployee?.employee?.name}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)" translate>Close</button>
+</div>
