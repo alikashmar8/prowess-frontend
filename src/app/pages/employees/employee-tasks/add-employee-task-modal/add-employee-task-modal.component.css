@@ -1,0 +1,9 @@
+mat-option {
+  min-height: 30px;
+  line-height: 30px;
+  background-color: #fcfcfc;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0 10px;
+  margin: 5px 0;
+}

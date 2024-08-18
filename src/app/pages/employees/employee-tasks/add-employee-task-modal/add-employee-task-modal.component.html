@@ -1,0 +1,86 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Add New Employee Task</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+
+    <div class="form-group">
+      <label for="category" class="required" translate>Task Category</label>
+      <select class="form-control" id="category" formControlName="category" required>
+        <option [value]="EmployeeTaskCategory.GENERAL" translate>General</option>
+        <option [value]="EmployeeTaskCategory.CUSTOMER" translate>Customer</option>
+      </select>
+    </div>
+
+    <!-- priority select -->
+    <div class="form-group">
+      <label for="priority" class="required" translate>Priority</label>
+      <select class="form-control" id="priority" formControlName="priority" required>
+        <option [value]="EmployeeTaskPriority.LOW" translate>Low</option>
+        <option [value]="EmployeeTaskPriority.MEDIUM" translate>Medium</option>
+        <option [value]="EmployeeTaskPriority.HIGH" translate>High</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="taskTypeId" class="required" translate>Task Type</label>
+      <select class="form-control" id="taskTypeId" formControlName="taskTypeId" required>
+        <option *ngFor="let type of taskTypes" [value]="type.id">{{type.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group" *ngIf="[UserRoles.ADMIN, UserRoles.MANAGER].includes(currentUser.role)">
+      <label for="employeeId" translate>Employee</label>
+      <select class="form-control" id="employeeId" formControlName="employeeId" required>
+        <option *ngFor="let employee of employees" [value]="employee.id">{{employee.name}}</option>
+      </select>
+    </div>
+
+    <!-- <mat-form-field> -->
+
+    <!-- view customer selection if category selection value == CUSTOMER -->
+    <div class="form-group" *ngIf="taskForm.get('category').value == EmployeeTaskCategory.CUSTOMER">
+      <label for="customerId" translate>Customer</label>
+      <mat-select translate placeholder="Customer" [(ngModel)]="selectedCustomerId" name="selectedCustomerId"
+        [ngModelOptions]="{standalone: true}" class="form-control col-md-12" #singleSelect>
+        <!-- <mat-option [disabled]="true"> -->
+        <!-- <ngx-mat-select-search name="selectedCustomerId" onchange="filterCustomers($event)"
+            [ngModelOptions]="{standalone: true}" placeholderLabel="Search..."
+            noEntriesFoundLabel="No Customer Found!"></ngx-mat-select-search> -->
+        <input (input)="filterCustomers($event)" (keydown)="handleInput($event)" placeholder="Search...">
+        <!-- </mat-option> -->
+        <mat-option *ngFor="let customer of customers" [value]="customer.id">
+          {{customer.name}}
+        </mat-option>
+      </mat-select>
+    </div>
+    <!-- </mat-form-field> -->
+
+    <div class="form-group">
+      <label for="description" translate>Description</label>
+      <input type="text" id="description" class="form-control" formControlName="description" required>
+    </div>
+
+
+    <!-- multi select supporting employees Ids -->
+    <div class="form-group" *ngIf="[UserRoles.ADMIN, UserRoles.MANAGER].includes(currentUser.role)">
+      <label translate>Supporting Employees</label>
+      <mat-select translate class="form-control col-md-12" [(ngModel)]="supportingEmployeesIds"
+        [ngModelOptions]="{standalone: true}" multiple>
+        <mat-option *ngFor="let employee of employees" [value]="employee.id">
+          {{employee.name}}
+        </mat-option>
+      </mat-select>
+    </div>
+  </div>
+
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss('cancel')"
+      translate>Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid" translate>Save</button>
+  </div>
+</form>
