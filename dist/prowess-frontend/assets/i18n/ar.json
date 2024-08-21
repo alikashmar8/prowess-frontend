@@ -346,5 +346,13 @@
   "From/To Counter Value:": "من/إلى قيمة العداد:",
   "Is Per Counter:": "حسب العداد:",
   "Is Per Counter?": "حسب العداد؟",
-  "Last Counter Value": "القيمة الأخيرة للعداد"
+  "Last Counter Value": "القيمة الأخيرة للعداد",
+  "Counter Serial Number:": "الرقم التسلسلي للعداد:",
+  "Counter Serial Number": "الرقم التسلسلي للعداد",
+  "Company Transactions:": "معاملات الشركة:",
+  "From Company": "من الشركة",
+  "To Company": "إلى الشركة",
+  "Transaction Type": "نوع المعاملة",
+  "Transaction Date": "تاريخ المعاملة",
+  "Transactions": "المعاملات"
 }
