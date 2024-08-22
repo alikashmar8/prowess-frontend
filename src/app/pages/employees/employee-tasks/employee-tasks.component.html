@@ -1,0 +1,68 @@
+<div *ngIf="!isLoading">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 translate>Employee Tasks:</h2>
+    </div>
+    <div class="col-md-6">
+      <button type="button" class="btn btn-primary float-right" (click)="openCreateEmployeeTaskModal()" translate>Add
+        Employee Task
+      </button>
+    </div>
+  </div>
+  <ul>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th translate>Customer</th>
+          <th translate>Task Type</th>
+          <th translate>Employee</th>
+          <th translate>Priority</th>
+          <th translate>Status</th>
+          <th translate>Created At</th>
+          <th translate>Finished At</th>
+          <th translate>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>{{task.customer?.name ?? 'N/A' }}</td>
+          <td>{{task.taskType?.name}}</td>
+          <td>{{task.employee?.name}}</td>
+          <td>{{task.priority}}
+            <i class="fa fa-pencil border rounded p-2 mx-2" aria-hidden="true"
+              (click)="openUpdatePriorityModal(task)"></i>
+          <td>{{task.status}}
+            <i class="fa fa-pencil border rounded p-2 mx-2" aria-hidden="true"
+              (click)="openUpdateStatusModal(task)"></i>
+          </td>
+          <td>{{task.createdAt | date:'yyyy-MM-dd hh:mm' }}</td>
+          <td>{{task.finishDate?.toLocaleString() | date:'yyyy-MM-dd hh:mm' }}
+            <i class="fa fa-pencil border rounded p-2 mx-2" aria-hidden="true"
+              (click)="openUpdateFinishDateModal(task)"></i>
+          </td>
+          <td>
+            <i class="fa fa-eye border rounded p-2 mx-2" aria-hidden="true"
+              (click)="openViewEmployeeTaskModal(task)"></i>
+        </tr>
+      </tbody>
+    </table>
+
+  </ul>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="pagination">
+        <i class="fa fa-arrow-left mx-2 p-1 rounded" [ngClass]="{
+        'bg-lightgrey': currentPage == 1,
+        'bg-primary': currentPage > 1
+        }" (click)="previousPage()" [disabled]="currentPage === 1"></i>
+        <span><span translate>Page</span> {{ currentPage }} <span translate>of</span> {{ totalPages }}</span>
+        <i class="fa fa-arrow-right mx-2 p-1 rounded" [ngClass]="{
+        'bg-lightgrey': currentPage == totalPages,
+        'bg-primary': currentPage < totalPages
+    }" (click)="nextPage()" [disabled]="currentPage === totalPages"></i>
+      </div>
+    </div>
+  </div>
+
+</div>
