@@ -1,0 +1,76 @@
+<div *ngIf="!isLoading">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 translate>Company Transactions:</h2>
+    </div>
+    <div class="col-md-6"></div>
+  </div>
+  <div class="row">
+    <div class="row">
+      <div class="col-sm-4 p-3">
+        <label for="startDate" translate>From Date:</label>
+        <input type="date" name="startDate" [(ngModel)]="filters.fromDate" class="p-2 select rounded w-100 form-control"
+          style="padding: 12px!important;" placeholder="Starting Date">
+      </div>
+      <div class="col-sm-4 p-3">
+        <label for="endDate" translate>To Date:</label>
+        <input type="date" name="endDate" [(ngModel)]="filters.toDate" class="p-2 select rounded w-100 form-control"
+          style="padding: 12px!important;" placeholder="Starting Date">
+      </div>
+      <div class="col-sm-4 mt-4">
+        <button class="btn btn-primary mt-4" (click)="loadTransactions()" translate>Filter</button>
+      </div>
+    </div>
+
+  </div>
+  <ul>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th translate>From Company</th>
+          <th translate>To Company</th>
+          <th translate>Amount</th>
+          <th translate>Transaction Type</th>
+          <th translate>Transaction Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions">
+          <td>{{ transaction.fromCompany?.name ?? 'Administrator' }}</td>
+          <td>{{ transaction.toCompany?.name ?? 'Administrator' }}</td>
+          <td>{{ transaction.amount }} {{ getCurrencySymbol(transaction.currency) }}</td>
+          <td>{{ transaction.type }}</td>
+          <td>{{ transaction.created_at | date: 'yyyy-MM-dd HH:mm' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </ul>
+
+  <div class="row">
+    <div class="col-md-7">
+      <div class="pagination">
+        <i class="fa fa-arrow-left mx-2 p-1 rounded" [ngClass]="{
+        'bg-lightgrey': currentPage == 1,
+        'bg-primary': currentPage > 1
+        }" (click)="previousPage()" [disabled]="currentPage === 1"></i>
+        <span><span translate>Page</span> {{ currentPage }} <span translate>of</span> {{ totalPages }}</span>
+        <i class="fa fa-arrow-right mx-2 p-1 rounded" [ngClass]="{
+        'bg-lightgrey': currentPage == totalPages,
+        'bg-primary': currentPage < totalPages
+    }" (click)="nextPage()" [disabled]="currentPage === totalPages"></i>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <!-- total amount -->
+      <div class="row">
+        <div class="col-md-6">
+          <label translate>Total Amount:</label>
+        </div>
+        <div class="col-md-6">
+          <span>{{ totalTransactionsAmount }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
