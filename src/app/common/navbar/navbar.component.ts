@@ -10,9 +10,10 @@ import { User } from 'src/models/user.model';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  showUsers = false;
-  showInvoices = false;
-  showAddresses = false;
+  showUsers: boolean = false;
+  showInvoices: boolean = false;
+  showAddresses: boolean = false;
+  showTasks: boolean = false;
   currentUser: User;
   UserRole = UserRoles;
 
@@ -32,6 +33,10 @@ export class NavbarComponent implements OnInit {
 
   toggleAddresses() {
     this.showAddresses = !this.showAddresses;
+  }
+
+  toggleTasks() {
+    this.showTasks = !this.showTasks;
   }
 
   logout() {

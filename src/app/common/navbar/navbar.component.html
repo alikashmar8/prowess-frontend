@@ -14,6 +14,11 @@
         <i class="fas fa-building"></i>
         {{'Companies' | translate}}
       </a>
+      <a routerLink="admin/transactions" class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('/admin/transactions')}" translate>
+        <i class="fas fa-building"></i>
+        {{'Transactions' | translate}}
+      </a>
     </div>
     <!-- company admin menu -->
     <div *ngIf="currentUser.role == 'ADMIN' && currentUser.isSuperAdmin != true">
@@ -65,6 +70,19 @@
         Clients
       </a>
 
+      <div class='dashboard-nav-dropdown' [ngClass]="{'show': showTasks }">
+        <a (click)="toggleTasks()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white" translate>
+          <i class="fa fa-briefcase" aria-hidden="true"></i>Tasks</a>
+        <div class='dashboard-nav-dropdown-menu'>
+          <a routerLink="/company/employee-tasks/" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/employee-tasks')}" translate>Employee Tasks</a>
+          <a routerLink="/company/employee-tasks/types" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/employee-tasks/types')}" translate>Task Types</a>
+          <a routerLink="/company/employee-tasks/reasons" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/employee-tasks/reason')}" translate>Task Reasons</a>
+        </div>
+      </div>
+
       <div class='dashboard-nav-dropdown' [ngClass]="{'show': showAddresses }">
         <a (click)="toggleAddresses()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white" translate>
           <i class="fa fa-home" aria-hidden="true"></i>Addresses</a>
@@ -90,6 +108,8 @@
             [ngClass]="{'active': isCurrentRoute('/company/invoices/unpaid')}" translate>Unpaid Invoices</a>
           <a routerLink="/company/invoices/paid" class="dashboard-nav-dropdown-item"
             [ngClass]="{'active': isCurrentRoute('/company/invoices/paid')}" translate>Paid Invoices</a>
+          <a routerLink="/company/invoices/balance-due" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/balance-due')}" translate>Balance Due</a>
           <a routerLink="/company/invoices/items" class="dashboard-nav-dropdown-item"
             [ngClass]="{'active': isCurrentRoute('/company/invoices/items')}" translate>Items Invoices</a>
           <!-- <a routerLink="/company/invoices/create" class="dashboard-nav-dropdown-item"
@@ -131,6 +151,12 @@
         Clients
       </a>
 
+      <a routerLink='company/employee-tasks' class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('company/employee-tasks') }" translate>
+        <i class="fas fa-users"></i>
+        Employee Tasks
+      </a>
+
       <div class='dashboard-nav-dropdown' [ngClass]="{'show': showAddresses }">
         <a (click)="toggleAddresses()" class="dashboard-nav-item dashboard-nav-dropdown-toggle text-white" translate>
           <i class="fa fa-home" aria-hidden="true"></i>Addresses</a>
@@ -160,6 +186,9 @@
             [ngClass]="{'active': isCurrentRoute('/company/invoices/unpaid')}" translate>Unpaid Invoices</a>
           <a routerLink="/company/invoices/paid" class="dashboard-nav-dropdown-item"
             [ngClass]="{'active': isCurrentRoute('/company/invoices/paid')}" translate>Paid Invoices</a>
+
+          <a routerLink="/company/invoices/balance-due" class="dashboard-nav-dropdown-item"
+            [ngClass]="{'active': isCurrentRoute('/company/invoices/balance-due')}" translate>Balance Due</a>
           <a routerLink="/company/invoices/items" class="dashboard-nav-dropdown-item"
             [ngClass]="{'active': isCurrentRoute('/company/invoices/items')}" translate>Items Invoices</a>
         </div>
@@ -200,6 +229,12 @@
         </div>
       </div>
 
+      <a routerLink='company/employee-tasks' class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('company/employee-tasks') }" translate>
+        <i class="fas fa-users"></i>
+        Employee Tasks
+      </a>
+
       <!-- <a routerLink="/company/profile" class="dashboard-nav-item"
         [ngClass]="{'active': isCurrentRoute('/company/profile')}" translate>
         <i class="fas fa-user"></i>
@@ -234,6 +269,12 @@
             [ngClass]="{'active': isCurrentRoute('/company/invoices/items')}" translate>Items Invoices</a>
         </div>
       </div>
+
+      <a routerLink='company/employee-tasks' class="dashboard-nav-item"
+        [ngClass]="{'active': isCurrentRoute('company/employee-tasks') }" translate>
+        <i class="fas fa-users"></i>
+        Employee Tasks
+      </a>
 
       <!-- <a routerLink="/company/profile" class="dashboard-nav-item"
         [ngClass]="{'active': isCurrentRoute('/company/profile')}" translate>
