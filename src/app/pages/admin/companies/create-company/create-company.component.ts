@@ -9,6 +9,7 @@ import { AdminCreateCompanyDTO } from './../../../../../dtos/create-company.dto'
 import { AddressesLevel } from './../../../../../enums/addresses.enum';
 import { CollectingType } from './../../../../../enums/collecting-type.enum';
 import { Currency } from 'src/enums/currency.enum';
+import { CompanyInvoicesType } from 'src/enums/company-invoices-type.enum';
 
 @Component({
   selector: 'app-create-company',
@@ -41,7 +42,8 @@ export class AdminCreateCompanyComponent implements OnInit {
     addressLevel3Name: null,
     addressLevel4Name: null,
     addressLevel5Name: null,
-    createdBy_id: null,
+    invoicesType: CompanyInvoicesType.PER_PLAN_MONTHLY,
+    pricePerCounter: 0,
   };
   loadingGif = loadingGifUrl;
 
@@ -54,6 +56,7 @@ export class AdminCreateCompanyComponent implements OnInit {
   CollectingType = CollectingType;
   InvoicesSortingType = InvoicesSortingType;
   Currency = Currency;
+  CompanyInvoicesType = CompanyInvoicesType;
 
   constructor(
     private companiesService: CompaniesService,
@@ -90,8 +93,6 @@ export class AdminCreateCompanyComponent implements OnInit {
 
     // TODO: validate address input according to level
 
-    this.company.createdBy_id = this.authService.currentUser.id;
-
     this.companiesService.adminStore(this.company).subscribe(
       (res: Company) => {
         this.alertService.toastSuccess('Company added successfully');
@@ -118,7 +119,8 @@ export class AdminCreateCompanyComponent implements OnInit {
           addressLevel3Name: null,
           addressLevel4Name: null,
           addressLevel5Name: null,
-          createdBy_id: null,
+          invoicesType: CompanyInvoicesType.PER_PLAN_MONTHLY,
+          pricePerCounter: 0,
         };
         this.isStoreLoading = false;
       },

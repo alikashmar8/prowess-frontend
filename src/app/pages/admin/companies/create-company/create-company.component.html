@@ -23,8 +23,9 @@
 
       <div class="form-label-group m-4">
         <label for="phoneNumber">Secondary Phone Number</label>
-        <input type="text" name="secondaryPhoneNumber" id="secondaryPhoneNumber" [(ngModel)]="company.secondaryPhoneNumber"
-          class="form-control common-input px-3" placeholder="Secondary Phone Number" required autofocus />
+        <input type="text" name="secondaryPhoneNumber" id="secondaryPhoneNumber"
+          [(ngModel)]="company.secondaryPhoneNumber" class="form-control common-input px-3"
+          placeholder="Secondary Phone Number" required autofocus />
       </div>
 
       <div class="form-label-group m-4">
@@ -83,8 +84,7 @@
 
       <div class="form-label-group m-4">
         <label for="currency">Currency:</label>
-        <select name="currency" id="currency" [(ngModel)]="company.currency"
-          class="form-control common-input px-3">
+        <select name="currency" id="currency" [(ngModel)]="company.currency" class="form-control common-input px-3">
           <option value="{{Currency.USD}}">USD</option>
           <option value="{{Currency.LBP}}">LBP</option>
           <option value="{{Currency.SYP}}">SYP</option>
@@ -94,6 +94,24 @@
           <option value="{{Currency.TRY}}">TRY</option>
         </select>
       </div>
+
+
+      <div class="form-label-group m-4">
+        <label for="invoicesType" translate>Invoices Type:</label>
+        <select name="invoicesType" id="invoicesType" [(ngModel)]="company.invoicesType"
+          class="form-control common-input px-3">
+          <option value="{{CompanyInvoicesType.PER_PLAN_MONTHLY}}" translate>Per Plan Monthly</option>
+          <option value="{{CompanyInvoicesType.PER_COUNTER}}" translate>Per Counter</option>
+        </select>
+      </div>
+
+
+      <div class="form-label-group m-4" *ngIf="company.invoicesType == CompanyInvoicesType.PER_COUNTER">
+        <label for="pricePerCounter" translate>Price Per Counter:</label>
+        <input type="number" name="pricePerCounter" id="pricePerCounter" [(ngModel)]="company.pricePerCounter"
+          class="form-control common-input px-3" placeholder="Price Per Counter" required autofocus min="0" />
+      </div>
+
 
       <div class="form-label-group m-4">
         <label for="collectingType">Collecting Type:</label>
