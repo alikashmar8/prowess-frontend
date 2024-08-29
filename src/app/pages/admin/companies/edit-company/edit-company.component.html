@@ -3,39 +3,123 @@
     <h2 class="card-title text-center" translate>Edit Company</h2>
     <form class="form-signin" (ngSubmit)="update()">
       <div class="form-label-group m-4">
+        <label for="name" translate>Company Name</label>
         <input type="text" name="name" id="name" [(ngModel)]="company.name" class="form-control common-input px-3"
           placeholder="Name" required autofocus />
       </div>
 
       <div class="form-label-group m-4">
-        <input type="number" name="balance" id="balance" [(ngModel)]="company.balance"
-          class="form-control common-input px-3" placeholder="Balance" required autofocus min="0" />
+        <label for="phoneNumber" translate>Phone Number</label>
+        <input type="text" name="phoneNumber" id="phoneNumber" [(ngModel)]="company.phoneNumber"
+          class="form-control common-input px-3" placeholder="Phone Number" required autofocus />
       </div>
 
       <div class="form-label-group m-4">
+        <label for="secondaryPhoneNumber" translate>Secondary Phone Number</label>
+        <input type="text" name="secondaryPhoneNumber" id="secondaryPhoneNumber"
+          [(ngModel)]="company.secondaryPhoneNumber" class="form-control common-input px-3"
+          placeholder="Secondary Phone Number" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label for="email" translate>Email</label>
+        <input type="email" name="email" id="email" [(ngModel)]="company.email" class="form-control common-input px-3"
+          placeholder="Email" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label for="maxManagersNumber" translate>Max Managers Number</label>
         <input type="number" name="maxManagersNumber" id="maxManagersNumber" [(ngModel)]="company.maxManagersNumber"
           class="form-control common-input px-3" placeholder="Max Managers Number" required autofocus min="1" />
       </div>
 
       <div class="form-label-group m-4">
+        <label for="maxSupervisorsNumber" translate>Max Supervisors Number</label>
         <input type="number" name="maxSupervisorsNumber" id="maxSupervisorsNumber"
           [(ngModel)]="company.maxSupervisorsNumber" class="form-control common-input px-3"
           placeholder="Max Supervisors Number" required autofocus min="1" />
       </div>
 
       <div class="form-label-group m-4">
+        <label for="maxCollectorsNumber" translate>Max Collectors Number</label>
         <input type="number" name="maxCollectorsNumber" id="maxCollectorsNumber"
           [(ngModel)]="company.maxCollectorsNumber" class="form-control common-input px-3"
           placeholder="Max Collectors Number" required autofocus min="1" />
       </div>
 
       <div class="form-label-group m-4">
+        <label for="maxCustomersNumber" translate>Max Customers Number</label>
         <input type="number" name="maxCustomersNumber" id="maxCustomersNumber" [(ngModel)]="company.maxCustomersNumber"
           class="form-control common-input px-3" placeholder="Max Customers Number" required autofocus min="1" />
       </div>
 
-      <h5 class="mt-4 ml-4" translate>Addresses levels:</h5>
+      <div class="form-label-group m-4">
+        <label for="managerAccountPrice" translate>Manager Account Price</label>
+        <input type="number" name="managerAccountPrice" id="managerAccountPrice"
+          [(ngModel)]="company.managerAccountPrice" class="form-control common-input px-3"
+          placeholder="Manager Account Price" required autofocus min="1" />
+      </div>
 
+      <div class="form-label-group m-4">
+        <label for="supervisorAccountPrice" translate>Supervisor Account Price</label>
+        <input type="number" name="supervisorAccountPrice" id="supervisorAccountPrice"
+          [(ngModel)]="company.supervisorAccountPrice" class="form-control common-input px-3"
+          placeholder="Supervisor Account Price" required autofocus min="1" />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label for="collectorAccountPrice" translate>Collector Account Price</label>
+        <input type="number" name="collectorAccountPrice" id="collectorAccountPrice"
+          [(ngModel)]="company.collectorAccountPrice" class="form-control common-input px-3"
+          placeholder="Collector Account Price" required autofocus min="1" />
+      </div>
+
+      <div class="form-label-group m-4" *ngIf="isCurrencyUpdateAllowed">
+        <label for="currency" translate>Currency:</label>
+        <select name="currency" id="currency" [(ngModel)]="company.currency" class="form-control common-input px-3">
+          <option value="{{Currency.USD}}">USD</option>
+          <option value="{{Currency.LBP}}">LBP</option>
+          <option value="{{Currency.SYP}}">SYP</option>
+          <option value="{{Currency.EUR}}">EUR</option>
+          <option value="{{Currency.SAR}}">SAR</option>
+          <option value="{{Currency.AED}}">AED</option>
+          <option value="{{Currency.TRY}}">TRY</option>
+        </select>
+      </div>
+
+      <div class="form-label-group m-4" *ngIf="company.invoicesType == CompanyInvoicesType.PER_COUNTER">
+        <label for="pricePerCounter" translate>Price Per Counter:</label>
+        <input type="number" name="pricePerCounter" id="pricePerCounter" [(ngModel)]="company.pricePerCounter"
+          class="form-control common-input px-3" placeholder="Price Per Counter" required autofocus min="0" />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label for="collectingType" translate>Collecting Type:</label>
+        <select name="collectingType" id="collectingType" [(ngModel)]="company.collectingType"
+          class="form-control common-input px-3">
+          <option value="{{CollectingType.MONTHLY}}" translate>Monthly</option>
+          <option value="{{CollectingType.DAILY}}" translate>Daily</option>
+        </select>
+      </div>
+
+      <div class="form-label-group m-4">
+        <label for="invoicesSortingType" translate>Invoices Sorting Type:</label>
+        <select name="invoicesSortingType" id="invoicesSortingType" [(ngModel)]="company.invoicesSortingType"
+          class="form-control common-input px-3">
+          <option value="{{InvoicesSortingType.DUE_DATE}}" translate>Due Date</option>
+          <option value="{{InvoicesSortingType.CUSTOMER_NAME}}" translate>Customer Name</option>
+        </select>
+      </div>
+
+      <!--  boolean allowDataImport checkbox section -->
+      <div class="form-label-group m-4">
+        <label for="allowDataImport" translate>Allow Data Import:</label>
+        <input type="checkbox" name="allowDataImport" id="allowDataImport" [(ngModel)]="company.allowDataImport"
+          class="common-input mx-3" />
+      </div>
+
+      <!--
+      <h5 class="mt-4 ml-4" translate>Addresses levels:</h5>
       <div class="row mx-3">
         <div class='level-selector'>
           <div class='level-item'>
@@ -61,12 +145,12 @@
             </label>
           </div>
         </div>
-      </div>
+      </div> -->
 
 
       <div class="form-label-group m-4" *ngIf="isLevel1Checked">
         <input type="text" name="level1" id="level1" class="form-control common-input px-3" placeholder="Level 1 naming"
-         autofocus [(ngModel)]="company.addressLevel1Name" />
+          autofocus [(ngModel)]="company.addressLevel1Name" />
       </div>
 
       <div class="form-label-group m-4" *ngIf="isLevel2Checked">

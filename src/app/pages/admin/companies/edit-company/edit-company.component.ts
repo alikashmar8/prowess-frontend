@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { CompaniesService } from 'src/app/services/companies.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { loadingGifUrl } from 'src/constants/constants';
 import { AddressesLevel } from 'src/enums/addresses.enum';
+import { CollectingType } from 'src/enums/collecting-type.enum';
+import { CompanyInvoicesType } from 'src/enums/company-invoices-type.enum';
+import { Currency } from 'src/enums/currency.enum';
+import { InvoicesSortingType } from 'src/enums/invoices-sorting-type';
 import { Company } from './../../../../../models/company.model';
 
 @Component({
@@ -27,29 +31,36 @@ export class AdminEditCompanyComponent implements OnInit {
   isLevel4Checked: boolean = false;
   isLevel5Checked: boolean = false;
 
+  CollectingType = CollectingType;
+  InvoicesSortingType = InvoicesSortingType;
+  Currency = Currency;
+  CompanyInvoicesType = CompanyInvoicesType;
+
+  isCurrencyUpdateAllowed: boolean = true;
   constructor(
     private companiesService: CompaniesService,
-    private router: Router,
     private route: ActivatedRoute,
     private loadingService: LoadingService,
     private authService: AuthService,
     private alertService: AlertService
   ) {}
 
-  ngOnInit(): void {
-    this.isLoading = this.loadingService.appLoading(true);
-    this.company_id = this.route.snapshot.paramMap.get('id');
-    this.companiesService.getById(this.company_id).subscribe(
-      (data: Company) => {
-        this.company = data;
-        this.handleAddressLevels(data.maxLocationLevel);
-        this.isLoading = this.loadingService.appLoading(false);
-      },
-      (err) => {
-        this.authService.handleHttpError(err);
-        this.isLoading = this.loadingService.appLoading(false);
-      }
-    );
+  async ngOnInit(): Promise<void> {
+    try {
+      this.isLoading = this.loadingService.appLoading(true);
+      this.company_id = this.route.snapshot.paramMap.get('id');
+      this.company = await this.companiesService.getByIdAsync(this.company_id);
+      this.handleAddressLevels(this.company.maxLocationLevel);
+      if (
+        this.company.parentCompany_id ||
+        this.company.subCompanies?.length > 0
+      )
+        this.isCurrencyUpdateAllowed = false;
+      this.isLoading = this.loadingService.appLoading(false);
+    } catch (err) {
+      this.authService.handleHttpError(err);
+      this.isLoading = this.loadingService.appLoading(false);
+    }
   }
 
   update() {
@@ -57,7 +68,7 @@ export class AdminEditCompanyComponent implements OnInit {
 
     if (
       !this.company.name ||
-      !this.company.balance ||
+      !this.company.phoneNumber ||
       !this.company.maxCollectorsNumber ||
       !this.company.maxCustomersNumber ||
       !this.company.maxLocationLevel ||
@@ -73,20 +84,30 @@ export class AdminEditCompanyComponent implements OnInit {
     }
 
     this.companiesService
-      .adminUpdate(this.company_id, {
+      .update(this.company_id, {
         name: this.company.name,
-        balance: Number(this.company.balance),
+        phoneNumber: this.company.phoneNumber,
+        secondaryPhoneNumber: this.company.secondaryPhoneNumber,
+        email: this.company.email,
         maxCollectorsNumber: this.company.maxCollectorsNumber,
         createdBy_id: this.company.createdBy_id,
         maxCustomersNumber: this.company.maxCustomersNumber,
+        managerAccountPrice: this.company.managerAccountPrice,
+        supervisorAccountPrice: this.company.supervisorAccountPrice,
+        collectorAccountPrice: this.company.collectorAccountPrice,
+        currency: this.company.currency,
+        collectingType: this.company.collectingType,
+        invoicesSortingType: this.company.invoicesSortingType,
         maxLocationLevel: this.company.maxLocationLevel,
         maxManagersNumber: this.company.maxManagersNumber,
         maxSupervisorsNumber: this.company.maxSupervisorsNumber,
+        allowDataImport: this.company.allowDataImport,
         addressLevel1Name: this.company.addressLevel1Name,
         addressLevel2Name: this.company.addressLevel2Name,
         addressLevel3Name: this.company.addressLevel3Name,
         addressLevel4Name: this.company.addressLevel4Name,
         addressLevel5Name: this.company.addressLevel5Name,
+        pricePerCounter: this.company.pricePerCounter,
       })
       .subscribe(
         (result) => {
