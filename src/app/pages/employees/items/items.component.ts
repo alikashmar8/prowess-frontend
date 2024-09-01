@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth-service.service';
 import { ItemsService } from 'src/app/services/items.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { Item } from 'src/models/item.model';
+import { User } from 'src/models/user.model';
 
 @Component({
   selector: 'app-items',
@@ -14,6 +15,7 @@ import { Item } from 'src/models/item.model';
 export class ItemsComponent implements OnInit {
   isLoading: boolean = true;
   items: Item[] = [];
+  currentUser: User;
 
   constructor(
     private loadingService: LoadingService,
@@ -28,6 +30,7 @@ export class ItemsComponent implements OnInit {
       .getCompanyItems(this.authService.currentUser.company_id)
       .subscribe((result: Item[]) => {
         this.items = result;
+        this.currentUser = this.authService.currentUser;
         this.isLoading = this.loadingService.appLoading(false);
       });
   }
