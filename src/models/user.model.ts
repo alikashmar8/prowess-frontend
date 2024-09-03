@@ -22,6 +22,9 @@ export class User {
   address_id?: string;
   company_id?: string;
   collector_id?: string;
+  counterSerialNumber?: string;
+  lastCounterValue?: number;
+  isPerCounter?: boolean;
   address: Level1Address;
   companies: Company[];
   company: Company;

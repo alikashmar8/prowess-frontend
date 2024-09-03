@@ -1,7 +1,7 @@
 import { Currency } from 'src/enums/currency.enum';
-import { getCurrencySymbol } from 'src/utils/functions';
 import { AddressesLevel } from './../enums/addresses.enum';
 import { CollectingType } from './../enums/collecting-type.enum';
+import { CompanyInvoicesType } from './../enums/company-invoices-type.enum';
 import { InvoicesSortingType } from './../enums/invoices-sorting-type';
 import { User } from './user.model';
 
@@ -30,6 +30,8 @@ export class Company {
   addressLevel3Name: string;
   addressLevel4Name: string;
   addressLevel5Name: string;
+  pricePerCounter: number;
+  invoicesType: CompanyInvoicesType;
   createdBy_id?: string;
   parentCompany_id?: string;
   createdBy?: User;
