@@ -10,6 +10,7 @@ import { AdminCompaniesComponent } from './pages/admin/companies/companies.compo
 import { AdminCreateCompanyComponent } from './pages/admin/companies/create-company/create-company.component';
 import { AdminEditCompanyComponent } from './pages/admin/companies/edit-company/edit-company.component';
 import { AdminShowCompanyComponent } from './pages/admin/companies/show-company/show-company.component';
+import { TransactionsComponent } from './pages/admin/transactions/transactions.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { Level1AddressesComponent } from './pages/employees/addresses/level1-addresses/level1-addresses.component';
 import { Level2AddressesComponent } from './pages/employees/addresses/level2-addresses/level2-addresses.component';
@@ -20,23 +21,30 @@ import { CreateCustomerComponent } from './pages/employees/customers/create-cust
 import { CustomersComponent } from './pages/employees/customers/customers.component';
 import { EditCustomerComponent } from './pages/employees/customers/edit-customer/edit-customer.component';
 import { ShowCustomerComponent } from './pages/employees/customers/show-customer/show-customer.component';
+import { EmployeeTaskReasonsComponent } from './pages/employees/employee-task-reasons/employee-task-reasons.component';
+import { EmployeeTaskTypesComponent } from './pages/employees/employee-task-types/employee-task-types.component';
+import { EmployeeTasksComponent } from './pages/employees/employee-tasks/employee-tasks.component';
 import { AllEmployeesComponent } from './pages/employees/employees/all-employees/all-employees.component';
 import { CollectorsComponent } from './pages/employees/employees/collectors/collectors.component';
 import { CreateEmployeeComponent } from './pages/employees/employees/create-employee/create-employee.component';
 import { ManagersComponent } from './pages/employees/employees/managers/managers.component';
 import { SuperVisorsComponent } from './pages/employees/employees/super-visors/super-visors.component';
 import { EmployeesHomeComponent } from './pages/employees/home/home.component';
+import { BalanceDueInvoicesComponent } from './pages/employees/invoices/balance-due-invoices/balance-due-invoices.component';
 import { CreateInvoiceComponent } from './pages/employees/invoices/create-invoice/create-invoice.component';
+import { ItemsInvoicesComponent } from './pages/employees/invoices/items-invoices/items-invoices.component';
+import { PaidInvoicesComponent } from './pages/employees/invoices/paid-invoices/paid-invoices.component';
 import { ShowInvoiceComponent } from './pages/employees/invoices/show-invoice/show-invoice.component';
-import { ThisMonthInvoicesComponent } from './pages/employees/invoices/this-month-invoices/this-month-invoices.component';
 import { UnpaidInvoicesComponent } from './pages/employees/invoices/unpaid-invoices/unpaid-invoices.component';
 import { CreateItemComponent } from './pages/employees/items/create-item/create-item.component';
 import { ItemsComponent } from './pages/employees/items/items.component';
 import { CreatePlanComponent } from './pages/employees/plans/create-plan/create-plan.component';
 import { PlansComponent } from './pages/employees/plans/plans.component';
-import { PaidInvoicesComponent } from './pages/employees/invoices/paid-invoices/paid-invoices.component';
-import { ItemsInvoicesComponent } from './pages/employees/invoices/items-invoices/items-invoices.component';
 import { ProfileComponent } from './pages/employees/profile/profile.component';
+import { CreateSubCompanyComponent } from './pages/employees/sub-companies/create-sub-company/create-sub-company.component';
+import { EditSubCompanyComponent } from './pages/employees/sub-companies/edit-sub-company/edit-sub-company.component';
+import { ShowSubCompanyComponent } from './pages/employees/sub-companies/show-sub-company/show-sub-company.component';
+import { SubCompaniesComponent } from './pages/employees/sub-companies/sub-companies.component';
 
 const adminRoutes: Routes = [
   {
@@ -68,6 +76,10 @@ const adminRoutes: Routes = [
       {
         path: 'home',
         component: AdminHomeComponent,
+      },
+      {
+        path: 'transactions',
+        component: TransactionsComponent,
       },
     ],
     canActivate: [SuperAdminGuard],
@@ -201,8 +213,30 @@ const employeesRoutes: Routes = [
             component: CreateInvoiceComponent,
           },
           {
+            path: 'balance-due',
+            component: BalanceDueInvoicesComponent,
+          },
+          {
             path: ':id',
             component: ShowInvoiceComponent,
+          },
+        ],
+        canActivate: [EmployeeGuard],
+      },
+      {
+        path: 'employee-tasks',
+        children: [
+          {
+            path: '',
+            component: EmployeeTasksComponent,
+          },
+          {
+            path: 'types',
+            component: EmployeeTaskTypesComponent,
+          },
+          {
+            path: 'reasons',
+            component: EmployeeTaskReasonsComponent,
           },
         ],
         canActivate: [EmployeeGuard],
@@ -216,6 +250,28 @@ const employeesRoutes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         canActivate: [EmployeeGuard],
+      },
+      {
+        path: 'sub-companies',
+        children: [
+          {
+            path: '',
+            component: SubCompaniesComponent,
+          },
+          {
+            path: 'create',
+            component: CreateSubCompanyComponent,
+          },
+          {
+            path: ':id',
+            component: ShowSubCompanyComponent,
+          },
+          {
+            path: ':id/edit',
+            component: EditSubCompanyComponent,
+          },
+        ],
+        canActivate: [AdminGuard],
       },
     ],
     canActivate: [AuthGuard],
