@@ -89,6 +89,33 @@
           </div>
         </div>
         <hr>
+        <div class="row">
+          <div class="col-sm-5">
+            <h6 class="mb-0" translate>Is Per Counter?</h6>
+          </div>
+          <div class="col-sm-7 text-primary" translate>
+            {{ customer.isPerCounter ? 'Yes' : 'No' }}
+          </div>
+        </div>
+        <hr>
+        <div class="row" *ngIf="customer.isPerCounter">
+          <div class="col-sm-5">
+            <h6 class="mb-0" translate>Counter Serial Number</h6>
+          </div>
+          <div class="col-sm-7 text-primary">
+            {{ customer.counterSerialNumber }}
+          </div>
+        </div>
+        <hr>
+        <div class="row" *ngIf="customer.isPerCounter">
+          <div class="col-sm-5">
+            <h6 class="mb-0" translate>Last Counter Value</h6>
+          </div>
+          <div class="col-sm-7 text-primary">
+            {{ customer.lastCounterValue }}
+          </div>
+        </div>
+        <hr>
       </div>
       <div class="box-shadow mt-3">
         <ul class="list-group list-group-flush">

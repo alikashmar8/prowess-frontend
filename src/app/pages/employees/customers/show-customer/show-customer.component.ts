@@ -18,6 +18,7 @@ import { Invoice } from 'src/models/invoice.model';
 import { User } from 'src/models/user.model';
 import { getLang } from 'src/utils/functions';
 import { AddEmployeeTaskModalComponent } from '../../employee-tasks/add-employee-task-modal/add-employee-task-modal.component';
+import { GenerateInvoiceModalComponent } from 'src/app/common/modals/generate-invoice-modal/generate-invoice-modal.component';
 
 @Component({
   selector: 'app-show-customer',
@@ -207,16 +208,26 @@ export class ShowCustomerComponent implements OnInit {
   }
 
   async generateInvoice(plan_id) {
-    const res = confirm('Are you sure you want to generate a new invoice?');
-    if (res) {
-      try {
-        await this.usersService.generateNewInvoice(this.customer.id, plan_id);
-        this.alertService.toastSuccess('Invoice generated successfully');
-        window.location.reload();
-      } catch (err) {
-        this.authService.handleHttpError(err);
-      }
-    }
+    // const res = confirm('Are you sure you want to generate a new invoice?');
+    // if (res) {
+    //   try {
+    //     await this.usersService.generateNewInvoice(this.customer.id, plan_id);
+    //     this.alertService.toastSuccess('Invoice generated successfully');
+    //     window.location.reload();
+    //   } catch (err) {
+    //     this.authService.handleHttpError(err);
+    //   }
+    // }
+    const modalRef = this.modalService.open(GenerateInvoiceModalComponent);
+    modalRef.componentInstance.customerId = this.customer_id;
+    modalRef.result.then(
+      (result) => {
+        if (result) {
+          window.location.reload();
+        }
+      },
+      (rejected) => {}
+    );
   }
 
   // openCreateEmployeeTaskModal(){
