@@ -202,7 +202,7 @@ export function getMonthName(monthIndex: number): string {
   return monthNames[monthIndex];
 }
 
-export function getCurrencySymbol(currency: Currency) {
+export function getCurrencySymbol(currency: Currency): string {
   switch (currency) {
     case Currency.USD:
       return '$';
