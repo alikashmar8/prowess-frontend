@@ -51,6 +51,8 @@
                   <a href="company/customers/{{invoice.user.id}}" class="">
                     {{ invoice.user.name }}
                   </a>
+                  <br>
+                  <span style="color: grey; font-size: smaller;">{{ invoice.user.phoneNumber }}</span>
                 </td>
                 <td>{{ getAddressString(invoice.user.address) }}</td>
                 <td>{{ invoice .isPaid ? invoice.collectedBy?.name : invoice.user.collector?.name }}</td>
