@@ -2,6 +2,7 @@ import { Currency } from 'src/enums/currency.enum';
 import { AddressesLevel } from './../enums/addresses.enum';
 import { CollectingType } from './../enums/collecting-type.enum';
 import { CompanyInvoicesType } from './../enums/company-invoices-type.enum';
+import { InvoiceSharingType } from './../enums/invoice-sharing-type';
 import { InvoicesSortingType } from './../enums/invoices-sorting-type';
 
 export class AdminCreateCompanyDTO {
@@ -20,6 +21,7 @@ export class AdminCreateCompanyDTO {
   currency: Currency;
   collectingType: CollectingType;
   invoicesSortingType: InvoicesSortingType;
+  invoiceSharingType: InvoiceSharingType;
   maxLocationLevel: AddressesLevel;
   allowDataImport: boolean;
   addressLevel1Name: string;
