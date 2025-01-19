@@ -1,15 +1,16 @@
-import { InvoicesSortingType } from './../../../../../enums/invoices-sorting-type';
 import { Component, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { CompaniesService } from 'src/app/services/companies.service';
+import { CompanyInvoicesType } from 'src/enums/company-invoices-type.enum';
+import { Currency } from 'src/enums/currency.enum';
+import { InvoiceSharingType } from 'src/enums/invoice-sharing-type';
 import { Company } from 'src/models/company.model';
 import { loadingGifUrl } from './../../../../../constants/constants';
 import { AdminCreateCompanyDTO } from './../../../../../dtos/create-company.dto';
 import { AddressesLevel } from './../../../../../enums/addresses.enum';
 import { CollectingType } from './../../../../../enums/collecting-type.enum';
-import { Currency } from 'src/enums/currency.enum';
-import { CompanyInvoicesType } from 'src/enums/company-invoices-type.enum';
+import { InvoicesSortingType } from './../../../../../enums/invoices-sorting-type';
 
 @Component({
   selector: 'app-create-company',
@@ -35,6 +36,7 @@ export class AdminCreateCompanyComponent implements OnInit {
     currency: Currency.USD,
     collectingType: CollectingType.MONTHLY,
     invoicesSortingType: InvoicesSortingType.DUE_DATE,
+    invoiceSharingType: InvoiceSharingType.DEFAULT_SHARE,
     maxLocationLevel: null,
     allowDataImport: false,
     addressLevel1Name: null,
@@ -55,6 +57,7 @@ export class AdminCreateCompanyComponent implements OnInit {
 
   CollectingType = CollectingType;
   InvoicesSortingType = InvoicesSortingType;
+  InvoiceSharingType = InvoiceSharingType;
   Currency = Currency;
   CompanyInvoicesType = CompanyInvoicesType;
 
@@ -112,6 +115,7 @@ export class AdminCreateCompanyComponent implements OnInit {
           currency: Currency.USD,
           collectingType: CollectingType.MONTHLY,
           invoicesSortingType: InvoicesSortingType.DUE_DATE,
+          invoiceSharingType: InvoiceSharingType.DEFAULT_SHARE,
           maxLocationLevel: null,
           allowDataImport: false,
           addressLevel1Name: null,
