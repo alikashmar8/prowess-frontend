@@ -115,6 +115,15 @@
         </select>
       </div>
 
+      <div class="form-label-group m-4">
+        <label for="invoiceSharingType">Invoice Sharing Type:</label>
+        <select name="invoiceSharingType" id="invoiceSharingType" [(ngModel)]="company.invoiceSharingType"
+          class="form-control common-input px-3">
+          <option value="{{InvoiceSharingType.DEFAULT_SHARE}}">Default Sharing</option>
+          <option value="{{InvoiceSharingType.SHARE_TO_NUMBER}}">Share To Number</option>
+        </select>
+      </div>
+
       <!-- boolean allowDataImport checkbox section -->
       <div class="form-label-group m-4">
         <label for="allowDataImport" translate>Allow Data Import:</label>
