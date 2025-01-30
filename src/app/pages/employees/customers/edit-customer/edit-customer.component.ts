@@ -7,7 +7,6 @@ import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { CompaniesService } from 'src/app/services/companies.service';
 import { LoadingService } from 'src/app/services/loading.service';
-import { PlansService } from 'src/app/services/plans.service';
 import { loadingGifUrl } from 'src/constants/constants';
 import { CreateCustomerDTO } from 'src/dtos/create-customer.dto';
 import { AddressesLevel } from 'src/enums/addresses.enum';
@@ -18,6 +17,7 @@ import { Level3Address } from 'src/models/level3-address.model';
 import { Level4Address } from 'src/models/level4-address.model';
 import { Level5Address } from 'src/models/level5-address.model';
 import { User } from 'src/models/user.model';
+import { CompanyInvoicesType } from '../../../../../enums/company-invoices-type.enum';
 import { UserRoles } from './../../../../../enums/user-roles.enum';
 
 @Component({
@@ -49,6 +49,8 @@ export class EditCustomerComponent implements OnInit {
     paymentDate: null,
     invoice_total: null,
     invoice_notes: null,
+    counterSerialNumber: null,
+    lastCounterValue: null,
   };
 
   detailsIsOpen: boolean = false;
@@ -71,6 +73,7 @@ export class EditCustomerComponent implements OnInit {
   selectedLevel2Id: string = null;
 
   public UserRoles = UserRoles;
+  CompanyInvoicesType = CompanyInvoicesType;
 
   // dropdownList = [];
   // selectedPlans = [];
@@ -121,6 +124,11 @@ export class EditCustomerComponent implements OnInit {
                   : null,
                 invoice_total: null,
                 invoice_notes: null,
+                counterSerialNumber: this.user.counterSerialNumber,
+                lastCounterValue: this.user.lastCounterValue
+                  ? Number(this.user.lastCounterValue)
+                  : null,
+                isPerCounter: this.user.isPerCounter,
               };
               switch (this.currentCompany.maxLocationLevel) {
                 case AddressesLevel.LEVEL5:
@@ -244,6 +252,12 @@ export class EditCustomerComponent implements OnInit {
 
     if (!this.data.address_id) {
       this.alertService.toastError('Address should be provided');
+      this.isUpdateLoading = false;
+      return;
+    }
+
+    if (this.data.isPerCounter && !this.data.counterSerialNumber) {
+      this.alertService.toastError('Counter Serial Number is required');
       this.isUpdateLoading = false;
       return;
     }
