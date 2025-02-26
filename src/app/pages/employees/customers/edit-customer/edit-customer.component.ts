@@ -34,7 +34,6 @@ export class EditCustomerComponent implements OnInit {
   user: User;
   isLoading: boolean = true;
   isUpdateLoading: boolean = false;
-  // plans: Plan[] = [];
   collectors: User[] = [];
   loadingGif: string = loadingGifUrl;
   data: CreateCustomerDTO = {
@@ -74,10 +73,6 @@ export class EditCustomerComponent implements OnInit {
 
   public UserRoles = UserRoles;
   CompanyInvoicesType = CompanyInvoicesType;
-
-  // dropdownList = [];
-  // selectedPlans = [];
-  // dropdownSettings: IDropdownSettings = {};
 
   constructor(
     private companiesService: CompaniesService,
@@ -261,22 +256,6 @@ export class EditCustomerComponent implements OnInit {
       this.isUpdateLoading = false;
       return;
     }
-
-    // if (this.selectedPlans.length == 0) {
-    //   this.alertService.toastError(
-    //     'You should select a plan for your customer!'
-    //   );
-    //   this.isUpdateLoading = false;
-    //   return;
-    // }
-    // if (this.selectedPlans.length > 2) {
-    //   0;
-    //   this.alertService.toastError('Selected plans should not exceed 2 plans!');
-    //   this.isUpdateLoading = false;
-    //   return;
-    // }
-
-    // this.data.plans = this.selectedPlans.map((plan) => plan.id);
 
     this.companiesService.updateCustomer(this.user_id, this.data).subscribe(
       (res) => {
