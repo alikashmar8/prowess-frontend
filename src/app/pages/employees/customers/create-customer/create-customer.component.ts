@@ -1,3 +1,4 @@
+import { CompanyInvoicesType } from './../../../../../enums/company-invoices-type.enum';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AddressesService } from 'src/app/services/addresses.service';
@@ -47,6 +48,9 @@ export class CreateCustomerComponent implements OnInit {
     paymentDate: new Date().toISOString().split('T')[0],
     invoice_total: 0,
     invoice_notes: null,
+    counterSerialNumber: null,
+    lastCounterValue: 0,
+    isPerCounter: false,
   };
 
   detailsIsOpen: boolean = false;
@@ -71,6 +75,8 @@ export class CreateCustomerComponent implements OnInit {
   dropdownList = [];
   selectedPlans = [];
   dropdownSettings: IDropdownSettings = {};
+
+  CompanyInvoicesType = CompanyInvoicesType;
 
   constructor(
     private companiesService: CompaniesService,
@@ -269,6 +275,12 @@ export class CreateCustomerComponent implements OnInit {
       return;
     }
 
+    if (this.data.isPerCounter && !this.data.counterSerialNumber) {
+      this.alertService.toastError('Counter serial number should be specified!');
+      this.isStoreLoading = false;
+      return;
+    }
+
     this.data.plans = this.selectedPlans.map((plan) => plan.id);
 
     this.data.company_id = this.authService.currentUser.company_id;
@@ -287,6 +299,8 @@ export class CreateCustomerComponent implements OnInit {
           paymentDate: new Date().toISOString().split('T')[0],
           invoice_total: null,
           invoice_notes: null,
+          counterSerialNumber: null,
+          lastCounterValue: null,
         };
         this.selectedPlans = [];
         this.alertService.toastSuccess('Customer created successfully');

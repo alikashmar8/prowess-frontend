@@ -37,6 +37,27 @@
         <label for="note" translate>Note:</label>
         <input type="text" class="form-control" name="note" id="note" aria-describedby="helpId" [(ngModel)]="data.note">
       </div>
+
+      <div class="form-group" *ngIf="currentCompany?.invoicesType == CompanyInvoicesType.PER_COUNTER">
+        <label for="isPerCounter" class="required" translate>Is Per Counter:</label>
+        <input type="checkbox" class="" name="isPerCounter" id="isPerCounter" aria-describedby="helpId"
+          [(ngModel)]="data.isPerCounter">
+      </div>
+
+      <div class="form-group"
+        *ngIf="currentCompany?.invoicesType == CompanyInvoicesType.PER_COUNTER && data.isPerCounter">
+        <label for="counterSerialNumber" class="required" translate>Counter Serial Number:</label>
+        <input type="text" class="form-control" name="counterSerialNumber" id="counterSerialNumber"
+          aria-describedby="helpId" [(ngModel)]="data.counterSerialNumber">
+      </div>
+
+      <div class="form-group"
+        *ngIf="currentCompany?.invoicesType == CompanyInvoicesType.PER_COUNTER && data.isPerCounter">
+        <label for="lastCounterValue" class="required" translate>Current Counter Value:</label>
+        <input type="number" class="form-control" name="lastCounterValue" id="lastCounterValue" [disabled]="!data.counterSerialNumber"
+          aria-describedby="helpId" [(ngModel)]="data.lastCounterValue">
+      </div>
+
       <div class="form-group">
         <label for="paymentDate" translate>Payment Date:</label>
         <input type="date" class="form-control" name="paymentDate" id="paymentDate" aria-describedby="helpId"
