@@ -4,6 +4,7 @@ import { CollectingType } from './../enums/collecting-type.enum';
 import { CompanyInvoicesType } from './../enums/company-invoices-type.enum';
 import { InvoiceSharingType } from './../enums/invoice-sharing-type';
 import { InvoicesSortingType } from './../enums/invoices-sorting-type';
+import { CreateInvoiceConfigDTO } from './create-invoice-config,dto';
 
 export class AdminCreateCompanyDTO {
   name: string;
@@ -30,5 +31,5 @@ export class AdminCreateCompanyDTO {
   addressLevel4Name: string;
   addressLevel5Name: string;
   invoicesType: CompanyInvoicesType;
-  pricePerCounter?: number;
+  invoiceConfig?: CreateInvoiceConfigDTO;
 }

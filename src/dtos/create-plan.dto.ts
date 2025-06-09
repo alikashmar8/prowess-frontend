@@ -1,5 +1,5 @@
-export class CreatePlanDTO{
-  name:string;
+export class CreatePlanDTO {
+  name: string;
   price: number;
-  company_id: string
+  pricePerCounter?: number;
 }

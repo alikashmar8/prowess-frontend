@@ -28,6 +28,5 @@ export class AdminEditCompanyDTO {
   addressLevel3Name: string;
   addressLevel4Name: string;
   addressLevel5Name: string;
-  pricePerCounter: number;
   createdBy_id: string;
 }
