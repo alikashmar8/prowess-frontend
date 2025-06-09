@@ -5,6 +5,7 @@ import { CompanyInvoicesType } from './../enums/company-invoices-type.enum';
 import { InvoiceSharingType } from './../enums/invoice-sharing-type';
 import { InvoicesSortingType } from './../enums/invoices-sorting-type';
 import { User } from './user.model';
+import { InvoiceConfig } from './invoice-config.model';
 
 export class Company {
   id: string;
@@ -32,7 +33,6 @@ export class Company {
   addressLevel3Name: string;
   addressLevel4Name: string;
   addressLevel5Name: string;
-  pricePerCounter: number;
   invoicesType: CompanyInvoicesType;
   createdBy_id?: string;
   parentCompany_id?: string;
@@ -40,5 +40,6 @@ export class Company {
   parentCompany?: Company;
   subCompanies: Company[];
   users: User[];
+  invoiceConfig: InvoiceConfig;
   // items: Item[];
 }

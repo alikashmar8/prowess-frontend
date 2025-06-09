@@ -14,7 +14,7 @@ export class Plan {
 
   company: Company;
 
-  customers: User[]
+  customers: User[];
 
-  // invoices: Invoice[];
+  pricePerCounter: number;
 }
