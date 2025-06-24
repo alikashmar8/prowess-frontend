@@ -74,11 +74,11 @@
           placeholder="Collector Account Price" required autofocus min="1" />
       </div>
 
-      <div class="form-label-group m-4" *ngIf="company.invoicesType == CompanyInvoicesType.PER_COUNTER">
+      <!-- <div class="form-label-group m-4" *ngIf="company.invoicesType == CompanyInvoicesType.PER_COUNTER">
         <label for="pricePerCounter" translate>Price Per Counter:</label>
         <input type="number" name="pricePerCounter" id="pricePerCounter" [(ngModel)]="company.pricePerCounter"
           class="form-control common-input px-3" placeholder="Price Per Counter" required autofocus min="0" />
-      </div>
+      </div> -->
 
       <div class="form-label-group m-4">
         <label for="collectingType" translate>Collecting Type:</label>

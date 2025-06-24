@@ -107,7 +107,6 @@ export class EditSubCompanyComponent implements OnInit {
         addressLevel3Name: this.company.addressLevel3Name,
         addressLevel4Name: this.company.addressLevel4Name,
         addressLevel5Name: this.company.addressLevel5Name,
-        pricePerCounter: this.company.pricePerCounter,
       })
       .subscribe(
         (result) => {
