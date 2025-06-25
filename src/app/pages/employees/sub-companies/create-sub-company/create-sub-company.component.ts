@@ -47,7 +47,6 @@ export class CreateSubCompanyComponent implements OnInit {
     addressLevel4Name: null,
     addressLevel5Name: null,
     invoicesType: CompanyInvoicesType.PER_PLAN_MONTHLY,
-    pricePerCounter: 0,
   };
   loadingGif = loadingGifUrl;
 
@@ -162,7 +161,6 @@ export class CreateSubCompanyComponent implements OnInit {
           addressLevel4Name: null,
           addressLevel5Name: null,
           invoicesType: CompanyInvoicesType.PER_PLAN_MONTHLY,
-          pricePerCounter: 0,
         };
         this.isStoreLoading = false;
         // go back:
