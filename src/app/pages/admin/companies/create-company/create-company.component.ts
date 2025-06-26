@@ -45,7 +45,11 @@ export class AdminCreateCompanyComponent implements OnInit {
     addressLevel4Name: null,
     addressLevel5Name: null,
     invoicesType: CompanyInvoicesType.PER_PLAN_MONTHLY,
-    pricePerCounter: 0,
+    invoiceConfig: {
+      printInvoiceId: false,
+      printCustomerName: false,
+      printInvoicePlans: false,
+    },
   };
   loadingGif = loadingGifUrl;
 
@@ -94,6 +98,12 @@ export class AdminCreateCompanyComponent implements OnInit {
       return;
     }
 
+    if (!this.company.invoiceConfig) {
+      this.alertService.toastError('Please fill in the invoice configuration details.');
+      this.isStoreLoading = false;
+      return;
+    }
+
     // TODO: validate address input according to level
 
     this.companiesService.adminStore(this.company).subscribe(
@@ -124,7 +134,11 @@ export class AdminCreateCompanyComponent implements OnInit {
           addressLevel4Name: null,
           addressLevel5Name: null,
           invoicesType: CompanyInvoicesType.PER_PLAN_MONTHLY,
-          pricePerCounter: 0,
+          invoiceConfig: {
+            printInvoiceId: false,
+            printCustomerName: false,
+            printInvoicePlans: false,
+          },
         };
         this.isStoreLoading = false;
       },

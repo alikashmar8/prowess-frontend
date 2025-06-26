@@ -106,11 +106,11 @@
       </div>
 
 
-      <div class="form-label-group m-4" *ngIf="company.invoicesType == CompanyInvoicesType.PER_COUNTER">
+      <!-- <div class="form-label-group m-4" *ngIf="company.invoicesType == CompanyInvoicesType.PER_COUNTER">
         <label for="pricePerCounter" translate>Price Per Counter:</label>
         <input type="number" name="pricePerCounter" id="pricePerCounter" [(ngModel)]="company.pricePerCounter"
           class="form-control common-input px-3" placeholder="Price Per Counter" required autofocus min="0" />
-      </div>
+      </div> -->
 
 
       <div class="form-label-group m-4">
@@ -200,6 +200,31 @@
       <div class="form-label-group m-4" *ngIf="isLevel5Checked">
         <input type="text" name="level5" id="level5" class="form-control common-input px-3" placeholder="Level 5 naming"
           autofocus [(ngModel)]="company.addressLevel5Name" />
+      </div>
+
+      <div class="card mt-5">
+        <div class="card-header">
+          <h3 translate>Invoice Configuration</h3>
+        </div>
+        <div class="card-body">
+          <div class="form-label-group m-4">
+            <label for="printInvoiceId">Print Invoice ID:</label>
+            <input type="checkbox" name="printInvoiceId" id="printInvoiceId" [(ngModel)]="company.invoiceConfig.printInvoiceId"
+              class="common-input mx-3" />
+          </div>
+
+          <div class="form-label-group m-4">
+            <label for="printCustomerName">Print Customer Name:</label>
+            <input type="checkbox" name="printCustomerName" id="printCustomerName"
+              [(ngModel)]="company.invoiceConfig.printCustomerName" class="common-input mx-3" />
+          </div>
+
+          <div class="form-label-group m-4">
+            <label for="printInvoicePlans">Print Invoice Plans:</label>
+            <input type="checkbox" name="printInvoicePlans" id="printInvoicePlans"
+              [(ngModel)]="company.invoiceConfig.printInvoicePlans" class="common-input mx-3" />
+          </div>
+        </div>
       </div>
 
       <div class="form-label-group m-4">
