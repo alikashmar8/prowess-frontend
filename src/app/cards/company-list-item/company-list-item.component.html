@@ -11,6 +11,10 @@
 
   <div class="no-wrap col-md-6">
     <button class="btn btn-primary m-2" (click)="openEditBalanceModal(company)" translate>Edit Balance</button>
+    <button class="btn btn-info m-2"
+      routerLink="{{ urlPrefix }}{{company.id}}/edit/invoices/{{company.invoiceConfig?.id}}" translate>
+      Update Invoice Config
+    </button>
     <button class="btn btn-primary m-2" routerLink="{{ urlPrefix }}{{company.id}}/edit" translate>Edit</button>
     <button class="btn btn-danger m-2" (click)="openDeleteModal()" translate>Delete</button>
   </div>
