@@ -12,11 +12,17 @@
     <div class="col-sm-12 m-2"><strong translate>Price:</strong>
       <input type="text" id="price" name="price" class="form-control" [(ngModel)]="plan.price" />
     </div>
+
+    <div class="col-sm-12 m-2" *ngIf="this.currentUser.company.invoicesType == CompanyInvoicesType.PER_COUNTER">
+      <strong translate>Price Per Counter:</strong>
+      <input type="text" id="pricePerCounter" name="pricePerCounter" class="form-control"
+        [(ngModel)]="plan.pricePerCounter" />
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)" translate>Close</button>
-    <button type="button" class="btn btn-success" (click)="update()" [disabled]="isUpdateLoading" >
+    <button type="button" class="btn btn-success" (click)="update()" [disabled]="isUpdateLoading">
       <span *ngIf="!isUpdateLoading" translate>Update</span>
       <span *ngIf="isUpdateLoading"><i class="fa fa-spinner fa-spin"></i> Updating...</span>
-      </button>
+    </button>
   </div>
