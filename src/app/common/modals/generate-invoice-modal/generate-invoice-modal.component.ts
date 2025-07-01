@@ -65,7 +65,10 @@ export class GenerateInvoiceModalComponent implements OnInit {
     );
 
     const counterDiff = this.data.counterValue - this.customer.lastCounterValue;
-    const counterTotal = counterDiff * this.currentUser.company.pricePerCounter;
+    const counterTotal = this.customer.plans.reduce(
+      (acc, plan) => acc + counterDiff * plan.pricePerCounter,
+      0
+    );
 
     this.invoiceTotal = fixedPlansTotal + counterTotal;
   }
@@ -95,7 +98,7 @@ export class GenerateInvoiceModalComponent implements OnInit {
         customer_id: this.customerId,
         plan_id: planId,
         counterValue: Number(this.data.counterValue),
-        dueDate: this.data.dueDate,
+        dueDate: this.data.dueDate ? new Date(this.data.dueDate) : null,
       });
       this.alertService.toastSuccess('Invoice generated successfully');
       this.activeModal.close();
