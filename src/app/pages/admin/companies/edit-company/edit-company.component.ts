@@ -9,6 +9,7 @@ import { AddressesLevel } from 'src/enums/addresses.enum';
 import { CollectingType } from 'src/enums/collecting-type.enum';
 import { CompanyInvoicesType } from 'src/enums/company-invoices-type.enum';
 import { Currency } from 'src/enums/currency.enum';
+import { InvoiceSharingType } from 'src/enums/invoice-sharing-type';
 import { InvoicesSortingType } from 'src/enums/invoices-sorting-type';
 import { Company } from './../../../../../models/company.model';
 
@@ -33,6 +34,7 @@ export class AdminEditCompanyComponent implements OnInit {
 
   CollectingType = CollectingType;
   InvoicesSortingType = InvoicesSortingType;
+  InvoiceSharingType = InvoiceSharingType;
   Currency = Currency;
   CompanyInvoicesType = CompanyInvoicesType;
 
@@ -98,6 +100,7 @@ export class AdminEditCompanyComponent implements OnInit {
         currency: this.company.currency,
         collectingType: this.company.collectingType,
         invoicesSortingType: this.company.invoicesSortingType,
+        invoiceSharingType: this.company.invoiceSharingType,
         maxLocationLevel: this.company.maxLocationLevel,
         maxManagersNumber: this.company.maxManagersNumber,
         maxSupervisorsNumber: this.company.maxSupervisorsNumber,
@@ -107,7 +110,6 @@ export class AdminEditCompanyComponent implements OnInit {
         addressLevel3Name: this.company.addressLevel3Name,
         addressLevel4Name: this.company.addressLevel4Name,
         addressLevel5Name: this.company.addressLevel5Name,
-        pricePerCounter: this.company.pricePerCounter,
       })
       .subscribe(
         (result) => {
