@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { InvoicesService } from 'src/app/services/invoices.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { InvoiceTypes } from 'src/enums/invoices-type.enum';
 import { Invoice } from 'src/models/invoice.model';
 import { getLang } from 'src/utils/functions';
 
@@ -20,6 +21,7 @@ export class UnpaidInvoicesComponent implements OnInit {
   take: number = 10;
   skip: number = 0;
   totalRecords: number = 0;
+  filters: Record<string, any> = {};
 
   constructor(
     private invoicesService: InvoicesService,
@@ -30,10 +32,13 @@ export class UnpaidInvoicesComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      let res = await this.invoicesService.getUnpaidInvoices({
+      this.filters = {
+        type: InvoiceTypes.PLANS_INVOICE,
+        isPaid: false,
         take: this.take,
         skip: this.skip,
-      });
+      };
+      let res = await this.invoicesService.listInvoices(this.filters);
       this.invoices = res.data;
       this.sum = res.sum;
       this.totalRecords = res.count;
@@ -70,8 +75,9 @@ export class UnpaidInvoicesComponent implements OnInit {
   }) {
     try {
       this.isLoading = this.loadingService.appLoading(true);
-
-      let res = await this.invoicesService.getUnpaidInvoices({
+      this.filters = {
+        type: InvoiceTypes.PLANS_INVOICE,
+        isPaid: false,
         search: data.search,
         employee_id: data.selectedEmployee,
         plan_id: data.selectedPlan,
@@ -84,7 +90,9 @@ export class UnpaidInvoicesComponent implements OnInit {
         level1Address: data.selectedLevel1Address,
         take: data.take,
         skip: data.skip,
-      });
+      };
+
+      let res = await this.invoicesService.listInvoices(this.filters);
 
       this.invoices = res.data;
       this.sum = res.sum;
@@ -110,41 +118,43 @@ export class UnpaidInvoicesComponent implements OnInit {
   async exportExcel() {
     try {
       this.isLoading = this.loadingService.appLoading(true);
-      const ids = this.invoices.map((invoice) => invoice.id);
-      const res = this.invoicesService.downloadInvoicesExcel(ids).subscribe(
-        (res) => {
-          var newBlob = new Blob([res], {
-            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          });
-          const data = window.URL.createObjectURL(newBlob);
-          var link = document.createElement('a');
-          link.href = data;
-          link.download =
-            this.currentUser.company.name +
-            '-unpaid-invoices-' +
-            new Date().getDate() +
-            '-' +
-            (new Date().getMonth() + 1) +
-            '-' +
-            new Date().getFullYear() +
-            '.xlsx';
-          link.dispatchEvent(
-            new MouseEvent('click', {
-              bubbles: true,
-              cancelable: true,
-              view: window,
-            })
-          );
-          setTimeout(function () {
-            window.URL.revokeObjectURL(data);
-            link.remove();
-          }, 100);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-      this.isLoading = this.loadingService.appLoading(false);
+      const res = this.invoicesService
+        .downloadInvoicesExcel(this.filters)
+        .subscribe(
+          (res) => {
+            var newBlob = new Blob([res], {
+              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            });
+            const data = window.URL.createObjectURL(newBlob);
+            var link = document.createElement('a');
+            link.href = data;
+            link.download =
+              this.currentUser.company.name +
+              '-unpaid-invoices-' +
+              new Date().getDate() +
+              '-' +
+              (new Date().getMonth() + 1) +
+              '-' +
+              new Date().getFullYear() +
+              '.xlsx';
+            link.dispatchEvent(
+              new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+              })
+            );
+            setTimeout(function () {
+              window.URL.revokeObjectURL(data);
+              link.remove();
+            }, 100);
+            this.isLoading = this.loadingService.appLoading(false);
+          },
+          (err) => {
+            console.log(err);
+            this.isLoading = this.loadingService.appLoading(false);
+          }
+        );
     } catch (err) {
       this.isLoading = this.loadingService.appLoading(false);
     }
