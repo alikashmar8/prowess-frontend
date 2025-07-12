@@ -18,21 +18,13 @@ export class PlansService {
   }
 
   getActivePlans() {
-    return this.http.get(
-      plansEndpoint +
-        '?isActive=true',
-      {
-        headers: getHeaders(),
-      }
-    );
+    return this.http.get(plansEndpoint + '?isActive=true', {
+      headers: getHeaders(),
+    });
   }
 
   store(data: CreatePlanDTO) {
-    return this.http.post(
-      plansEndpoint,
-      data,
-      { headers: getHeaders() }
-    );
+    return this.http.post(plansEndpoint, data, { headers: getHeaders() });
   }
 
   updateStatus(id: string, status: boolean) {
@@ -43,10 +35,18 @@ export class PlansService {
     );
   }
 
-  update(id: string, data: { name: string; price: number; isActive: boolean }) {
+  update(
+    id: string,
+    data: {
+      name: string;
+      price: number;
+      isActive: boolean;
+      pricePerCounter: number;
+    }
+  ) {
     return this.http.put(
       plansEndpoint + id,
-      { ...data, company_id: this.authService.currentUser.company_id },
+      { ...data },
       {
         headers: getHeaders(),
       }
