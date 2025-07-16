@@ -230,7 +230,10 @@ export class CreateCustomerComponent implements OnInit {
       return;
     }
 
-    if (!this.data.paymentDate || new Date(this.data.paymentDate).getDate() >= 29) {
+    if (
+      !this.data.paymentDate ||
+      new Date(this.data.paymentDate).getDate() >= 29
+    ) {
       this.alertService.toastError('Customer payment date should be provided');
       this.isStoreLoading = false;
       return;
@@ -275,11 +278,11 @@ export class CreateCustomerComponent implements OnInit {
       return;
     }
 
-    if (this.data.isPerCounter && !this.data.counterSerialNumber) {
-      this.alertService.toastError('Counter serial number should be specified!');
-      this.isStoreLoading = false;
-      return;
-    }
+    // if (this.data.isPerCounter && !this.data.counterSerialNumber) {
+    //   this.alertService.toastError('Counter serial number should be specified!');
+    //   this.isStoreLoading = false;
+    //   return;
+    // }
 
     this.data.plans = this.selectedPlans.map((plan) => plan.id);
 
@@ -362,7 +365,9 @@ export class CreateCustomerComponent implements OnInit {
       this.level1Addresses = await this.addressesService.getLevel2Children(
         this.selectedLevel2Id
       );
-      this.data.address_id = null;
+      if (this.level1Addresses?.length > 0) {
+        this.data.address_id = this.level1Addresses[0].id;
+      } else this.data.address_id = null;
     } catch (err) {
       this.authService.handleHttpError(err);
     }

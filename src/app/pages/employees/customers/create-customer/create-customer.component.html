@@ -46,7 +46,7 @@
 
       <div class="form-group"
         *ngIf="currentCompany?.invoicesType == CompanyInvoicesType.PER_COUNTER && data.isPerCounter">
-        <label for="counterSerialNumber" class="required" translate>Counter Serial Number:</label>
+        <label for="counterSerialNumber" translate>Counter Serial Number:</label>
         <input type="text" class="form-control" name="counterSerialNumber" id="counterSerialNumber"
           aria-describedby="helpId" [(ngModel)]="data.counterSerialNumber">
       </div>
@@ -54,7 +54,7 @@
       <div class="form-group"
         *ngIf="currentCompany?.invoicesType == CompanyInvoicesType.PER_COUNTER && data.isPerCounter">
         <label for="lastCounterValue" class="required" translate>Current Counter Value:</label>
-        <input type="number" class="form-control" name="lastCounterValue" id="lastCounterValue" [disabled]="!data.counterSerialNumber"
+        <input type="number" class="form-control" name="lastCounterValue" id="lastCounterValue"
           aria-describedby="helpId" [(ngModel)]="data.lastCounterValue">
       </div>
 
