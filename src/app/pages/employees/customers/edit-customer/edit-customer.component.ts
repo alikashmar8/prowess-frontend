@@ -251,11 +251,11 @@ export class EditCustomerComponent implements OnInit {
       return;
     }
 
-    if (this.data.isPerCounter && !this.data.counterSerialNumber) {
-      this.alertService.toastError('Counter Serial Number is required');
-      this.isUpdateLoading = false;
-      return;
-    }
+    // if (this.data.isPerCounter && !this.data.counterSerialNumber) {
+    //   this.alertService.toastError('Counter Serial Number is required');
+    //   this.isUpdateLoading = false;
+    //   return;
+    // }
 
     this.companiesService.updateCustomer(this.user_id, this.data).subscribe(
       (res) => {
@@ -318,7 +318,9 @@ export class EditCustomerComponent implements OnInit {
       this.level1Addresses = await this.addressesService.getLevel2Children(
         this.selectedLevel2Id
       );
-      this.data.address_id = null;
+      if (this.level1Addresses?.length > 0) {
+        this.data.address_id = this.level1Addresses[0].id;
+      } else this.data.address_id = null;
     } catch (err) {
       this.authService.handleHttpError(err);
     }
