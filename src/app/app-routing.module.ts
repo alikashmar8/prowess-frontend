@@ -10,6 +10,7 @@ import { AdminCompaniesComponent } from './pages/admin/companies/companies.compo
 import { AdminCreateCompanyComponent } from './pages/admin/companies/create-company/create-company.component';
 import { AdminEditCompanyComponent } from './pages/admin/companies/edit-company/edit-company.component';
 import { AdminShowCompanyComponent } from './pages/admin/companies/show-company/show-company.component';
+import { UpdateInvoiceConfigComponent } from './pages/admin/companies/update-invoice-config/update-invoice-config.component';
 import { TransactionsComponent } from './pages/admin/transactions/transactions.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { Level1AddressesComponent } from './pages/employees/addresses/level1-addresses/level1-addresses.component';
@@ -69,6 +70,10 @@ const adminRoutes: Routes = [
           {
             path: ':id/edit',
             component: AdminEditCompanyComponent,
+          },
+          {
+            path: ':company_id/edit/invoices/:id',
+            component: UpdateInvoiceConfigComponent,
           },
         ],
         canActivate: [SuperAdminGuard],
