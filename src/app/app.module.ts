@@ -56,6 +56,7 @@ import { AdminCompaniesComponent } from './pages/admin/companies/companies.compo
 import { AdminCreateCompanyComponent } from './pages/admin/companies/create-company/create-company.component';
 import { AdminEditCompanyComponent } from './pages/admin/companies/edit-company/edit-company.component';
 import { AdminShowCompanyComponent } from './pages/admin/companies/show-company/show-company.component';
+import { UpdateInvoiceConfigComponent } from './pages/admin/companies/update-invoice-config/update-invoice-config.component';
 import { TransactionsComponent } from './pages/admin/transactions/transactions.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { Level1AddressesComponent } from './pages/employees/addresses/level1-addresses/level1-addresses.component';
@@ -84,7 +85,6 @@ import { CreateInvoiceComponent } from './pages/employees/invoices/create-invoic
 import { ItemsInvoicesComponent } from './pages/employees/invoices/items-invoices/items-invoices.component';
 import { PaidInvoicesComponent } from './pages/employees/invoices/paid-invoices/paid-invoices.component';
 import { ShowInvoiceComponent } from './pages/employees/invoices/show-invoice/show-invoice.component';
-import { ThisMonthInvoicesComponent } from './pages/employees/invoices/this-month-invoices/this-month-invoices.component';
 import { UnpaidInvoicesComponent } from './pages/employees/invoices/unpaid-invoices/unpaid-invoices.component';
 import { CreateItemComponent } from './pages/employees/items/create-item/create-item.component';
 import { ItemsComponent } from './pages/employees/items/items.component';
@@ -137,7 +137,6 @@ import { SubCompaniesComponent } from './pages/employees/sub-companies/sub-compa
     InvoicesListComponent,
     ShowInvoiceComponent,
     CreateInvoiceComponent,
-    ThisMonthInvoicesComponent,
     ConfirmationModalComponent,
     ItemsComponent,
     CreateItemComponent,
@@ -171,6 +170,7 @@ import { SubCompaniesComponent } from './pages/employees/sub-companies/sub-compa
     UpdateCompanyBalanceModalComponent,
     GenerateInvoiceModalComponent,
     TransactionsComponent,
+    UpdateInvoiceConfigComponent,
   ],
   imports: [
     BrowserModule,
