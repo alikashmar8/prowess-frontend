@@ -1,6 +1,6 @@
 // export const backendUrl = 'http://localhost:3000/';
-// export const backendUrl = 'http://113.30.189.70:3000/';
-export const backendUrl = 'http://62.171.150.232:3000/';
+// export const backendUrl = 'http://44.197.151.2:3000/';
+export const backendUrl = 'https://backend.prowess.me/';
 export const apiUrl = backendUrl + 'api/';
 
 // admin endpoints
@@ -18,3 +18,10 @@ export const addressesLevel3Endpoint = apiUrl + 'level3-addresses/';
 export const addressesLevel4Endpoint = apiUrl + 'level4-addresses/';
 export const addressesLevel5Endpoint = apiUrl + 'level5-addresses/';
 export const invoicesEndpoint = apiUrl + 'invoices/';
+export const employeesEndpoint = apiUrl + 'employees/';
+export const receivedAmountsEndpoint = apiUrl + 'received-amounts/';
+export const employeeTasksEndpoint = apiUrl + 'employee-tasks/';
+export const employeeTaskTypesEndpoint = apiUrl + 'employee-task-types/';
+export const employeeTaskReasonsEndpoint = apiUrl + 'employee-task-reasons/';
+export const companyTransactionsEndpoint = apiUrl + 'company-transactions/';
+export const invoiceConfigsEndpoint = apiUrl + 'invoice-configs/';
