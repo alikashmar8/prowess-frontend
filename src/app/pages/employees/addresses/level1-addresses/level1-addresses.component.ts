@@ -62,7 +62,7 @@ export class Level1AddressesComponent implements OnInit {
         AddressesLevel.LEVEL1
       );
 
-      if (!this.isMaxLevel){
+      if (!this.isMaxLevel) {
         switch (this.currentCompany.maxLocationLevel) {
           case AddressesLevel.LEVEL5:
             this.isLevel5Allowed = true;
@@ -105,7 +105,8 @@ export class Level1AddressesComponent implements OnInit {
         }
       }
       this.parents = await this.addressesService.GetLevel2Addresses();
-      this.addresses = await this.addressesService.GetLevel1Addresses();
+      if (this.isMaxLevel)
+        this.addresses = await this.addressesService.GetLevel1Addresses();
       this.isLoading = false;
     } catch (err) {
       this.authService.handleHttpError(err);
@@ -219,4 +220,17 @@ export class Level1AddressesComponent implements OnInit {
     }
   }
 
+  async level2Selected() {
+    if (!this.selectedLevel2Id) {
+      this.addresses = [];
+      return;
+    }
+    try {
+      this.addresses = await this.addressesService.getLevel2Children(
+        this.selectedLevel2Id
+      );
+    } catch (err) {
+      this.authService.handleHttpError(err);
+    }
+  }
 }
