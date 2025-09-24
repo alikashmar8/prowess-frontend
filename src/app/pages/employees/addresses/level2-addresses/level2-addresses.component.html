@@ -19,7 +19,7 @@
         </div>
         <div *ngIf="isLevel3Allowed">
           <div>{{currentCompany.addressLevel3Name}}: </div>
-          <select class="form-control" [(ngModel)]="selectedLevel3Id" name="level3"
+          <select class="form-control" [(ngModel)]="selectedLevel3Id" name="level3" (change)="level3Selected()"
             [disabled]="!level3Addresses.length">
             <option class="form-control option" *ngFor="let level of level3Addresses" [value]="level.id">{{level.name}}
             </option>
@@ -48,9 +48,9 @@
         <li class="list-group-item d-flex justify-content-between align-items-center bg-linear-primary">
           <div class="row mx-2">
             {{address.name}}
-            <span *ngIf="address.parent" class="mx-3">
+            <!-- <span *ngIf="address.parent" class="mx-3">
               - {{address.parent.name}}
-            </span>
+            </span> -->
           </div>
           <div class="badge">
             <i class="fa fa-pen bg-white text-black p-1 rounded m-1" style="font-size: 22px!important;"
