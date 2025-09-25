@@ -84,7 +84,8 @@ export class Level2AddressesComponent implements OnInit {
         }
       }
       this.parents = await this.addressesService.GetLevel3Addresses();
-      this.addresses = await this.addressesService.GetLevel2Addresses();
+      if (this.isMaxLevel)
+        this.addresses = await this.addressesService.GetLevel2Addresses();
       this.isLoading = false;
     } catch (err) {
       this.authService.handleHttpError(err);
@@ -179,6 +180,20 @@ export class Level2AddressesComponent implements OnInit {
         this.selectedLevel4Id
       );
       this.selectedLevel3Id = null;
+    } catch (err) {
+      this.authService.handleHttpError(err);
+    }
+  }
+
+  async level3Selected() {
+    if (!this.selectedLevel3Id) {
+      this.addresses = [];
+      return;
+    }
+    try {
+      this.addresses = await this.addressesService.getLevel3Children(
+        this.selectedLevel3Id
+      );
     } catch (err) {
       this.authService.handleHttpError(err);
     }
