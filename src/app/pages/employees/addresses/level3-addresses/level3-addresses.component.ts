@@ -56,7 +56,7 @@ export class Level3AddressesComponent implements OnInit {
         this.currentCompany.maxLocationLevel,
         AddressesLevel.LEVEL3
       );
-      if (!this.isMaxLevel){
+      if (!this.isMaxLevel) {
         switch (this.currentCompany.maxLocationLevel) {
           case AddressesLevel.LEVEL5:
             this.isLevel5Allowed = true;
@@ -73,10 +73,10 @@ export class Level3AddressesComponent implements OnInit {
               await this.addressesService.GetLevel4Addresses();
             break;
         }
-
       }
       this.parents = await this.addressesService.GetLevel4Addresses();
-      this.addresses = await this.addressesService.GetLevel3Addresses();
+      if (this.isMaxLevel)
+        this.addresses = await this.addressesService.GetLevel3Addresses();
       this.isLoading = false;
     } catch (err) {
       this.authService.handleHttpError(err);
@@ -159,5 +159,17 @@ export class Level3AddressesComponent implements OnInit {
     }
   }
 
-
+  async level4Selected() {
+    if (!this.selectedLevel4Id) {
+      this.addresses = [];
+      return;
+    }
+    try {
+      this.addresses = await this.addressesService.getLevel4Children(
+        this.selectedLevel4Id
+      );
+    } catch (err) {
+      this.authService.handleHttpError(err);
+    }
+  }
 }
