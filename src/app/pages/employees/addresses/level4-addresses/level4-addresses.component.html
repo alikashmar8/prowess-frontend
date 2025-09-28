@@ -9,7 +9,8 @@
 
       <div class="form-label-group m-4" *ngIf='!isMaxLevel'>
         {{ currentCompany.addressLevel5Name }}:
-        <select [(ngModel)]="level5Id" name="level5" class="form-control" [disabled]="!parents.length">
+        <select [(ngModel)]="level5Id" name="level5" class="form-control" [disabled]="!parents.length"
+          (change)="level5Selected">
           <option *ngFor="let level of parents" [value]="level.id">{{level.name}}</option>
         </select>
       </div>
@@ -30,9 +31,9 @@
         <li class="list-group-item d-flex justify-content-between align-items-center bg-linear-primary">
           <div class="row mx-2">
             {{address.name}}
-            <span *ngIf="address.parent" class="mx-3">
+            <!-- <span *ngIf="address.parent" class="mx-3">
               - {{address.parent.name}}
-            </span>
+            </span> -->
           </div>
           <div class="badge">
             <i class="fa fa-pen bg-white text-black p-1 rounded m-1" style="font-size: 22px!important;"
