@@ -35,7 +35,7 @@ export class Level4AddressesComponent implements OnInit {
     private alertService: AlertService,
     private loadingService: LoadingService,
     private authService: AuthService,
-    private modalService: NgbModal,
+    private modalService: NgbModal
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -43,7 +43,8 @@ export class Level4AddressesComponent implements OnInit {
     try {
       this.currentCompany = this.authService.currentUser.company;
       this.parents = await this.addressesService.GetLevel5Addresses();
-      this.addresses = await this.addressesService.GetLevel4Addresses();
+      if (this.isMaxLevel)
+        this.addresses = await this.addressesService.GetLevel4Addresses();
       this.isMaxLevel = isAddressMaxLevel(
         this.currentCompany.maxLocationLevel,
         AddressesLevel.LEVEL4
@@ -110,5 +111,19 @@ export class Level4AddressesComponent implements OnInit {
       },
       (rejected) => {}
     );
+  }
+
+  async level5Selected() {
+    if (!this.level5Id) {
+      this.addresses = [];
+      return;
+    }
+    try {
+      this.addresses = await this.addressesService.getLevel5Children(
+        this.level5Id
+      );
+    } catch (err) {
+      this.authService.handleHttpError(err);
+    }
   }
 }
