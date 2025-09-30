@@ -26,13 +26,12 @@ export class Level5AddressesComponent implements OnInit {
   currentCompany: Company;
 
   addresses: Level5Address[] = [];
-  isMaxLevel: boolean;
 
   constructor(
     private addressesService: AddressesService,
     private alertService: AlertService,
     private authService: AuthService,
-    private modalService: NgbModal,
+    private modalService: NgbModal
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -40,10 +39,6 @@ export class Level5AddressesComponent implements OnInit {
     try {
       this.currentCompany = this.authService.currentUser.company;
       this.addresses = await this.addressesService.GetLevel5Addresses();
-      this.isMaxLevel = isAddressMaxLevel(
-        this.currentCompany.maxLocationLevel,
-        AddressesLevel.LEVEL4
-      );
       this.isLoading = false;
     } catch (err) {
       this.authService.handleHttpError(err);
