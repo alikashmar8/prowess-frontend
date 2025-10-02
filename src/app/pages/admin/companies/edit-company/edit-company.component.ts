@@ -105,6 +105,7 @@ export class AdminEditCompanyComponent implements OnInit {
         maxManagersNumber: this.company.maxManagersNumber,
         maxSupervisorsNumber: this.company.maxSupervisorsNumber,
         allowDataImport: this.company.allowDataImport,
+        allowPartialPayment: this.company.allowPartialPayment,
         addressLevel1Name: this.company.addressLevel1Name,
         addressLevel2Name: this.company.addressLevel2Name,
         addressLevel3Name: this.company.addressLevel3Name,
