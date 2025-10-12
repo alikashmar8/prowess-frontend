@@ -28,6 +28,7 @@ export class Company {
   currencySymbol?: string;
   maxLocationLevel: AddressesLevel;
   allowDataImport: boolean;
+  allowPartialPayment: boolean;
   addressLevel1Name: string;
   addressLevel2Name: string;
   addressLevel3Name: string;
