@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Currency } from 'src/enums/currency.enum';
 import { InvoiceConfig } from 'src/models/invoice-config.model';
 import { InvoiceConfigsService } from './../../../../services/invoice-config.service';
 
@@ -15,10 +16,14 @@ export class UpdateInvoiceConfigComponent implements OnInit {
     printInvoiceId: false,
     printCustomerName: false,
     printInvoicePlans: false,
+    displayCurrency: null,
+    exchangeRate: null,
     createdAt: null,
     updatedAt: null,
     company: null,
   };
+
+  Currency = Currency;
 
   constructor(
     private route: ActivatedRoute,
