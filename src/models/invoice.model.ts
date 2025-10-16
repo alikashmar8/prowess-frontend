@@ -1,4 +1,5 @@
 import { InvoiceTypes } from 'src/enums/invoices-type.enum';
+import { Currency } from './../enums/currency.enum';
 import { Item } from './item.model';
 import { Plan } from './plan.model';
 import { User } from './user.model';
@@ -16,6 +17,8 @@ export class Invoice {
   collectedBy_id: string;
   item_id?: string;
   plan_id?: string;
+  displayTotal?: number;
+  displayCurrency?: Currency;
   user: User;
   collectedBy?: User;
   items?: Item[];
