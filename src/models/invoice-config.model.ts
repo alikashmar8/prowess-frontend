@@ -1,3 +1,4 @@
+import { Currency } from './../enums/currency.enum';
 import { Company } from './company.model';
 
 export class InvoiceConfig {
@@ -5,6 +6,8 @@ export class InvoiceConfig {
   printInvoiceId?: boolean;
   printCustomerName?: boolean;
   printInvoicePlans?: boolean;
+  displayCurrency?: Currency;
+  exchangeRate?: number;
   createdAt: Date;
   updatedAt: Date;
   company: Company;
