@@ -40,7 +40,7 @@ export class EditPlanModalComponent implements OnInit {
       return;
     }
 
-    if (!this.plan.price) {
+    if (!this.plan.price || !Number(this.plan.price)) {
       this.alertService.toastError('Plan price is required');
       this.isUpdateLoading = false;
       return;
