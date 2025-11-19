@@ -8,15 +8,18 @@
       </div>
       <div class="form-group">
         <label for="printCustomerName">Print Customer Name:</label>
-        <input type="checkbox" id="printCustomerName" [(ngModel)]="invoiceConfig.printCustomerName" name="printCustomerName" />
+        <input type="checkbox" id="printCustomerName" [(ngModel)]="invoiceConfig.printCustomerName"
+          name="printCustomerName" />
       </div>
       <div class="form-group">
         <label for="printInvoicePlans">Print Invoice Plans:</label>
-        <input type="checkbox" id="printInvoicePlans" [(ngModel)]="invoiceConfig.printInvoicePlans" name="printInvoicePlans" />
+        <input type="checkbox" id="printInvoicePlans" [(ngModel)]="invoiceConfig.printInvoicePlans"
+          name="printInvoicePlans" />
       </div>
       <div class="form-group">
         <label for="displayCurrency">Display Currency:</label>
-        <select id="displayCurrency" [(ngModel)]="invoiceConfig.displayCurrency" name="displayCurrency" class="form-control">
+        <select id="displayCurrency" [(ngModel)]="invoiceConfig.displayCurrency" name="displayCurrency"
+          class="form-control">
           <option [value]="null">-- Select Currency --</option>
           <option value="{{Currency.USD}}">USD</option>
           <option value="{{Currency.LBP}}">LBP</option>
@@ -28,8 +31,12 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="exchangeRate">Exchange Rate:</label>
-        <input type="number" id="exchangeRate" [(ngModel)]="invoiceConfig.exchangeRate" name="exchangeRate" class="form-control" placeholder="Exchange Rate" min="0" step="0.01" />
+        <label for="exchangeRate">Exchange Rate:
+          <br>
+          <small>(Company Currency to {{invoiceConfig.displayCurrency}})</small>
+        </label>
+        <input type="number" id="exchangeRate" [(ngModel)]="invoiceConfig.exchangeRate" name="exchangeRate"
+          class="form-control" placeholder="Exchange Rate" min="0" step="0.01" />
       </div>
       <button type="submit" class="btn btn-primary">Update</button>
     </form>
